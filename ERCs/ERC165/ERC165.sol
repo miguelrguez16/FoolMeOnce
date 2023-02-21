@@ -10,8 +10,10 @@ abstract contract ERC165 is IERC165 {
      * @param {interfaceId} Identifier of the interface
      */
     function supportsInterface(bytes4 interfaceId)
-        external
-        pure
+        public
+        view
+        virtual
+        override
         returns (bool)
     {
         return type(IERC165).interfaceId == interfaceId;

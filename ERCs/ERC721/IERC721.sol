@@ -25,7 +25,7 @@ interface IERC721 is IERC165 {
 
     /**
      * @dev returns the amount of an address
-     * @param _owner addressz
+     * @param _owner address
      */
     function balanceOf(address _owner) external view returns (uint256);
 
@@ -49,7 +49,7 @@ interface IERC721 is IERC165 {
         bytes memory data
     ) external payable;
 
-    ///@dev similar
+    ///@dev similar 
     function safeTransferFrom(
         address _from,
         address _to,
