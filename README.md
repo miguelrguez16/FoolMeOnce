@@ -1,8 +1,8 @@
 # EPI-FoolMeOnce
 
-<!-- ![FoolMeOnce](ipfs://bafybeihnzmk3fvfep45axsbs5pcch3xoavcvhevxtaydvi5s7gd4uejk3y/) -->
+<!-- ![FoolMeOnce](ipfs://bafybeihnzmk3fvfep45axsbs5pcch3xoavcvhevxtaydvi5s7gd4uejk3y/)
 
-![FoolMeOnce](http://bafybeihnzmk3fvfep45axsbs5pcch3xoavcvhevxtaydvi5s7gd4uejk3y.ipfs.localhost:48084/)
+![FoolMeOnce](http://bafybeihnzmk3fvfep45axsbs5pcch3xoavcvhevxtaydvi5s7gd4uejk3y.ipfs.localhost:48084/) -->
 
 Plataforma para la creación y verificación de promesas electorales por parte de políticos y sus partidos.
 
