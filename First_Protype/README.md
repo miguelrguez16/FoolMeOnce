@@ -37,6 +37,9 @@ You need to install these dependencies to run the sample project:
 Project created
 # Instalamos la dependencia requerida
 $> npm install --save-dev "hardhat@^2.12.7" "@nomicfoundation/hardhat-toolbox@^2.0.0"
+
+# Instalamos la biblioteca de OpenZepellin para hacer uso de librerías
+$> npm install @openzeppelin/contracts
 ```
 
 
@@ -50,6 +53,24 @@ REPORT_GAS=true npx hardhat test
 npx hardhat node
 npx hardhat run scripts/deploy.js # Lanzar Deploy
 ```
+
+## Comandos para hardhat
+### 1. Arranque de la Blockchain de desarrollo local
+
+`$ npx hardhat node`
+
+### 2. Conectar las cuentas del blockchain de desarrollo a Metamask
+
+- Copiar la clave privada de las direcciones e importarla a Metamask
+- Conecta tu metamask al hardhat blockchain, 127.0.0.1:8545.
+
+### 3. Migrar los Smart Contracts
+
+`npx hardhat run src/backend/scripts/deploy.js --network ganache`
+
+### 4. Ejecutar los Tests
+
+`$ npx hardhat test`
 
 ## Referencias
 
