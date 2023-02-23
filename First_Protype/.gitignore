@@ -1,0 +1,15 @@
+node_modules
+.env
+coverage
+coverage.json
+typechain
+typechain-types
+
+# Hardhat files
+cache
+artifacts
+
+# Default Files from Hardhat
+/scripts/deploy.js
+/test/Lock.js
+/contracts/Lock.sol
