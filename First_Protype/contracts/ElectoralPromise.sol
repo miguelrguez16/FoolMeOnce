@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.8.17;
 
 import "./IElectoralPromise.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
+
+//import "../../.deps/npm/@openzeppelin/contracts/utils/Strings.sol";
 
 contract ElectoralPromise is IElectoralPromise {
     using Strings for uint256;
@@ -69,7 +71,7 @@ contract ElectoralPromise is IElectoralPromise {
     }
 
     function _baseURI() internal view virtual returns (string memory) {
-        return "ipfs://";
+        return _baseUri;
     }
 
     function balanceOf(address _owner) external view returns (uint256 balance) {
@@ -98,7 +100,7 @@ contract ElectoralPromise is IElectoralPromise {
     {
         require(
             _exists(tokenId),
-            "ERC721URIStorage: URI query for nonexistent token"
+            "ElectoralPromise: URI query for nonexistent token"
         );
 
         string memory _tokenURI = _tokenURIs[tokenId];
@@ -129,7 +131,7 @@ contract ElectoralPromise is IElectoralPromise {
     {
         require(
             _exists(tokenId),
-            "ERC721URIStorage: URI set of nonexistent token"
+            "ElectoralPromise: URI set of nonexistent token"
         );
         _tokenURIs[tokenId] = _tokenURI;
     }
