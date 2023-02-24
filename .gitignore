@@ -1,3 +1,4 @@
 # artifacts from .sol compiler
 **/artifacts/** 
 /.idea/
+/.deps/
