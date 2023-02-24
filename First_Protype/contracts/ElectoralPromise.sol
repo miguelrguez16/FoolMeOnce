@@ -14,7 +14,6 @@ contract ElectoralPromise is IElectoralPromise {
      ****************************/
     // Token name
     string private _name;
-
     // Token symbol
     string private _symbol;
     // Base uri
@@ -70,7 +69,7 @@ contract ElectoralPromise is IElectoralPromise {
         return ownerOfPromise;
     }
 
-    function _baseURI() internal view virtual returns (string memory) {
+    function baseURI() external view virtual returns (string memory) {
         return _baseUri;
     }
 
@@ -104,7 +103,7 @@ contract ElectoralPromise is IElectoralPromise {
         );
 
         string memory _tokenURI = _tokenURIs[tokenId];
-        string memory base = _baseURI();
+        string memory base = this.baseURI();
 
         // If there is no base URI, return the token URI.
         if (bytes(base).length == 0) {

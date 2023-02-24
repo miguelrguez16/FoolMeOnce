@@ -10,6 +10,6 @@ cache
 artifacts
 
 # Default Files from Hardhat
-/scripts/deploy.js
-/test/Lock.js
+/old/deploy.js
+/old/Lock.js
 /contracts/Lock.sol
