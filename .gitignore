@@ -4,8 +4,8 @@
 /.deps/
 
 # workspace
-/First_Protype/contracts/epi-foolmeonce.code-workspace
+/First_Protype/assets/epi-foolmeonce.code-workspace
 # basic staff from hardhat
-/First_Protype/old/
+/First_Protype/assets/old/
 # Config prettier VSC
 .prettierrc.json

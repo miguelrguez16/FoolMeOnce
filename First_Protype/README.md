@@ -11,10 +11,12 @@ Para esta version comenzaremos a utilizar una de las famosos entornos de desarro
     - [Instalamos la biblioteca de OpenZeppelin para hacer uso de librerías](#instalamos-la-biblioteca-de-openzeppelin-para-hacer-uso-de-librerías)
   - [Comandos HardHat](#comandos-hardhat)
     - [Básicos](#básicos)
+    - [Compilacion](#compilacion)
     - [Arranque de la Blockchain de desarrollo local](#arranque-de-la-blockchain-de-desarrollo-local)
     - [Conectar las cuentas del blockchain de desarrollo a Metamask](#conectar-las-cuentas-del-blockchain-de-desarrollo-a-metamask)
     - [Migrar los Smart Contracts](#migrar-los-smart-contracts)
     - [Ejecutar los Tests](#ejecutar-los-tests)
+    - [Comprobar COVERAGE de los test](#comprobar-coverage-de-los-test)
   - [Referencias](#referencias)
 
 ## Instalación
@@ -44,16 +46,16 @@ $>  npx hardhat
   888    888 .d888888 888    888  888 888  888 .d888888 888
   888    888 888  888 888    Y88b 888 888  888 888  888 Y88b.
   888    888 "Y888888 888     "Y88888 888  888 "Y888888  "Y888
-  
+
   Welcome to Hardhat v2.12.7
-  
+
   √ What do you want to do? · Create a JavaScript project
   √ Hardhat project root: · ..\epi-foolmeonce\First_Protype
   √ Do you want to add a .gitignore? (Y/n) · y
-  
+
   You need to install these dependencies to run the sample project:
     npm install --save-dev "hardhat@^2.12.7" "@nomicfoundation/hardhat-toolbox@^2.0.0"
-  
+
   Project created
 ```
 
@@ -76,7 +78,9 @@ REPORT_GAS=true npx hardhat test
 npx hardhat node
 npx hardhat run scripts/deploy.js # Lanzar Deploy
 ```
+
 ### Compilacion
+
 `$npx hardhat compile --show-stack-traces`
 
 ### Arranque de la Blockchain de desarrollo local
@@ -95,6 +99,10 @@ npx hardhat run scripts/deploy.js # Lanzar Deploy
 ### Ejecutar los Tests
 
 `$ npx hardhat test`
+
+### Comprobar cobertura de los test
+
+`$ npx hardhat coverage`
 
 ## Referencias
 

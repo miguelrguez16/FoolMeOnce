@@ -6,10 +6,13 @@ typechain
 typechain-types
 
 # Hardhat files
-cache
+Backend/cache
 artifacts
 
 # Default Files from Hardhat
-/old/deploy.js
-/old/Lock.js
-/contracts/Lock.sol
+/assets/old/deploy.js
+/assets/old/Lock.js
+/Backend/contracts/Lock.sol
+/assets/old/deploy.js
+/assets/epi-foolmeonce.code-workspace
+/assets/old/Lock.js
