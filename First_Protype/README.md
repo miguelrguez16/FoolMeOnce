@@ -4,19 +4,22 @@ Para esta version comenzaremos a utilizar una de las famosos entornos de desarro
 
 - [Hardhat Project - First Prototype](#hardhat-project---first-prototype)
   - [Instalación](#instalación)
-  - [Arranque](#arranque)
+  - [Backend](#backend)
     - [Instalamos Hardhat](#instalamos-hardhat)
     - [Iniciamos un proyecto de Hardhat](#iniciamos-un-proyecto-de-hardhat)
     - [Instalamos la dependencia requerida](#instalamos-la-dependencia-requerida)
     - [Instalamos la biblioteca de OpenZeppelin para hacer uso de librerías](#instalamos-la-biblioteca-de-openzeppelin-para-hacer-uso-de-librerías)
-  - [Comandos HardHat](#comandos-hardhat)
-    - [Básicos](#básicos)
-    - [Compilacion](#compilacion)
-    - [Arranque de la Blockchain de desarrollo local](#arranque-de-la-blockchain-de-desarrollo-local)
-    - [Conectar las cuentas del blockchain de desarrollo a Metamask](#conectar-las-cuentas-del-blockchain-de-desarrollo-a-metamask)
-    - [Migrar los Smart Contracts](#migrar-los-smart-contracts)
-    - [Ejecutar los Tests](#ejecutar-los-tests)
-    - [Comprobar COVERAGE de los test](#comprobar-coverage-de-los-test)
+    - [Comandos HardHat](#comandos-hardhat)
+      - [Básicos](#básicos)
+      - [Compilacion](#compilacion)
+      - [Arranque de la Blockchain de desarrollo local](#arranque-de-la-blockchain-de-desarrollo-local)
+      - [Conectar las cuentas del blockchain de desarrollo a Metamask](#conectar-las-cuentas-del-blockchain-de-desarrollo-a-metamask)
+      - [Migrar los Smart Contracts](#migrar-los-smart-contracts)
+      - [Ejecutar los Tests](#ejecutar-los-tests)
+      - [Comprobar cobertura de los test](#comprobar-cobertura-de-los-test)
+    - [Generar diagrama UML del código](#generar-diagrama-uml-del-código)
+    - [Deploy in ganache](#deploy-in-ganache)
+  - [Front](#front)
   - [Referencias](#referencias)
 
 ## Instalación
@@ -26,9 +29,9 @@ Requerimientos de la instalación:
 1. [Node y npm](https://nodejs.org/en/): Última versión estable: 18.14.2 2. Se puede utilizar [NVM](https://github.com/nvm-sh/nvm) el cual permite manejar múltiples versiones de node js (recomendado)
 2. Instalación de hardhat
 
-$> nvm use 18.14.2 // nos situamos en la version correspondiente de nodejs
+`$> nvm use 18.14.2 // nos situamos en la version correspondiente de nodejs`
 
-## Arranque
+## Backend
 
 ### Instalamos Hardhat
 
@@ -38,14 +41,6 @@ $> nvm use 18.14.2 // nos situamos en la version correspondiente de nodejs
 
 ```shell
 $>  npx hardhat
-  888    888                      888 888               888
-  888    888                      888 888               888
-  888    888                      888 888               888
-  8888888888  8888b.  888d888 .d88888 88888b.   8888b.  888888
-  888    888     "88b 888P"  d88" 888 888 "88b     "88b 888
-  888    888 .d888888 888    888  888 888  888 .d888888 888
-  888    888 888  888 888    Y88b 888 888  888 888  888 Y88b.
-  888    888 "Y888888 888     "Y88888 888  888 "Y888888  "Y888
 
   Welcome to Hardhat v2.12.7
 
@@ -67,9 +62,9 @@ $>  npx hardhat
 
 `$> npm install @openzeppelin/contracts`
 
-## Comandos HardHat
+### Comandos HardHat
 
-### Básicos
+#### Básicos
 
 ```shell
 npx hardhat help # Ayuda de Hardhat
@@ -79,30 +74,46 @@ npx hardhat node
 npx hardhat run scripts/deploy.js # Lanzar Deploy
 ```
 
-### Compilacion
+#### Compilacion
 
-`$npx hardhat compile --show-stack-traces`
+`$ npx hardhat compile --show-stack-traces`
 
-### Arranque de la Blockchain de desarrollo local
+#### Arranque de la Blockchain de desarrollo local
 
 `$ npx hardhat node`
 
-### Conectar las cuentas del blockchain de desarrollo a Metamask
+#### Conectar las cuentas del blockchain de desarrollo a Metamask
 
 - Copiar la clave privada de las direcciones e importarla a Metamask
 - Conecta tu metamask al hardhat blockchain, 127.0.0.1:8545.
 
-### Migrar los Smart Contracts
+#### Migrar los Smart Contracts
 
 `npx hardhat run src/backend/scripts/deploy.js --network ganache`
 
-### Ejecutar los Tests
+#### Ejecutar los Tests
 
 `$ npx hardhat test`
 
-### Comprobar cobertura de los test
+#### Comprobar cobertura de los test
 
 `$ npx hardhat coverage`
+
+Este comando genera un reporte en la ruta donde se ejecuta el comando.
+
+### Generar diagrama UML del código
+
+`$ npm link sol2uml`
+
+Ejecutar con:
+
+`$ sol2uml .\Backend\contracts\ElectoralManager.sol`
+
+### Deploy in ganache
+
+`$ npx hardhat run .\Backend\scripts\deployFirstPrototype.js --network ganache`
+
+## Front
 
 ## Referencias
 

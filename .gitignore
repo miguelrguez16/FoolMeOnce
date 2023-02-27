@@ -9,3 +9,6 @@
 /First_Protype/assets/old/
 # Config prettier VSC
 .prettierrc.json
+First_Protype/README.md
+First_Protype/Front/contractsData/ElectoralManager.json
+First_Protype/Front/contractsData/electoralManager-address.json
