@@ -1,5 +1,5 @@
-const {expect} = require('chai');
-const {ethers} = require('hardhat');
+const { expect } = require('chai');
+const { ethers } = require('hardhat');
 
 describe("TestElectoralManager", function () {
 
@@ -13,7 +13,7 @@ describe("TestElectoralManager", function () {
   let addrs;
   let _tokenURI = 'sample uri for new electoral promise';
 
-  // ERRORS
+  // ERRORS MESSAGE
   const errorNewRegister = 'ElectoralManager author already exists';
   const errorAuthorNotExists = 'ElectoralManager author not exists';
 
@@ -49,22 +49,25 @@ describe("TestElectoralManager", function () {
     });
   });
 
-  describe("Register and test promiser" , function (){
+  describe("Register and test promiser", function () {
     it('should track the register of a person', async function () {
       const _completeName = "Juan Alberto Rodriguez";
       const _isPoliticalParty = false;
       const newIdentifier = 1;
 
       // write the first promiser
-      await expect(electoralManager.connect(addr1).registerUser(_completeName, _isPoliticalParty))
+      await expect(electoralManager.connect(addr1)
+        .registerUser(_completeName, _isPoliticalParty))
         .to.emit(electoralManager, 'NewPromiser');
 
       // on success try to put again
-      await expect(electoralManager.connect(addr1).registerUser(_completeName, _isPoliticalParty))
-      .to.be.revertedWith(errorNewRegister);
+      await expect(electoralManager.connect(addr1)
+        .registerUser(_completeName, _isPoliticalParty))
+        .to.be.revertedWith(errorNewRegister);
 
       // on previous success check all data is registered in the correct position
       await expect(await electoralManager.connect(addr1).checkMyIdentifier()).to.equal(newIdentifier);
+
       const promiser = await electoralManager.listPromisers(addr1.address);
 
       expect(promiser.idAuthor).to.equal(newIdentifier);
@@ -72,14 +75,15 @@ describe("TestElectoralManager", function () {
       expect(promiser.isPoliticalParty).to.equal(_isPoliticalParty);
       expect(await electoralManager.counterPromisers()).to.equal(2);
 
+
     });
   });
 
-  describe("Basic functionality to register a new Electoral Promise", function (){
-    it('should track the register of a new electoral promise', async function(){
+
+  describe("Register a new Electoral Promise", function () {
+    it('should track the register of a new electoral promise without a login', async function () {
       const _isObligatory = false;
-      const _relationalPromises= [];
-      const _tokenId = 0;
+      const _relationalPromises = [];
 
       // first attempt -> expect a user not exists
       await expect(electoralManager.connect(addr1)
@@ -88,11 +92,19 @@ describe("TestElectoralManager", function () {
 
       expect(await electoralManager.balanceOf(addr1.address)).to.equal(0);
 
+    });
 
-      // register a promiser
+    it('should track a correct register of a promise with a correct login', async function () {
+      // basic information for an electoral promise
+      const _isObligatory = false;
+      const _relationalPromises = [];
       const _completeName = "Juan Alberto Rodriguez";
       const _isPoliticalParty = false;
-      await expect(electoralManager.connect(addr1).registerUser(_completeName, _isPoliticalParty))
+      const _tokenId = 0;
+
+      // first attempt
+      await expect(electoralManager.connect(addr1)
+        .registerUser(_completeName, _isPoliticalParty))
         .to.emit(electoralManager, 'NewPromiser');
 
       // second attempt
@@ -101,19 +113,29 @@ describe("TestElectoralManager", function () {
         .to.emit(electoralManager, 'CreatedPromise')
         .withArgs(addr1.address, _tokenId);
 
+      // expect to list increment
       expect(await electoralManager.counterElectoralPromises()).to.equal(1);
-
 
       const allEP = await electoralManager.getAllPromises();
       expect(allEP.length).to.equal(1);
 
+      // expect all data is correct
+      const electoralPromise = allEP[0];
+      expect(electoralPromise.nameAuthor).to.equal(_completeName);
+      expect(electoralPromise.idAuthor).to.equal(1);
+      expect(electoralPromise.tokenUri).to.equal(_tokenURI);
+      expect(electoralPromise.isObligatory).to.equal(false);
+      expect(electoralPromise.relationalPromises.length).to.equal(0);
+      expect(electoralPromise.isApproved).to.equal(false);
+
+      // expect basic information to be okey
       expect(await electoralManager.tokenURI(_tokenId)).to.equal('ipfs://' + _tokenURI);
       expect(await electoralManager.ownerOf(_tokenId)).to.equal(addr1.address);
-
       expect(await electoralManager.balanceOf(addr1.address)).to.equal(1);
 
     });
 
   });
+
 
 });
