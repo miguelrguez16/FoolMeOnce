@@ -50,15 +50,23 @@ contract ElectoralManager is ElectoralPromise {
      *      PUBLIC FUNCTIONS
      ****************************/
 
+    /**
+     * @notice register a new user
+     * @param _completeName string of the user
+     * @param _isPoliticalParty boolean that identifies whether it is a political party
+     * @return the id of the new user
+     */
     function registerUser(string memory _completeName, bool _isPoliticalParty)
         external
         returns (uint256)
     {
+        /// check if msg.sender is not registerd
         require(
             _checkPromiser(msg.sender) == 0,
             "ElectoralManager author already exists"
         );
 
+        /// register a new user
         Promiser memory tmpPromiser = Promiser(
             counterPromisers,
             _completeName,
@@ -67,21 +75,22 @@ contract ElectoralManager is ElectoralPromise {
 
         listPromisers[msg.sender] = tmpPromiser;
 
-        counterPromisers++;
+        counterPromisers++; //increment
 
+        /// emit new user
         emit NewPromiser(msg.sender);
 
+        // return the identifier
         return tmpPromiser.idAuthor;
     }
 
-    function checkMyIdentifier() external view returns (uint256) {
-        return listPromisers[msg.sender].idAuthor;
-    }
-
-    function getAllPromises() public view returns (DataPromise[] memory) {
-        return listElectoralPromises;
-    }
-
+    /**
+     * @notice register a new Electoral promise
+     * @param _tokenURI string with all data
+     * @param _isObligatory boolean representing the mandatory of the electoral promise
+     * @param _relationalPromises an array with ids of other electoral promises
+     * @return the id of the new user
+     */
     function createElectoralPromise(
         string memory _tokenURI,
         bool _isObligatory,
@@ -113,13 +122,31 @@ contract ElectoralManager is ElectoralPromise {
 
         counterElectoralPromises++;
         emit CreatedPromise(msg.sender, counterElectoralPromises);
+        // return the total electoral Promises
         return counterElectoralPromises;
     }
 
+    /**
+     * @notice returns the associated identifier
+     */
+    function checkMyIdentifier() external view returns (uint256) {
+        return listPromisers[msg.sender].idAuthor;
+    }
+
+    /**
+     * @notice returns all electoral promises
+     */
+    function getAllPromises() public view returns (DataPromise[] memory) {
+        return listElectoralPromises;
+    }
+
     /****************************
-     *      PRIVATE FUNCTIONS
+     *      INTERNAL FUNCTIONS
      ****************************/
 
+    /**
+     * @dev returns the identifier for a user
+     */
     function _checkPromiser(address _addressToCheck)
         internal
         view
