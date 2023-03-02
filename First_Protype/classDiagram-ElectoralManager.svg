@@ -43,8 +43,8 @@
 <text text-anchor="start" x="8" y="-380.9" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;_checkPromiser(_addressToCheck: address): uint256</text>
 <text text-anchor="start" x="8" y="-364.1" font-family="Times,serif" font-size="14.00">External:</text>
 <text text-anchor="start" x="8" y="-347.3" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;registerUser(_completeName: string, _isPoliticalParty: bool): uint256</text>
-<text text-anchor="start" x="8" y="-330.5" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;checkMyIdentifier(): uint256</text>
-<text text-anchor="start" x="8" y="-313.7" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;createElectoralPromise(_tokenURI: string, _isObligatory: bool, _relationalPromises: uint256[]): uint256</text>
+<text text-anchor="start" x="8" y="-330.5" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;createElectoralPromise(_tokenURI: string, _isObligatory: bool, _relationalPromises: uint256[]): uint256</text>
+<text text-anchor="start" x="8" y="-313.7" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;checkMyIdentifier(): uint256</text>
 <text text-anchor="start" x="8" y="-296.9" font-family="Times,serif" font-size="14.00">Public:</text>
 <text text-anchor="start" x="8" y="-280.1" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;&lt;&lt;event&gt;&gt; NewPromiser(owner: address)</text>
 <text text-anchor="start" x="8" y="-263.3" font-family="Times,serif" font-size="14.00"> &#160;&#160;&#160;constructor()</text>

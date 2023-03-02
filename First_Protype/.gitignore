@@ -10,9 +10,7 @@ Backend/cache
 artifacts
 
 # Default Files from Hardhat
-/assets/old/deploy.js
-/assets/old/Lock.js
+/assets/old/**.js
 /Backend/contracts/Lock.sol
-/assets/old/deploy.js
 /assets/epi-foolmeonce.code-workspace
 /assets/old/Lock.js
