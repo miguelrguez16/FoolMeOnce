@@ -5,10 +5,10 @@ module.exports = {
   solidity: "0.8.17",
 
   paths: {
-    artifacts: "./Backend/artifacts",
-    sources: "./Backend/contracts",
-    cache: "./Backend/cache",
-    tests: "./Backend/test"
+    artifacts: "./artifacts",
+    sources: "./contracts",
+    cache: "./cache",
+    tests: "./test"
   },
 
   networks: {
