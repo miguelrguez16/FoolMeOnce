@@ -89,7 +89,7 @@ npx hardhat run scripts/deploy.js # Lanzar Deploy
 
 #### Migrar los Smart Contracts
 
-`npx hardhat run src/backend/scripts/deploy.js --network ganache`
+`npx hardhat run ./scripts/deploy.js --network ganache`
 
 #### Ejecutar los Tests
 
