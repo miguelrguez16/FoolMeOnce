@@ -1,0 +1,19 @@
+footer {
+    display: flex;
+
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8em;
+    color: black;
+    padding: 10px;
+    margin-top: 600px;
+}
+
+.footer img {
+    width: 40px;
+}
+
+.footer a {
+    color: black;
+}
