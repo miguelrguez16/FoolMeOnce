@@ -1,11 +1,18 @@
 .connected {
-    border: 1px solid rgb(47, 255, 64);
-    color: rgb(47, 255, 64);
+    /* border: 1px solid rgb(47, 255, 64); */
+    border: 1px solid #378708;
+    /* color: rgb(47, 255, 64); */
+    color: #378708;
     border-radius: 0.375rem;
 }
 
 .connected:hover {
-    background-color: rgb(47, 255, 64);
+    /* background-color: rgb(47, 255, 64); */
+    background-color: #378708;
     color: white;
     cursor: pointer;
+}
+
+.brand {
+    font-size: 1.1em;
 }

@@ -68,7 +68,6 @@ function App() {
     userIdentifier = parseInt(userIdentifier, 16)
     console.log(`User identifier: ${userIdentifier}`);
     setIdUser(userIdentifier);
-    debugger
     setLoading(false);
 
   }
@@ -87,7 +86,7 @@ function App() {
         <Navigation web3Handler={web3Handler} userAccount={userAccount} idUser={idUser} />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/list" element={<ListElectoralPromise electoralManager={electoralManager} />} />
+          <Route path="/listado" element={<ListElectoralPromise electoralManager={electoralManager} />} />
           <Route path="/create" element={<CreateElectoralPromise electoralManager={electoralManager} />} />
           <Route path="/register" element={<Register electoralManager={electoralManager} setUserIdentifier={setUserIdentifier} />} />
           <Route path="*" element={<NoPage />} />

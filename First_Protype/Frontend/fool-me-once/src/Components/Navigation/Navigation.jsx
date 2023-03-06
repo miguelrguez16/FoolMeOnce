@@ -34,8 +34,8 @@ function Navigation({ web3Handler, userAccount, idUser }) {
             <Nav.Link as={Link} to="/create">
               Nueva Promesa
             </Nav.Link>
-            <Nav.Link as={Link} to="/list">
-              Listado
+            <Nav.Link as={Link} to="/listado">
+              Listado Promesas
             </Nav.Link>
           </Nav>
           <Nav>

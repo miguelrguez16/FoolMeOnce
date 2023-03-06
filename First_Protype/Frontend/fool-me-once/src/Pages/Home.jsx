@@ -10,9 +10,9 @@ function Home() {
           Bienvenido a <span className="brand">VOTUM</span>
         </h1>
         <section>
-          <Card style={{ width: "20em" }}>
+          <Card style={{ width: "25em" }}>
             <Card.Img variant="top" src={logo} bsPrefix="logo-tarjeta" />
-            <Card.Title>Mi promesa Electoral</Card.Title>
+            <Card.Title>&nbsp;&nbsp;&nbsp;Mi promesa Electoral</Card.Title>
             <Card.Body>
               Bienvenido a Electoral Manager, Plataforma para la creación y
               Verificación de promesas Electorales.

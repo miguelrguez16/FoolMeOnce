@@ -1,26 +1,84 @@
 import React, { useState } from "react";
 
+// Componentes Bootstrap
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
+// IPFS
+import { create } from "ipfs-http-client";
+
+// conect to localhost
+const clientIpfs = create({
+  host: "localhost",
+  port: "5001",
+  protocol: "http",
+});
+
 function CreateElectoralPromise({ electoralManager }) {
   // TODO: cuando se pueda
-  // function createElectoralPromise(
-  //         string memory _tokenURI,
-  //         bool _isObligatory,
-  //         uint256[] memory _relationalPromises
-  //     ) external returns (uint256) {
-  // TITULO DE LA PROMESA ELECTORAL
-  // DESCRIPCION
   // RELACION
 
   const [tituloPromesa, setTituloPromesa] = useState("");
-  const [descripcionPromesa, setDescripcionPromesa] = useState("");
+  const [descriptionPromesa, setDescriptionPromesa] = useState("");
   const [isObligatory, setIsObligatory] = useState(false);
   const [listElectoralPromise, setListElectoraPromise] = useState([]);
+  const [imageElectoralPromise, setImageElectoralPromise] = useState("");
+
+  // upload the image to
+  const uploadImageToIpfs = async (event) => {
+    event.preventDefault();
+    const currentFile = event.target.files[0];
+    if (typeof currentFile !== "undefined") {
+      try {
+        const cid = await clientIpfs.add(currentFile);
+        setImageElectoralPromise(`http://127.0.0.1:8080/ipfs/${cid.path}`);
+        debugger;
+      } catch (error) {
+        console.log("ipfs image uploadToIpfs error: ", error);
+      }
+    }
+  };
+
+  // Verificación datos
+  const verifiedElectoralPromise = async () => {
+    // Check info
+    if (!tituloPromesa || !descriptionPromesa || !listElectoralPromise) {
+      debugger;
+      console.log();
+      return;
+    } else {
+      const resultCreate = await clientIpfs.add(
+        JSON.stringify({
+          imageElectoralPromise,
+          tituloPromesa,
+          descriptionPromesa,
+        })
+      );
+      createNewElectoralPromise(resultCreate);
+    }
+  };
+
+  const createNewElectoralPromise = async (result) => {
+    debugger;
+    console.log(`
+        URI: ${result}
+        tituloPromesa: ${tituloPromesa}
+        descriptionPromesa: ${descriptionPromesa}
+        listElectoralPromise: ${listElectoralPromise}
+      `);
+    const uri = `http://127.0.0.1:8080/ipfs/${result.path}`;
+
+    const newEPid = await electoralManager.createElectoralPromise(
+      uri,
+      isObligatory,
+      listElectoralPromise
+    );
+
+    console.log(newEPid);
+  };
 
   return (
-    <div className="register">
+    <div className="create-promise">
       <h3> CreateElectoralPromise</h3>
       <Form>
         <Form.Group className="mb-3" controlId="formTituloPromesa">
@@ -43,8 +101,16 @@ function CreateElectoralPromise({ electoralManager }) {
             as="textarea"
             rows={5}
             placeholder="Introduce la descripción de la promesa "
-            onChange={(e) => setDescripcionPromesa(e.target.value)}
+            onChange={(e) => setDescriptionPromesa(e.target.value)}
           />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formPromesaImage">
+          <Form.Label>¿Deseas añadir una imagen?</Form.Label>
+          <Form.Control
+            type="file"
+            name="file"
+            onChange={uploadImageToIpfs}
+          ></Form.Control>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formPromesaObligatoria">
           <Form.Check
@@ -55,9 +121,15 @@ function CreateElectoralPromise({ electoralManager }) {
             onChange={(e) => setIsObligatory(e.target.checked)}
           />
         </Form.Group>
-        {/* <Button variant="primary" type="submit" onClick={registerNewUser}>
-          Submit
-        </Button> */}
+        <div className="g-grid px-0">
+          <Button
+            onClick={verifiedElectoralPromise}
+            variant="primary"
+            size="lg"
+          >
+            Create
+          </Button>
+        </div>
       </Form>
     </div>
   );
