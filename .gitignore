@@ -1,2 +1,14 @@
 # artifacts from .sol compiler
 **/artifacts/** 
+/.idea/
+/.deps/
+/.vscode/
+# workspace
+/First_Protype/assets/epi-foolmeonce.code-workspace
+# basic staff from hardhat
+/First_Protype/assets/old/
+# Config prettier VSC
+.prettierrc.json
+First_Protype/README.md
+First_Protype/Front/contractsData/ElectoralManager.json
+First_Protype/Front/contractsData/electoralManager-address.json
