@@ -31,11 +31,6 @@ function ListElectoralPromise({ electoralManager, userAccount }) {
         imageElectoralPromise: metadata.imageElectoralPromise,
       };
       listedElectoralPromise.push(item);
-      // listedElectoralPromise.push(item);
-      // listedElectoralPromise.push(item);
-      // listedElectoralPromise.push(item);
-      // listedElectoralPromise.push(item);
-      // listedElectoralPromise.push(item);
 
       // item.descriptionPromesa =
       //   "Prometo mejorar la aplicación puliendo defectos y añadiéndole más funcionalidad Prometo mejorar la aplicación puliendo defectos y añadiéndole más funcionalidadPrometo mejorar la aplicación puliendo defectos y añadiéndole más funcionalidadPrometo mejorar la aplicación puliendo defectos y añadiéndole más funcionalidadPrometo mejorar la aplicación puliendo defectos y añadiéndole más funcionalidadPrometo mejorar la aplicación puliendo defectos y añadiéndole más funcionalidad. Saludos";

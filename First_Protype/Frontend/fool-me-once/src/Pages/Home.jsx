@@ -7,7 +7,7 @@ function Home() {
     <>
       <main className="main-home">
         <h1>
-          Bienvenido a <span className="brand">VOTUM</span>
+          Bienvenido a <span className="brand">VOTUM3.0</span>
         </h1>
         <section>
           <Card style={{ width: "25em" }}>

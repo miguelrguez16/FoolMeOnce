@@ -14,7 +14,7 @@ function Navigation({ web3Handler, userAccount, idUser }) {
       <Container fluid>
         <Navbar.Brand as={Link} to="/">
           <img src={logo} width="50" height="50" className="" alt="" />
-          &nbsp;&nbsp;&nbsp; <span className="brand">VOTUM</span>
+          &nbsp;&nbsp;&nbsp; <span className="brand">VOTUM3.0</span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar navbar-white bg-primary" />
         <Navbar.Collapse id="navbar navbar-white bg-primary">
