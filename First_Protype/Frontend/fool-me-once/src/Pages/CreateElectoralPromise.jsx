@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Componentes Bootstrap
 import Button from "react-bootstrap/Button";
@@ -6,6 +6,7 @@ import Form from "react-bootstrap/Form";
 
 // IPFS
 import { create } from "ipfs-http-client";
+import TablePromises from "../Components/Tabla/TablaPromesas";
 
 // conect to localhost
 const clientIpfs = create({
@@ -15,14 +16,12 @@ const clientIpfs = create({
 });
 
 function CreateElectoralPromise({ electoralManager }) {
-  // TODO: cuando se pueda
-  // RELACION
-
   const [tituloPromesa, setTituloPromesa] = useState("");
   const [descriptionPromesa, setDescriptionPromesa] = useState("");
   const [isObligatory, setIsObligatory] = useState(false);
   const [listElectoralPromise, setListElectoraPromise] = useState([]);
   const [imageElectoralPromise, setImageElectoralPromise] = useState("");
+  const [listaTemas, setListaTemas] = useState([]);
 
   // upload the image to
   const uploadImageToIpfs = async (event) => {
@@ -41,8 +40,15 @@ function CreateElectoralPromise({ electoralManager }) {
 
   // Verificación datos
   const verifiedElectoralPromise = async () => {
+    var temas = document.getElementById("input-word").value;
+    setListaTemas(temas.split(" "));
     // Check info
-    if (!tituloPromesa || !descriptionPromesa || !listElectoralPromise) {
+    if (
+      !tituloPromesa ||
+      !descriptionPromesa ||
+      !listElectoralPromise ||
+      !listaTemas
+    ) {
       debugger;
       console.log();
       return;
@@ -52,6 +58,8 @@ function CreateElectoralPromise({ electoralManager }) {
           imageElectoralPromise,
           tituloPromesa,
           descriptionPromesa,
+          listElectoralPromise,
+          listaTemas,
         })
       );
       createNewElectoralPromise(resultCreate);
@@ -61,10 +69,11 @@ function CreateElectoralPromise({ electoralManager }) {
   const createNewElectoralPromise = async (result) => {
     debugger;
     console.log(`
-        URI: ${result}
-        tituloPromesa: ${tituloPromesa}
-        descriptionPromesa: ${descriptionPromesa}
-        listElectoralPromise: ${listElectoralPromise}
+        URI: [${result}]
+        tituloPromesa: [${tituloPromesa}]
+        descriptionPromesa: [${descriptionPromesa}]
+        listElectoralPromise: [${listElectoralPromise}]
+        listaTemas: [${listaTemas}]
       `);
     const uri = `http://127.0.0.1:8080/ipfs/${result.path}`;
 
@@ -78,9 +87,10 @@ function CreateElectoralPromise({ electoralManager }) {
   };
 
   return (
-    <div className="create-promise">
-      <h3> CreateElectoralPromise</h3>
-      <Form>
+    <div>
+      <h3>CreateElectoralPromise</h3>
+      <Form className="create-promise">
+        {/* className="create-promise" titulo de la promesa */}
         <Form.Group className="mb-3" controlId="formTituloPromesa">
           <Form.Label>Título de la promesa</Form.Label>
           <Form.Control
@@ -93,17 +103,17 @@ function CreateElectoralPromise({ electoralManager }) {
             Tú nombre se verá reflejado en las promesas electorales
           </Form.Text>
         </Form.Group>
-        <Form.Group>
-          <Form.Label>Descripción de la promesa</Form.Label>
-          <Form.Control
+        {/* Tipo de obligatoriedad */}
+        <Form.Group className="mb-3" controlId="formPromesaObligatoria">
+          <Form.Check
             required
-            type="textarea"
-            as="textarea"
-            rows={5}
-            placeholder="Introduce la descripción de la promesa "
-            onChange={(e) => setDescriptionPromesa(e.target.value)}
+            type="checkbox"
+            label="Sera de debido Cumplimiento"
+            defaultChecked={true}
+            onChange={(e) => setIsObligatory(e.target.checked)}
           />
         </Form.Group>
+        {/* añadir una imagen */}
         <Form.Group className="mb-3" controlId="formPromesaImage">
           <Form.Label>¿Deseas añadir una imagen?</Form.Label>
           <Form.Control
@@ -112,13 +122,33 @@ function CreateElectoralPromise({ electoralManager }) {
             onChange={uploadImageToIpfs}
           ></Form.Control>
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formPromesaObligatoria">
-          <Form.Check
+        {/* Temas */}
+        <Form.Group className="mb-3">
+          <Form.Label>Temas que trata la promesa</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Escribe una palabra..."
+            id="input-word"
+          />
+        </Form.Group>
+        {/* Descripcion */}
+        <Form.Group>
+          <Form.Label>Descripción de la promesa</Form.Label>
+          <Form.Control
             required
-            type="checkbox"
-            label="Sera de debido Cumplimiento"
-            defaultChecked={true}
-            onChange={(e) => setIsObligatory(e.target.checked)}
+            type="textarea"
+            as="textarea"
+            rows={6}
+            placeholder="Introduce la descripción de la promesa "
+            onChange={(e) => setDescriptionPromesa(e.target.value)}
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formPromesaObligatoria">
+          <Form.Label>Promesas Relacionadas:</Form.Label>
+          <TablePromises
+            electoralManager={electoralManager}
+            addRelationalPromises={setListElectoraPromise}
           />
         </Form.Group>
         <div className="g-grid px-0">

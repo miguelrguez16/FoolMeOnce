@@ -24,11 +24,12 @@ function ListElectoralPromise({ electoralManager, userAccount }) {
         nameAuthor,
         isObligatory,
         isApproved,
-        relationalPromises,
+        relationalPromises: relationalPromises.map((item) => item.toNumber()),
         created,
         tituloPromesa: metadata.tituloPromesa,
         descriptionPromesa: metadata.descriptionPromesa,
         imageElectoralPromise: metadata.imageElectoralPromise,
+        listaTemas: metadata.listaTemas,
       };
       listedElectoralPromise.push(item);
 
@@ -36,6 +37,7 @@ function ListElectoralPromise({ electoralManager, userAccount }) {
       //   "Prometo mejorar la aplicación puliendo defectos y añadiéndole más funcionalidad Prometo mejorar la aplicación puliendo defectos y añadiéndole más funcionalidadPrometo mejorar la aplicación puliendo defectos y añadiéndole más funcionalidadPrometo mejorar la aplicación puliendo defectos y añadiéndole más funcionalidadPrometo mejorar la aplicación puliendo defectos y añadiéndole más funcionalidadPrometo mejorar la aplicación puliendo defectos y añadiéndole más funcionalidad. Saludos";
       // listedElectoralPromise.push(item);
     }
+    console.log(`Items to list: [${listedElectoralPromise.length}]`);
     setListedElectoralPromise(listedElectoralPromise);
     setLoading(false);
   };
@@ -44,19 +46,19 @@ function ListElectoralPromise({ electoralManager, userAccount }) {
     loadListedItems();
   }, []);
 
-  if (loading) {
+  if (loading || !userAccount) {
     return (
       <main style={{ padding: "1rem 0" }}>
         <SpinnerCustom />
       </main>
     );
   }
-
+  debugger;
   return (
     <div>
       {/* <h3>Listado de Promesas electorales</h3> */}
       <div className="simple-container">
-        {listedElectoralPromise.length >= 0 ? (
+        {listedElectoralPromise.length > 0 ? (
           <div className="visual-list">
             {listedElectoralPromise.map((item, indice) => (
               <ElectoralPromise
@@ -69,11 +71,14 @@ function ListElectoralPromise({ electoralManager, userAccount }) {
                 autor={item.nameAuthor}
                 isObligatory={item.isObligatory}
                 relationalPromises={item.relationalPromises}
+                listaTemas={item.listaTemas}
               />
             ))}
           </div>
         ) : (
-          <>Na</>
+          <div className="empty-listed">
+            Lo sentimos, no hemos encontrado ninguna promesa
+          </div>
         )}
       </div>
     </div>

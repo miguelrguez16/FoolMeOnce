@@ -12,7 +12,9 @@ function ElectoralPromise({
   imagen,
   autor,
   isObligatory,
+  listaTemas,
 }) {
+  debugger;
   const maxSize = 300;
   if (descriptionPromesa.length > maxSize) {
     descriptionPromesa = descriptionPromesa.slice(0, maxSize);
@@ -26,6 +28,10 @@ function ElectoralPromise({
       <div className="tarjeta-imagen">
         <img src={imagen} alt="" />
       </div>
+      <div>{tituloPromesa}</div>
+      <div>{relationalPromises.toString()}</div>
+      <div>{listaTemas}</div>
+
       <div className="tarjeta-descripcion">{descriptionPromesa}</div>
       <div className="tarjeta-autor">
         <span>

@@ -36,10 +36,9 @@
 
 
 .create-promise {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    align-self: center;
+
 }
 
 
@@ -58,4 +57,10 @@
     gap: 28px;
     flex-wrap: wrap;
     align-content: center;
+}
+
+
+.empty-listed {
+    display: grid;
+    align-items: center;
 }

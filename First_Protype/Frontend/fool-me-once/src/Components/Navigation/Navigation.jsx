@@ -5,7 +5,6 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
-
 import "./Navigation.css";
 
 function Navigation({ web3Handler, userAccount, idUser }) {
@@ -14,7 +13,7 @@ function Navigation({ web3Handler, userAccount, idUser }) {
       <Container fluid>
         <Navbar.Brand as={Link} to="/">
           <img src={logo} width="50" height="50" className="" alt="" />
-          &nbsp;&nbsp;&nbsp; <span className="brand">VOTUM3.0</span>
+          &nbsp;&nbsp;&nbsp; <span className="brand">VOTUM</span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar navbar-white bg-primary" />
         <Navbar.Collapse id="navbar navbar-white bg-primary">
@@ -31,12 +30,18 @@ function Navigation({ web3Handler, userAccount, idUser }) {
             <Nav.Link as={Link} to="/">
               Home
             </Nav.Link>
-            <Nav.Link as={Link} to="/create">
-              Nueva Promesa
-            </Nav.Link>
-            <Nav.Link as={Link} to="/listado">
-              Listado Promesas
-            </Nav.Link>
+            {userAccount ? (
+              <>
+                <Nav.Link as={Link} to="/create">
+                  Nueva Promesa
+                </Nav.Link>
+                <Nav.Link as={Link} to="/listado">
+                  Listado Promesas
+                </Nav.Link>
+              </>
+            ) : (
+              <></>
+            )}
           </Nav>
           <Nav>
             {idUser !== 0 ? (

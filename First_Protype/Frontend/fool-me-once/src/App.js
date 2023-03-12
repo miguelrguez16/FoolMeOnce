@@ -58,22 +58,16 @@ function App() {
     const electoralManager = new ethers.Contract(ElectoralManagerAddress.address, ElectoralManagerAbi.abi, signer);
     setElectoralManager(electoralManager);
     console.log(electoralManager)
-    const nombre = await electoralManager.name();
+    const nombre = await electoralManager.name() === "FoolMeOnce" ? true : false;
     console.log(nombre);
     getUserId(electoralManager);
   }
 
   const getUserId = async (electoralManager) => {
     let userIdentifier = await electoralManager.checkMyIdentifier();
-    userIdentifier = parseInt(userIdentifier, 16)
-    console.log(`User identifier: ${userIdentifier}`);
-    setIdUser(userIdentifier);
+    console.log(`User identifier: ${userIdentifier.toNumber()}`);
+    setIdUser(userIdentifier.toNumber());
     setLoading(false);
-
-  }
-
-  const setUserIdentifier = (newIdentifier) => {
-    setIdUser(newIdentifier);
   }
 
   useEffect(() => {
@@ -86,11 +80,16 @@ function App() {
         <Navigation web3Handler={web3Handler} userAccount={userAccount} idUser={idUser} />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/listado" element={<ListElectoralPromise electoralManager={electoralManager} />} />
-          <Route path="/create" element={<CreateElectoralPromise electoralManager={electoralManager} />} />
-          <Route path="/register" element={<Register electoralManager={electoralManager} setUserIdentifier={setUserIdentifier} />} />
+          <Route path="/listado" element={
+            <ListElectoralPromise electoralManager={electoralManager} userAccount={userAccount} />} />
+          <Route path="/create" element={
+            <CreateElectoralPromise electoralManager={electoralManager} userAccount={userAccount} />} />
+          <Route path="/register" element={
+            <Register electoralManager={electoralManager} setIdUser={setIdUser} userAccount={userAccount} />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
+
+
         <Footer />
       </div>
     </BrowserRouter>
