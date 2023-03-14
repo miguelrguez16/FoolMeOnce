@@ -6,9 +6,6 @@ import "./DataInfo.sol";
 
 ///@author Miguel Rodriguez Gonzalez
 contract ElectoralManager is ElectoralPromise {
-    // using DataPromise for DataInfo.DataPromise;
-    // using Promiser for DataInfo.Promiser;
-
     /****************************
      *      CONSTRUCTOR
      ****************************/
@@ -39,11 +36,13 @@ contract ElectoralManager is ElectoralPromise {
     /**
      * @notice register a new user
      * @param _completeName string of the user
+     * @param _namePoliticalParty string that identifies the political party
      * @param _isPoliticalParty boolean that identifies whether it is a political party
      * @return the id of the new user
      */
     function registerUser(
         string memory _completeName,
+        string memory _namePoliticalParty,
         bool _isPoliticalParty
     ) external returns (uint256) {
         /// check if msg.sender is not registerd
@@ -55,8 +54,9 @@ contract ElectoralManager is ElectoralPromise {
         /// register a new user
         DataInfo.Promiser memory tmpPromiser = DataInfo.Promiser(
             counterPromisers,
+            _isPoliticalParty,
             _completeName,
-            _isPoliticalParty
+            _namePoliticalParty
         );
 
         listPromisers[msg.sender] = tmpPromiser;

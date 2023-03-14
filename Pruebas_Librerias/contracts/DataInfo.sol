@@ -21,7 +21,8 @@ library DataInfo {
     ///@dev basic info for a person or a political party
     struct Promiser {
         uint256 idAuthor;
-        string completeName;
         bool isPoliticalParty;
+        string completeName;
+        string namePoliticalParty;
     }
 }
