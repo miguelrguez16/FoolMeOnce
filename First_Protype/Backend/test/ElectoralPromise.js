@@ -6,7 +6,7 @@ describe("TestElectoralManager", function () {
   // address deploy contract
   let ElectoralManager;
   let electoralManager;
-  // address fot interact
+  // some address to interact with
   let deployer;
   let addr1;
   let addr2;
@@ -32,13 +32,13 @@ describe("TestElectoralManager", function () {
 
   describe("Deployment", function () {
     it('should track name, symbol and baseUri of the ElectoralManager, and other state', async function () {
-      const nameContract = 'FoolMeOnce';
-      const symbolContract = 'FMO';
-      const ipfsName = 'ipfs://';
+      const _nameContract = 'FoolMeOnce';
+      const _symbolContract = 'FMO';
+      const _ipfsName = 'ipfs://';
 
-      expect(await electoralManager.name()).to.equal(nameContract);
-      expect(await electoralManager.symbol()).to.equal(symbolContract);
-      expect(await electoralManager.baseURI()).to.equal(ipfsName);
+      expect(await electoralManager.name()).to.equal(_nameContract);
+      expect(await electoralManager.symbol()).to.equal(_symbolContract);
+      expect(await electoralManager.baseURI()).to.equal(_ipfsName);
       // check state values
       expect(await electoralManager.counterElectoralPromises()).to.equal(0);
       expect(await electoralManager.counterPromisers()).to.equal(1);
@@ -52,17 +52,18 @@ describe("TestElectoralManager", function () {
   describe("Register and test promiser", function () {
     it('should track the register of a person', async function () {
       const _completeName = "Juan Alberto Rodriguez";
+      const _namePoliticalParty = "Partido Por La BlockChain";
       const _isPoliticalParty = false;
       const newIdentifier = 1;
 
       // write the first promiser
       await expect(electoralManager.connect(addr1)
-        .registerUser(_completeName, _isPoliticalParty))
+        .registerUser(_completeName, _namePoliticalParty, _isPoliticalParty))
         .to.emit(electoralManager, 'NewPromiser');
 
       // on success try to put again
       await expect(electoralManager.connect(addr1)
-        .registerUser(_completeName, _isPoliticalParty))
+        .registerUser(_completeName, _namePoliticalParty, _isPoliticalParty))
         .to.be.revertedWith(errorNewRegister);
 
       // on previous success check all data is registered in the correct position
@@ -74,7 +75,6 @@ describe("TestElectoralManager", function () {
       expect(promiser.completeName).to.equal(_completeName);
       expect(promiser.isPoliticalParty).to.equal(_isPoliticalParty);
       expect(await electoralManager.counterPromisers()).to.equal(2);
-
 
     });
   });
@@ -91,6 +91,7 @@ describe("TestElectoralManager", function () {
         .to.be.revertedWith(errorAuthorNotExists);
 
       expect(await electoralManager.balanceOf(addr1.address)).to.equal(0);
+      expect(await electoralManager.connect(addr1).checkMyIdentifier()).to.equal(0);
 
     });
 
@@ -99,13 +100,19 @@ describe("TestElectoralManager", function () {
       const _isObligatory = false;
       const _relationalPromises = [];
       const _completeName = "Juan Alberto Rodriguez";
+      const _namePoliticalParty = "Partido Por La BlockChain";
+
       const _isPoliticalParty = false;
       const _tokenId = 0;
+      const _idAuthor = 1;
 
       // first attempt
       await expect(electoralManager.connect(addr1)
-        .registerUser(_completeName, _isPoliticalParty))
+        .registerUser(_completeName, _namePoliticalParty, _isPoliticalParty))
         .to.emit(electoralManager, 'NewPromiser');
+
+      await expect(await electoralManager.connect(addr1).checkMyIdentifier()).to.equal(_idAuthor);
+
 
       // second attempt
       await expect(electoralManager.connect(addr1)
@@ -121,11 +128,14 @@ describe("TestElectoralManager", function () {
 
       // expect all data is correct
       const electoralPromise = allEP[0];
+
+      expect(electoralPromise.id).to.equal(_tokenId);
       expect(electoralPromise.nameAuthor).to.equal(_completeName);
-      expect(electoralPromise.idAuthor).to.equal(1);
+      expect(electoralPromise.idAuthor).to.equal(_idAuthor);
+      expect(electoralPromise.created).to.lt(Date.now()); // Timestamp
+      expect(electoralPromise.dateApproved).to.equal(0);
       expect(electoralPromise.tokenUri).to.equal(_tokenURI);
       expect(electoralPromise.isObligatory).to.equal(false);
-      expect(electoralPromise.relationalPromises.length).to.equal(0);
       expect(electoralPromise.isApproved).to.equal(false);
 
       // expect basic information to be okey
@@ -136,6 +146,5 @@ describe("TestElectoralManager", function () {
     });
 
   });
-
 
 });

@@ -2,7 +2,9 @@
 pragma solidity 0.8.17;
 
 import "./ElectoralPromise.sol";
+import "./DataInfo.sol";
 
+///@author Miguel Rodriguez Gonzalez
 contract ElectoralManager is ElectoralPromise {
     /****************************
      *      CONSTRUCTOR
@@ -13,36 +15,17 @@ contract ElectoralManager is ElectoralPromise {
         counterPromisers = 1;
     }
 
-    /****************************
-     *      DATA STRUCTURES
-     ****************************/
-
-    ///@dev Basic info of a electoral promise
-    struct DataPromise {
-        uint256 id;
-        uint256 created; // timestamp
-        uint256 idAuthor;
-        bool isObligatory;
-        bool isApproved;
-        string tokenUri;
-        string nameAuthor;
-        uint256[] relationalPromises;
-    }
-    ///@dev list of all electoral promise
-    DataPromise[] public listElectoralPromises;
-
-    ///@dev number of promise, it  is use for id
+    ///@dev number of promise, it is use for id
     uint256 public counterElectoralPromises;
 
-    ///@dev basic info for a person or a
-    struct Promiser {
-        uint256 idAuthor;
-        string completeName;
-        bool isPoliticalParty;
-    }
+    ///@dev identify the next id for a new user
     uint256 public counterPromisers;
+
+    ///@dev list of all electoral promise
+    DataInfo.DataPromise[] public listElectoralPromises;
+
     ///@dev list promisers
-    mapping(address => Promiser) public listPromisers;
+    mapping(address => DataInfo.Promiser) public listPromisers;
 
     event NewPromiser(address indexed owner);
 
@@ -53,13 +36,15 @@ contract ElectoralManager is ElectoralPromise {
     /**
      * @notice register a new user
      * @param _completeName string of the user
+     * @param _namePoliticalParty string that identifies the political party
      * @param _isPoliticalParty boolean that identifies whether it is a political party
      * @return the id of the new user
      */
-    function registerUser(string memory _completeName, bool _isPoliticalParty)
-        external
-        returns (uint256)
-    {
+    function registerUser(
+        string memory _completeName,
+        string memory _namePoliticalParty,
+        bool _isPoliticalParty
+    ) external returns (uint256) {
         /// check if msg.sender is not registerd
         require(
             _checkPromiser(msg.sender) == 0,
@@ -67,10 +52,11 @@ contract ElectoralManager is ElectoralPromise {
         );
 
         /// register a new user
-        Promiser memory tmpPromiser = Promiser(
+        DataInfo.Promiser memory tmpPromiser = DataInfo.Promiser(
             counterPromisers,
+            _isPoliticalParty,
             _completeName,
-            _isPoliticalParty
+            _namePoliticalParty
         );
 
         listPromisers[msg.sender] = tmpPromiser;
@@ -88,13 +74,11 @@ contract ElectoralManager is ElectoralPromise {
      * @notice register a new Electoral promise
      * @param _tokenURI string with all data
      * @param _isObligatory boolean representing the mandatory of the electoral promise
-     * @param _relationalPromises an array with ids of other electoral promises
      * @return the id of the new user
      */
     function createElectoralPromise(
         string memory _tokenURI,
-        bool _isObligatory,
-        uint256[] memory _relationalPromises
+        bool _isObligatory
     ) external returns (uint256) {
         require(
             _checkPromiser(msg.sender) != 0,
@@ -102,15 +86,15 @@ contract ElectoralManager is ElectoralPromise {
         );
 
         /// new ElectoralPromise
-        DataPromise memory tmpPromise = DataPromise(
+        DataInfo.DataPromise memory tmpPromise = DataInfo.DataPromise(
             counterElectoralPromises,
             block.timestamp,
+            0,
             listPromisers[msg.sender].idAuthor,
             _isObligatory,
             false,
             _tokenURI,
-            listPromisers[msg.sender].completeName,
-            _relationalPromises
+            listPromisers[msg.sender].completeName
         );
 
         /// save into the list
@@ -119,9 +103,9 @@ contract ElectoralManager is ElectoralPromise {
         /// mint the newPromise
         _mint(msg.sender, counterElectoralPromises);
         _setTokenURI(counterElectoralPromises, _tokenURI);
-
+        uint256 idtoken = counterElectoralPromises;
         counterElectoralPromises++;
-        emit CreatedPromise(msg.sender, counterElectoralPromises);
+        emit CreatedPromise(msg.sender, idtoken);
         // return the total electoral Promises
         return counterElectoralPromises;
     }
@@ -136,7 +120,11 @@ contract ElectoralManager is ElectoralPromise {
     /**
      * @notice returns all electoral promises
      */
-    function getAllPromises() public view returns (DataPromise[] memory) {
+    function getAllPromises()
+        public
+        view
+        returns (DataInfo.DataPromise[] memory)
+    {
         return listElectoralPromises;
     }
 
@@ -147,11 +135,9 @@ contract ElectoralManager is ElectoralPromise {
     /**
      * @dev returns the identifier for a user
      */
-    function _checkPromiser(address _addressToCheck)
-        internal
-        view
-        returns (uint256)
-    {
+    function _checkPromiser(
+        address _addressToCheck
+    ) internal view returns (uint256) {
         return listPromisers[_addressToCheck].idAuthor;
     }
 }
