@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import QRCode from "react-qr-code";
 
 import { useParams } from "react-router-dom";
 import ElectoralPromise from "../Components/ElectoralPromise/ElectoralPromise";
@@ -10,6 +11,7 @@ function SingleElectoralPromise({ electoralManager, userAccount }) {
   const { tokenId } = useParams();
   const [loading, setLoading] = useState(true);
   const [promise, setPromise] = useState();
+  const [value, setValue] = useState();
   const loadPromise = async () => {
     const itemTmp = await electoralManager.listElectoralPromises(tokenId);
     debugger;
@@ -29,6 +31,7 @@ function SingleElectoralPromise({ electoralManager, userAccount }) {
       descriptionPromesa: metadata.descriptionPromesa,
       listElectoralPromises: metadata.listElectoralPromises,
     };
+    setValue(`http://localhost:3000/listado/{item.id}`);
     setPromise(item);
     setLoading(false);
   };
@@ -58,6 +61,12 @@ function SingleElectoralPromise({ electoralManager, userAccount }) {
         relationalPromises={promise.relationalPromises}
         listaTemas={promise.listaTemas}
         className="only-tarjeta"
+      />
+      <QRCode
+        size={256}
+        style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+        value={value}
+        viewBox={`0 0 256 256`}
       />
     </div>
   );
