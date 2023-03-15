@@ -79,8 +79,7 @@ function CreateElectoralPromise({ electoralManager }) {
 
     const newEPid = await electoralManager.createElectoralPromise(
       uri,
-      isObligatory,
-      listElectoralPromise
+      isObligatory
     );
 
     console.log(newEPid);

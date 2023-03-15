@@ -15,19 +15,25 @@ function ListElectoralPromise({ electoralManager, userAccount }) {
       const nameAuthor = all[indx].nameAuthor;
       const isObligatory = all[indx].isObligatory;
       const isApproved = all[indx].isApproved;
-      const relationalPromises = all[indx].relationalPromises;
       const created = all[indx].created.toNumber();
       const response = await fetch(all[indx].tokenUri);
       const metadata = await response.json();
+      const relationalPromises = metadata.relationalPromises || "";
+      let descriptionPromesa = metadata.descriptionPromesa;
+      const maxSize = 300;
+      if (descriptionPromesa.length > maxSize) {
+        descriptionPromesa = descriptionPromesa.slice(0, maxSize);
+        descriptionPromesa = descriptionPromesa.concat("...");
+      }
       let item = {
         id,
         nameAuthor,
         isObligatory,
         isApproved,
-        relationalPromises: relationalPromises.map((item) => item.toNumber()),
+        relationalPromises,
         created,
         tituloPromesa: metadata.tituloPromesa,
-        descriptionPromesa: metadata.descriptionPromesa,
+        descriptionPromesa,
         imageElectoralPromise: metadata.imageElectoralPromise,
         listaTemas: metadata.listaTemas,
       };
@@ -53,7 +59,6 @@ function ListElectoralPromise({ electoralManager, userAccount }) {
       </main>
     );
   }
-  debugger;
   return (
     <div>
       {/* <h3>Listado de Promesas electorales</h3> */}
@@ -62,6 +67,7 @@ function ListElectoralPromise({ electoralManager, userAccount }) {
           <div className="visual-list">
             {listedElectoralPromise.map((item, indice) => (
               <ElectoralPromise
+                className="container-tarjeta"
                 id={item.id}
                 tituloPromesa={item.tituloPromesa}
                 fecha={item.created}

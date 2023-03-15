@@ -14,8 +14,8 @@ function Home() {
             <Card.Img variant="top" src={logo} bsPrefix="logo-tarjeta" />
             <Card.Title>&nbsp;&nbsp;&nbsp;Mi promesa Electoral</Card.Title>
             <Card.Body>
-              Bienvenido a Electoral Manager, Plataforma para la creación y
-              Verificación de promesas Electorales.
+              Plataforma para la creación y Verificación de promesas
+              Electorales.
             </Card.Body>
             <Card.Footer>Por Miguel Rodríguez González</Card.Footer>
           </Card>
@@ -26,4 +26,3 @@ function Home() {
 }
 
 export default Home;
-//  que secciones se pueden añadir, tipo, que tipo somo, la tecnología

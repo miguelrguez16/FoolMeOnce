@@ -1,5 +1,6 @@
 import React from "react";
 import Moment from "react-moment";
+import { Link } from "react-router-dom";
 
 import "./ElectoralPromise.css";
 function ElectoralPromise({
@@ -13,17 +14,14 @@ function ElectoralPromise({
   autor,
   isObligatory,
   listaTemas,
+  className,
 }) {
-  debugger;
-  const maxSize = 300;
-  if (descriptionPromesa.length > maxSize) {
-    descriptionPromesa = descriptionPromesa.slice(0, maxSize);
-    descriptionPromesa = descriptionPromesa.concat("...");
-  }
   return (
-    <div className="container-tarjeta">
+    <div className={className}>
       <div className="tarjeta-representacion">
-        <div>#{id}</div>
+        <div>
+          <Link to={`/listado/${id}`}>#{id}</Link>
+        </div>
       </div>
       <div className="tarjeta-imagen">
         <img src={imagen} alt="" />

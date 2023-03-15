@@ -12,6 +12,7 @@ import ListElectoralPromise from './Pages/ListElectoralPromise';
 import CreateElectoralPromise from './Pages/CreateElectoralPromise';
 import Register from './Pages/Register';
 import NoPage from './Pages/NoPage';
+import SingleElectoralPromise from './Pages/SingleElectoralPromise';
 
 import {
   BrowserRouter,
@@ -80,8 +81,8 @@ function App() {
         <Navigation web3Handler={web3Handler} userAccount={userAccount} idUser={idUser} />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/listado" element={
-            <ListElectoralPromise electoralManager={electoralManager} userAccount={userAccount} />} />
+          <Route path="/listado" element={<ListElectoralPromise electoralManager={electoralManager} userAccount={userAccount} />} />
+          <Route path="/listado/:tokenId" element={<SingleElectoralPromise electoralManager={electoralManager} userAccount={userAccount} />} />
           <Route path="/create" element={
             <CreateElectoralPromise electoralManager={electoralManager} userAccount={userAccount} />} />
           <Route path="/register" element={

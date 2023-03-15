@@ -64,3 +64,8 @@
     display: grid;
     align-items: center;
 }
+
+
+.padding-basic {
+    padding: 20px;
+}
