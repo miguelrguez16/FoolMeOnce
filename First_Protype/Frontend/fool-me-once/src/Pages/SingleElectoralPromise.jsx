@@ -64,7 +64,7 @@ function SingleElectoralPromise({ electoralManager, userAccount }) {
       />
       <QRCode
         size={256}
-        style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+        style={{ height: "auto" }}
         value={value}
         viewBox={`0 0 256 256`}
       />

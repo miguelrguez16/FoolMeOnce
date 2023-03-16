@@ -31,27 +31,35 @@ function Navigation({ web3Handler, userAccount, idUser }) {
               Home
             </Nav.Link>
             {userAccount ? (
-              <>
-                <Nav.Link as={Link} to="/create">
-                  Nueva Promesa
-                </Nav.Link>
-                <Nav.Link as={Link} to="/listado">
-                  Listado Promesas
-                </Nav.Link>
-              </>
+              <Nav.Link as={Link} to="/listado">
+                Listado Promesas
+              </Nav.Link>
+            ) : (
+              <></>
+            )}
+            {idUser ? (
+              <Nav.Link as={Link} to="/create">
+                Nueva Promesa
+              </Nav.Link>
             ) : (
               <></>
             )}
           </Nav>
           <Nav>
-            {idUser !== 0 ? (
+            {idUser !== 0 && userAccount ? (
               <Nav.Link as={Link} to="/myPromises">
                 Perfil
               </Nav.Link>
             ) : (
-              <Nav.Link as={Link} to="/register">
-                Sign Up
-              </Nav.Link>
+              <>
+                {!userAccount ? (
+                  <></>
+                ) : (
+                  <Nav.Link as={Link} to="/register">
+                    Registrarse
+                  </Nav.Link>
+                )}
+              </>
             )}
           </Nav>
         </Navbar.Collapse>

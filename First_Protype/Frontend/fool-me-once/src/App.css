@@ -1,9 +1,27 @@
-.main-home {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+@media (min-width: 851px) {
+    main {
+        padding: 20px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 850px) {
+    main {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex-wrap: nowrap;
+        align-content: space-around;
+        align-items: center;
+    }
+
+    footer {
+        margin-top: 60px;
+    }
 }
 
 .logo-tarjeta-top {
@@ -12,10 +30,21 @@
     align-items: center;
     align-content: center;
     justify-content: center;
+    filter: drop-shadow(3px 4px 3px #babab7)
 }
 
-.logo-tarjeta-top img {
-    width: 70%;
+.cards-presentation {
+    width: 20em;
+    height: 28em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cards-presentation img {
+    width: 300px;
+    height: 300px;
+
 }
 
 .brand {
@@ -24,6 +53,8 @@
     font-weight: bold;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    filter: drop-shadow(4px 2px 2px #babab7);
+    text-transform: uppercase;
 }
 
 
