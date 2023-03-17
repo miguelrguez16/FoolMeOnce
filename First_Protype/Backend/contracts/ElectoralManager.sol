@@ -94,7 +94,8 @@ contract ElectoralManager is ElectoralPromise {
             _isObligatory,
             false,
             _tokenURI,
-            listPromisers[msg.sender].completeName
+            listPromisers[msg.sender].completeName,
+            listPromisers[msg.sender].namePoliticalParty
         );
 
         /// save into the list

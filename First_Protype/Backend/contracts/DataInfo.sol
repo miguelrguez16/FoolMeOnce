@@ -16,6 +16,7 @@ library DataInfo {
         bool isApproved;
         string tokenUri;
         string nameAuthor;
+        string namePoliticalParty;
     }
 
     ///@dev basic info for a person or a political party
