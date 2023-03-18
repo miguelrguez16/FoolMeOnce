@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import ElectoralPromise from "../Components/ElectoralPromise/ElectoralPromise";
 
 import SpinnerCustom from "../Components/SpinnerCustom/SpinnerCustom";
-import NoPage from "./NoPage";
 
 function SingleElectoralPromise({ electoralManager, userAccount }) {
   const { tokenId } = useParams();
@@ -13,23 +12,23 @@ function SingleElectoralPromise({ electoralManager, userAccount }) {
   const [promise, setPromise] = useState();
   const [value, setValue] = useState();
   const loadPromise = async () => {
-    const itemTmp = await electoralManager.listElectoralPromises(tokenId);
-    debugger;
-    const response = await fetch(itemTmp.tokenUri);
+    const element = await electoralManager.listElectoralPromises(tokenId);
+    const response = await fetch(element.tokenUri);
     const metadata = await response.json();
     const relationalPromises = metadata.relationalPromises || "";
     let item = {
-      id: itemTmp.id.toNumber(),
-      nameAuthor: itemTmp.nameAuthor,
-      created: itemTmp.created.toNumber(),
-      approved: itemTmp.dateApproved.toNumber(),
-      isApproved: itemTmp.isApproved,
-      tituloPromesa: itemTmp.tituloPromesa,
+      id: element.id.toNumber(),
+      nameAuthor: element.nameAuthor,
+      namePoliticalParty: element.namePoliticalParty,
+      isObligatory: element.isObligatory,
+      isApproved: element.isApproved,
       relationalPromises,
+      created: element.created.toNumber(),
+      dateApproved: element.dateApproved.toNumber(),
+      tituloPromesa: metadata.tituloPromesa,
+      descriptionPromesa: metadata.descriptionPromesa,
       imageElectoralPromise: metadata.imageElectoralPromise,
       listaTemas: metadata.listaTemas,
-      descriptionPromesa: metadata.descriptionPromesa,
-      listElectoralPromises: metadata.listElectoralPromises,
     };
     setValue(`http://localhost:3000/listado/{item.id}`);
     setPromise(item);
@@ -49,19 +48,7 @@ function SingleElectoralPromise({ electoralManager, userAccount }) {
 
   return (
     <div className="padding-basic">
-      <ElectoralPromise
-        id={promise.id}
-        tituloPromesa={promise.tituloPromesa}
-        fecha={promise.created}
-        isApproved={promise.isApproved}
-        descriptionPromesa={promise.descriptionPromesa}
-        imagen={promise.imageElectoralPromise}
-        autor={promise.nameAuthor}
-        isObligatory={promise.isObligatory}
-        relationalPromises={promise.relationalPromises}
-        listaTemas={promise.listaTemas}
-        className="only-tarjeta"
-      />
+      <ElectoralPromise electoralpromise={promise} className="only-tarjeta" />
       <QRCode
         size={256}
         style={{ height: "auto" }}

@@ -1,7 +1,7 @@
 @media (min-width: 851px) {
     main {
         padding: 20px;
-        gap: 120px;
+        gap: 80px;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -67,13 +67,6 @@
 }
 
 
-.create-promise {
-    display: grid;
-    align-self: center;
-
-}
-
-
 .simple-container {
     display: flex;
     flex-direction: row;
@@ -100,4 +93,11 @@
 
 .padding-basic {
     padding: 20px;
+}
+
+.container-create {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

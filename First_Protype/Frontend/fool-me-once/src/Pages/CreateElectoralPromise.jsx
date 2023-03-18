@@ -4,9 +4,10 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
+import TablePromises from "../Components/Tabla/TablaPromesas";
+
 // IPFS
 import { create } from "ipfs-http-client";
-import TablePromises from "../Components/Tabla/TablaPromesas";
 
 // conect to localhost
 const clientIpfs = create({
@@ -18,7 +19,7 @@ const clientIpfs = create({
 function CreateElectoralPromise({ electoralManager }) {
   const [tituloPromesa, setTituloPromesa] = useState("");
   const [descriptionPromesa, setDescriptionPromesa] = useState("");
-  const [isObligatory, setIsObligatory] = useState(false);
+  const [isObligatory, setIsObligatory] = useState(true);
   const [listElectoralPromise, setListElectoraPromise] = useState([]);
   const [imageElectoralPromise, setImageElectoralPromise] = useState("");
   const [listaTemas, setListaTemas] = useState([]);
@@ -31,7 +32,6 @@ function CreateElectoralPromise({ electoralManager }) {
       try {
         const cid = await clientIpfs.add(currentFile);
         setImageElectoralPromise(`http://127.0.0.1:8080/ipfs/${cid.path}`);
-        debugger;
       } catch (error) {
         console.log("ipfs image uploadToIpfs error: ", error);
       }
@@ -40,17 +40,12 @@ function CreateElectoralPromise({ electoralManager }) {
 
   // Verificación datos
   const verifiedElectoralPromise = async () => {
-    var temas = document.getElementById("input-word").value;
-    setListaTemas(temas.split(" "));
-    // Check info
     if (
       !tituloPromesa ||
       !descriptionPromesa ||
       !listElectoralPromise ||
       !listaTemas
     ) {
-      debugger;
-      console.log();
       return;
     } else {
       const resultCreate = await clientIpfs.add(
@@ -67,7 +62,6 @@ function CreateElectoralPromise({ electoralManager }) {
   };
 
   const createNewElectoralPromise = async (result) => {
-    debugger;
     console.log(`
         URI: [${result}]
         tituloPromesa: [${tituloPromesa}]
@@ -86,8 +80,8 @@ function CreateElectoralPromise({ electoralManager }) {
   };
 
   return (
-    <div>
-      <h3>CreateElectoralPromise</h3>
+    <div className="container-create">
+      <h3>Crear una nueva promesa</h3>
       <Form className="create-promise">
         {/* className="create-promise" titulo de la promesa */}
         <Form.Group className="mb-3" controlId="formTituloPromesa">
@@ -107,7 +101,7 @@ function CreateElectoralPromise({ electoralManager }) {
           <Form.Check
             required
             type="checkbox"
-            label="Sera de debido Cumplimiento"
+            label="Será de debido Cumplimiento"
             defaultChecked={true}
             onChange={(e) => setIsObligatory(e.target.checked)}
           />
@@ -127,7 +121,7 @@ function CreateElectoralPromise({ electoralManager }) {
           <Form.Control
             type="text"
             placeholder="Escribe una palabra..."
-            id="input-word"
+            onChange={(e) => setListaTemas(e.target.value)}
           />
         </Form.Group>
         {/* Descripcion */}

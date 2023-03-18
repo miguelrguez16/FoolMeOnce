@@ -55,7 +55,7 @@ function TablePromises({ electoralManager, addRelationalPromises }) {
         <tbody>
           {listaElementos.map((item, indice) => (
             <tr key={indice}>
-              <td>
+              <td key={indice}>
                 <input
                   type="checkbox"
                   name={indice}

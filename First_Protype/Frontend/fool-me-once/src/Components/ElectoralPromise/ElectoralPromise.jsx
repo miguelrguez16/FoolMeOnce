@@ -3,41 +3,48 @@ import Moment from "react-moment";
 import { Link } from "react-router-dom";
 
 import "./ElectoralPromise.css";
-function ElectoralPromise({
-  id,
-  tituloPromesa,
-  fecha,
-  isApproved,
-  descriptionPromesa,
-  relationalPromises,
-  imagen,
-  autor,
-  isObligatory,
-  listaTemas,
-  className,
-}) {
+function ElectoralPromise({ electoralpromise, className }) {
+  console.log(electoralpromise);
   return (
     <div className={className}>
       <div className="tarjeta-representacion">
         <div>
-          <Link to={`/listado/${id}`}>#{id}</Link>
+          <Link to={`/listado/${electoralpromise.id}`}>
+            #{electoralpromise.id}
+          </Link>
         </div>
       </div>
       <div className="tarjeta-imagen">
-        <img src={imagen} alt="" />
+        <img src={electoralpromise.imageElectoralPromise} alt="" />
       </div>
-      <div>{tituloPromesa}</div>
-      <div>{relationalPromises.toString()}</div>
-      <div>{listaTemas}</div>
+      <div>{electoralpromise.tituloPromesa}</div>
+      <div>{electoralpromise.relationalPromises.toString()}</div>
+      <div>{electoralpromise.listaTemas}</div>
 
-      <div className="tarjeta-descripcion">{descriptionPromesa}</div>
+      <div className="tarjeta-descripcion">
+        {electoralpromise.descriptionPromesa}
+      </div>
       <div className="tarjeta-autor">
         <span>
-          Por <i>{autor}</i>
+          Por <i>{electoralpromise.nameAuthor}</i>- Partido:{" "}
+          {electoralpromise.namePoliticalParty}
+          {electoralpromise.isObligatory === true ? <>Es Mandatorio</> : <></>}
         </span>
-        <Moment unix format="DD-MM-YYYY">
-          {fecha}
+        <Moment unix format="DD-MM-YYYY HH:MM">
+          {electoralpromise.created}
         </Moment>
+      </div>
+      <div>
+        {electoralpromise.dateApproved === 0 ? (
+          <>No aprobado</>
+        ) : (
+          <>
+            Aprobado a fecha:
+            <Moment unix format="DD-MM-YYYY HH:MM">
+              {electoralpromise.dateApproved}
+            </Moment>
+          </>
+        )}
       </div>
     </div>
   );
