@@ -26,6 +26,7 @@ import ElectoralManagerAddress from '../src/contractsData/ElectoralManager-addre
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const [connected, setConnected] = useState(false);
   const [userAccount, setUserAccount] = useState(null);
   const [electoralManager, setElectoralManager] = useState({});
   const [isWallet, setWallet] = useState(false); // para controlar si se conecta una wallet
@@ -59,8 +60,8 @@ function App() {
     const electoralManager = new ethers.Contract(ElectoralManagerAddress.address, ElectoralManagerAbi.abi, signer);
     setElectoralManager(electoralManager);
     console.log(electoralManager)
-    const nombre = await electoralManager.name() === "FoolMeOnce" ? true : false;
-    console.log(nombre);
+    const isConnected = await electoralManager.name() === "FoolMeOnce" ? true : false;
+    setConnected(isConnected);
     getUserId(electoralManager);
   }
 
@@ -78,7 +79,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className='App'>
-        <Navigation web3Handler={web3Handler} userAccount={userAccount} idUser={idUser} />
+        <Navigation web3Handler={web3Handler} userAccount={userAccount} idUser={idUser} connected={connected} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/listado" element={<ListElectoralPromise electoralManager={electoralManager} userAccount={userAccount} />} />
@@ -89,8 +90,6 @@ function App() {
             <Register electoralManager={electoralManager} setIdUser={setIdUser} userAccount={userAccount} />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
-
-
         <Footer />
       </div>
     </BrowserRouter>

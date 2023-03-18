@@ -7,10 +7,10 @@ import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import "./Navigation.css";
 
-function Navigation({ web3Handler, userAccount, idUser }) {
+function Navigation({ web3Handler, userAccount, idUser, connected }) {
   return (
     <Navbar expand="lg" variant="beige">
-      <Container fluid>
+      <Container>
         <Navbar.Brand as={Link} to="/">
           <img src={logo} width="50" height="50" className="" alt="" />
           &nbsp;&nbsp;&nbsp; <span className="brand">VOTUM</span>
@@ -19,7 +19,7 @@ function Navigation({ web3Handler, userAccount, idUser }) {
         <Navbar.Collapse id="navbar navbar-white bg-primary">
           <Nav className="me-auto">
             <Nav className="me-auto">
-              {userAccount ? (
+              {userAccount && connected ? (
                 <Nav.Link className="connected">Connected</Nav.Link>
               ) : (
                 <Button onClick={web3Handler} variant="outline-danger">
