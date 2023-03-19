@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-function Register({ electoralManager, setUserIdentifier }) {
+function Register({ electoralManager, setIdUser }) {
+  const navigate = useNavigate();
   const [nameUser, setNameUser] = useState("");
   const [namePoliticalParty, setNamePoliticalParty] = useState("");
   const [isPOliticalParty, setIsPoliticalParty] = useState(false);
@@ -24,22 +26,26 @@ function Register({ electoralManager, setUserIdentifier }) {
     event.preventDefault();
 
     console.log(`
-      Nombre: [${nameUser}]
-      namePoliticalParty: [${namePoliticalParty}]
-      IsPolitical: [${isPOliticalParty}]
+      -> Nombre: [${nameUser}]
+      -> namePoliticalParty: [${namePoliticalParty}]
+      -> IsPolitical: [${isPOliticalParty}]
     `);
 
-    // validacion de datos no vacios
     if (
-      nameUser.trim().length() !== 0 &&
-      namePoliticalParty.trim().length() !== 0
+      nameUser.trim().length !== 0 &&
+      namePoliticalParty.trim().length !== 0
     ) {
       const ide = await electoralManager.registerUser(
         nameUser,
         namePoliticalParty,
         isPOliticalParty
       );
-      setUserIdentifier(ide);
+      if (ide !== 0) {
+        setIdUser(ide);
+        navigate("/create");
+      } else {
+        alert("Ups: algo fue mal");
+      }
     }
   };
 
@@ -59,6 +65,7 @@ function Register({ electoralManager, setUserIdentifier }) {
 
   return (
     <div className="register">
+      <button onClick={() => navigate("/listado")}></button>
       <h3>Registra tu nombre o Partido Político</h3>
       <Form>
         {/* Nombre Completo */}

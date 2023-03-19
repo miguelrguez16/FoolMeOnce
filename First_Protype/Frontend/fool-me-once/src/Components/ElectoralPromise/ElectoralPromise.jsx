@@ -3,33 +3,68 @@ import Moment from "react-moment";
 import { Link } from "react-router-dom";
 
 import "./ElectoralPromise.css";
-function ElectoralPromise({ electoralpromise, className }) {
-  console.log(electoralpromise);
+function ElectoralPromise({ electoralpromise, className, key }) {
   return (
-    <div className={className}>
+    <div key={key} className={className}>
       <div className="tarjeta-representacion">
-        <div>
-          <Link to={`/listado/${electoralpromise.id}`}>
+        <>
+          <Link to={`/listado/${electoralpromise.id}`} className="idpromise">
             #{electoralpromise.id}
           </Link>
+        </>
+        <>
+          {electoralpromise.nameAuthor} {electoralpromise.namePoliticalParty}
+        </>
+      </div>
+      <>
+        <b>{electoralpromise.tituloPromesa}</b>
+      </>
+      {electoralpromise.imageElectoralPromise.length > 1 ? (
+        <div className="tarjeta-imagen">
+          <img
+            loading="lazy"
+            src={electoralpromise.imageElectoralPromise}
+            alt=""
+          />
         </div>
+      ) : (
+        <></>
+      )}
+      <div>
+        <>
+          {electoralpromise.relationalPromises.toString().length > 1 ? (
+            <b>
+              Promesas Relacionadas:
+              {electoralpromise.relationalPromises.toString()}
+            </b>
+          ) : (
+            <></>
+          )}
+        </>
       </div>
-      <div className="tarjeta-imagen">
-        <img src={electoralpromise.imageElectoralPromise} alt="" />
+      <div>
+        <>
+          {electoralpromise.listaTemas.toString().length > 1 ? (
+            <>
+              {electoralpromise.listaTemas.split(" ").map((element) => (
+                <> #{element.toLocaleLowerCase()}</>
+              ))}
+            </>
+          ) : (
+            <></>
+          )}
+        </>
       </div>
-      <div>{electoralpromise.tituloPromesa}</div>
-      <div>{electoralpromise.relationalPromises.toString()}</div>
-      <div>{electoralpromise.listaTemas}</div>
 
       <div className="tarjeta-descripcion">
-        {electoralpromise.descriptionPromesa}
+        {electoralpromise.descriptionPromesa.length > 1 ? (
+          <>{electoralpromise.descriptionPromesa.toString()}</>
+        ) : (
+          <></>
+        )}
       </div>
-      <div className="tarjeta-autor">
-        <span>
-          Por <i>{electoralpromise.nameAuthor}</i>- Partido:{" "}
-          {electoralpromise.namePoliticalParty}
-          {electoralpromise.isObligatory === true ? <>Es Mandatorio</> : <></>}
-        </span>
+      <div>
+        {electoralpromise.isObligatory === true ? <>Es Mandatorio</> : <></>}
         <Moment unix format="DD-MM-YYYY HH:MM">
           {electoralpromise.created}
         </Moment>

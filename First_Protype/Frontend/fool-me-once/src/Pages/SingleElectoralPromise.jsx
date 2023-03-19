@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import QRCode from "react-qr-code";
-
-import { useParams } from "react-router-dom";
-import ElectoralPromise from "../Components/ElectoralPromise/ElectoralPromise";
+import { useParams, Link } from "react-router-dom";
+import Single from "../Components/ElectoralPromise/Single";
 
 import SpinnerCustom from "../Components/SpinnerCustom/SpinnerCustom";
 
@@ -18,6 +17,7 @@ function SingleElectoralPromise({ electoralManager, userAccount }) {
     const relationalPromises = metadata.relationalPromises || "";
     let item = {
       id: element.id.toNumber(),
+      idAuthor: element.idAuthor.toNumber(),
       nameAuthor: element.nameAuthor,
       namePoliticalParty: element.namePoliticalParty,
       isObligatory: element.isObligatory,
@@ -36,7 +36,7 @@ function SingleElectoralPromise({ electoralManager, userAccount }) {
   };
   useEffect(() => {
     loadPromise();
-  }, []);
+  }, [tokenId]);
 
   if (loading) {
     return (
@@ -48,9 +48,9 @@ function SingleElectoralPromise({ electoralManager, userAccount }) {
 
   return (
     <div className="padding-basic">
-      <ElectoralPromise electoralpromise={promise} className="only-tarjeta" />
+      <Single electoralpromise={promise} />
       <QRCode
-        size={256}
+        size={128}
         style={{ height: "auto" }}
         value={value}
         viewBox={`0 0 256 256`}

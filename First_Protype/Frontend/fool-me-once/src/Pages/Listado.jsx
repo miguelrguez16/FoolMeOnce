@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import SpinnerCustom from "../Components/SpinnerCustom/SpinnerCustom";
 import ElectoralPromise from "../Components/ElectoralPromise/ElectoralPromise";
 
-function ListElectoralPromise({ electoralManager, userAccount }) {
+function Listado({ electoralManager, userAccount }) {
   const [listedElectoralPromise, setListedElectoralPromise] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -25,6 +25,7 @@ function ListElectoralPromise({ electoralManager, userAccount }) {
       }
       let item = {
         id: element.id.toNumber(),
+        idAuthor: element.idAuthor.toNumber(),
         nameAuthor: element.nameAuthor,
         namePoliticalParty: element.namePoliticalParty,
         isObligatory: element.isObligatory,
@@ -40,7 +41,8 @@ function ListElectoralPromise({ electoralManager, userAccount }) {
       listedElectoralPromise.push(item);
     }
 
-    console.log(`Items to list: [${listedElectoralPromise.length}]`);
+    // console.log(`Items to list: [${listedElectoralPromise.length}]`);
+    // console.table(listedElectoralPromise);
     setListedElectoralPromise(listedElectoralPromise);
     setLoading(false);
   };
@@ -63,8 +65,9 @@ function ListElectoralPromise({ electoralManager, userAccount }) {
       <div className="simple-container">
         {listedElectoralPromise.length > 0 ? (
           <div className="visual-list">
-            {listedElectoralPromise.map((item) => (
+            {listedElectoralPromise.map((item, i) => (
               <ElectoralPromise
+                key={i}
                 className="container-tarjeta"
                 electoralpromise={item}
               />
@@ -80,4 +83,4 @@ function ListElectoralPromise({ electoralManager, userAccount }) {
   );
 }
 
-export default ListElectoralPromise;
+export default Listado;

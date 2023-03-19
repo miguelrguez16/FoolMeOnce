@@ -4,7 +4,11 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
+// Otros Componentes
 import TablePromises from "../Components/Tabla/TablaPromesas";
+
+// Router
+import { useNavigate } from "react-router-dom";
 
 // IPFS
 import { create } from "ipfs-http-client";
@@ -16,11 +20,13 @@ const clientIpfs = create({
   protocol: "http",
 });
 
-function CreateElectoralPromise({ electoralManager }) {
+function Create({ electoralManager }) {
+  const navigate = useNavigate();
+
   const [tituloPromesa, setTituloPromesa] = useState("");
   const [descriptionPromesa, setDescriptionPromesa] = useState("");
   const [isObligatory, setIsObligatory] = useState(true);
-  const [listElectoralPromise, setListElectoraPromise] = useState([]);
+  const [relationalPromises, setRelationalPromises] = useState([]);
   const [imageElectoralPromise, setImageElectoralPromise] = useState("");
   const [listaTemas, setListaTemas] = useState([]);
 
@@ -43,7 +49,7 @@ function CreateElectoralPromise({ electoralManager }) {
     if (
       !tituloPromesa ||
       !descriptionPromesa ||
-      !listElectoralPromise ||
+      !relationalPromises ||
       !listaTemas
     ) {
       return;
@@ -53,7 +59,7 @@ function CreateElectoralPromise({ electoralManager }) {
           imageElectoralPromise,
           tituloPromesa,
           descriptionPromesa,
-          listElectoralPromise,
+          relationalPromises,
           listaTemas,
         })
       );
@@ -66,7 +72,7 @@ function CreateElectoralPromise({ electoralManager }) {
         URI: [${result}]
         tituloPromesa: [${tituloPromesa}]
         descriptionPromesa: [${descriptionPromesa}]
-        listElectoralPromise: [${listElectoralPromise}]
+        listElectoralPromise: [${relationalPromises}]
         listaTemas: [${listaTemas}]
       `);
     const uri = `http://127.0.0.1:8080/ipfs/${result.path}`;
@@ -75,8 +81,8 @@ function CreateElectoralPromise({ electoralManager }) {
       uri,
       isObligatory
     );
-
-    console.log(newEPid);
+    let total = await electoralManager.counterElectoralPromises();
+    navigate(`/listado/${total.toNumber()}`);
   };
 
   return (
@@ -141,7 +147,7 @@ function CreateElectoralPromise({ electoralManager }) {
           <Form.Label>Promesas Relacionadas:</Form.Label>
           <TablePromises
             electoralManager={electoralManager}
-            addRelationalPromises={setListElectoraPromise}
+            addRelationalPromises={setRelationalPromises}
           />
         </Form.Group>
         <div className="g-grid px-0">
@@ -158,4 +164,4 @@ function CreateElectoralPromise({ electoralManager }) {
   );
 }
 
-export default CreateElectoralPromise;
+export default Create;

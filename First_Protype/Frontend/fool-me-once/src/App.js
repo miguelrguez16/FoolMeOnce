@@ -8,8 +8,8 @@ import Footer from './Components/Footer/Footer';
 
 // Pages
 import Home from './Pages/Home';
-import ListElectoralPromise from './Pages/ListElectoralPromise';
-import CreateElectoralPromise from './Pages/CreateElectoralPromise';
+import Listado from './Pages/Listado';
+import Create from './Pages/Create';
 import Register from './Pages/Register';
 import NoPage from './Pages/NoPage';
 import SingleElectoralPromise from './Pages/SingleElectoralPromise';
@@ -25,6 +25,7 @@ import ElectoralManagerAbi from '../src/contractsData/ElectoralManager.json'
 import ElectoralManagerAddress from '../src/contractsData/ElectoralManager-address.json'
 
 function App() {
+
   const [loading, setLoading] = useState(true);
   const [connected, setConnected] = useState(false);
   const [userAccount, setUserAccount] = useState(null);
@@ -74,7 +75,8 @@ function App() {
 
   useEffect(() => {
 
-  }, [isWallet, idUser]);
+
+  }, [isWallet, idUser, setIdUser]);
 
   return (
     <BrowserRouter>
@@ -82,10 +84,10 @@ function App() {
         <Navigation web3Handler={web3Handler} userAccount={userAccount} idUser={idUser} connected={connected} />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/listado" element={<ListElectoralPromise electoralManager={electoralManager} userAccount={userAccount} />} />
+          <Route path="/listado" element={<Listado electoralManager={electoralManager} userAccount={userAccount} />} />
           <Route path="/listado/:tokenId" element={<SingleElectoralPromise electoralManager={electoralManager} userAccount={userAccount} />} />
           <Route path="/create" element={
-            <CreateElectoralPromise electoralManager={electoralManager} userAccount={userAccount} />} />
+            <Create electoralManager={electoralManager} userAccount={userAccount} />} />
           <Route path="/register" element={
             <Register electoralManager={electoralManager} setIdUser={setIdUser} userAccount={userAccount} />} />
           <Route path="*" element={<NoPage />} />
