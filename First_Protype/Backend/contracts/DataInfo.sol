@@ -13,7 +13,6 @@ library DataInfo {
         uint256 dateApproved;
         uint256 idAuthor;
         bool isObligatory;
-        bool isApproved; // quitar ya existe el timestamp
         string tokenUri;
         string nameAuthor;
         string namePoliticalParty;

@@ -137,7 +137,6 @@ describe("TestElectoralManager", function () {
       expect(electoralPromise.dateApproved).to.equal(0);
       expect(electoralPromise.tokenUri).to.equal(_tokenURI);
       expect(electoralPromise.isObligatory).to.equal(false);
-      expect(electoralPromise.isApproved).to.equal(false);
 
       // expect basic information to be okey
       expect(await electoralManager.tokenURI(_tokenId)).to.equal('ipfs://' + _tokenURI);
