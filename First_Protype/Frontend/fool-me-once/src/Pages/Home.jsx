@@ -21,7 +21,7 @@ function Home() {
               ¿Nuevo Usuario?
             </Card.Title>
             <Card.Body style={{ textAlign: "justify" }}>
-              Solo conecta to Wallet y podrás ver cualquier promesa electoral de
+              Solo conecta tu Wallet y podrás ver cualquier promesa electoral de
               los partidos, sin <b>pagar nada</b>.
             </Card.Body>
           </Card>

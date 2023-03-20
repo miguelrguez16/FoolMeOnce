@@ -44,3 +44,7 @@ ul {
 .rotate-180 {
   rotate: 180deg;
 }
+
+.text-bold {
+  font-weight: bold;
+}

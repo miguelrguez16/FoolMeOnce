@@ -1,7 +1,8 @@
 import React from "react";
-import Form from "react-bootstrap/Form";
+import ReactDOM from "react-dom";
+import MDEditor from "@uiw/react-md-editor";
 import Moment from "react-moment";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import QRCode from "react-qr-code";
 
 import down from "../../assets/down-outline.gif";
@@ -9,8 +10,6 @@ import down from "../../assets/down-outline.gif";
 import "./single-grid.css";
 
 function Single({ electoralpromise, url }) {
-  const navigate = useNavigate();
-
   return (
     <div className="layout-promesa">
       <div className="part1">
@@ -27,16 +26,10 @@ function Single({ electoralpromise, url }) {
         )}
       </div>
       <div className="part2">
-        <h3>{electoralpromise.tituloPromesa}</h3>
+        <h3 className="text-bold">{electoralpromise.tituloPromesa}</h3>
         {electoralpromise.nameAuthor} - {electoralpromise.namePoliticalParty}
-        <div className="tarjeta-descripcion">
-          <Form.Control
-            readOnly
-            type="textarea"
-            as="textarea"
-            rows={6}
-            value={electoralpromise.descriptionPromesa}
-          />
+        <div className="tarjeta-descripcion" data-color-mode="light">
+          <MDEditor.Markdown source={electoralpromise.descriptionPromesa} />
         </div>
         <>
           <div>
@@ -49,12 +42,19 @@ function Single({ electoralpromise, url }) {
             )}
           </div>
           <div>
-            Creado a fecha:
+            Creado a fecha:{" "}
             <b>
               <Moment unix format="DD-MM-YYYY HH:MM">
                 {electoralpromise.created}
               </Moment>
             </b>
+          </div>
+          <div>
+            {electoralpromise.isObligatory === true ? (
+              <b>- Se debe cumplir</b>
+            ) : (
+              <></>
+            )}
           </div>
         </>
         <div>

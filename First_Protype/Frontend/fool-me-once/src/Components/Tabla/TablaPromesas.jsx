@@ -41,7 +41,7 @@ function TablePromises({ electoralManager, addRelationalPromises }) {
   }, []);
 
   return (
-    <table>
+    <table style={{ background: "white" }}>
       <thead>
         <tr>
           <th>Seleccionar</th>

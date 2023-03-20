@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import MDEditor from "@uiw/react-md-editor";
 
 // Componentes Bootstrap
 import Button from "react-bootstrap/Button";
@@ -6,7 +7,7 @@ import Form from "react-bootstrap/Form";
 
 // Otros Componentes
 import TablePromises from "../Components/Tabla/TablaPromesas";
-
+import "../assets/create.css";
 // Router
 import { useNavigate } from "react-router-dom";
 
@@ -35,15 +36,13 @@ function Create({ electoralManager }) {
     event.preventDefault();
     debugger;
     const currentFile = event.target.files[0];
-    if (typeof currentFile !== "undefined" && currentFile.size > 1048576) {
+    if (typeof currentFile !== "undefined") {
       try {
         const cid = await clientIpfs.add(currentFile);
         setImageElectoralPromise(`http://127.0.0.1:8080/ipfs/${cid.path}`);
       } catch (error) {
         console.log("ipfs image uploadToIpfs error: ", error);
       }
-    } else {
-      alert("Archivo demasiado grande, debe ser menor de 1MB");
     }
   };
 
@@ -91,77 +90,78 @@ function Create({ electoralManager }) {
   return (
     <div className="container-create">
       <h3>Crear una nueva promesa</h3>
-      <Form className="create-promise">
-        {/* className="create-promise" titulo de la promesa */}
-        <Form.Group className="mb-3" controlId="formTituloPromesa">
-          <Form.Label>Título de la promesa</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="Introduce el título "
-            onChange={(e) => setTituloPromesa(e.target.value)}
-          />
-          <Form.Text className="text-muted">
-            Tú nombre se verá reflejado en las promesas electorales
-          </Form.Text>
-        </Form.Group>
-        {/* Tipo de obligatoriedad */}
-        <Form.Group className="mb-3" controlId="formPromesaObligatoria">
-          <Form.Check
-            required
-            type="checkbox"
-            label="Será de debido Cumplimiento"
-            defaultChecked={true}
-            onChange={(e) => setIsObligatory(e.target.checked)}
-          />
-        </Form.Group>
-        {/* añadir una imagen */}
-        <Form.Group className="mb-3" controlId="formPromesaImage">
-          <Form.Label>¿Deseas añadir una imagen?</Form.Label>
-          <Form.Control
-            type="file"
-            accept="image/*"
-            name="file"
-            onChange={uploadImageToIpfs}
-          ></Form.Control>
-        </Form.Group>
-        {/* Temas */}
-        <Form.Group className="mb-3">
-          <Form.Label>Temas que trata la promesa</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Escribe una palabra..."
-            onChange={(e) => setListaTemas(e.target.value)}
-          />
-        </Form.Group>
-        {/* Descripcion */}
-        <Form.Group>
-          <Form.Label>Descripción de la promesa</Form.Label>
-          <Form.Control
-            required
-            type="textarea"
-            as="textarea"
-            rows={6}
-            placeholder="Introduce la descripción de la promesa "
-            onChange={(e) => setDescriptionPromesa(e.target.value)}
-          />
-        </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formPromesaObligatoria">
-          <Form.Label>Promesas Relacionadas:</Form.Label>
-          <TablePromises
-            electoralManager={electoralManager}
-            addRelationalPromises={setRelationalPromises}
-          />
-        </Form.Group>
-        <div className="g-grid px-0">
-          <Button
-            onClick={verifiedElectoralPromise}
-            variant="primary"
-            size="lg"
-          >
-            Create
-          </Button>
+      <Form className="display-layout">
+        <div className="form1">
+          <Form.Group controlId="formTituloPromesa">
+            <Form.Label>Título de la promesa</Form.Label>
+            <Form.Control
+              required
+              type="text"
+              placeholder="Introduce el título "
+              onChange={(e) => setTituloPromesa(e.target.value)}
+            />
+            <Form.Text className="text-muted">
+              Tú nombre se verá reflejado en las promesas electorales
+            </Form.Text>
+          </Form.Group>
+          <Form.Group controlId="formPromesaObligatoria">
+            <Form.Check
+              required
+              type="checkbox"
+              label="Será de debido Cumplimiento"
+              defaultChecked={true}
+              onChange={(e) => setIsObligatory(e.target.checked)}
+            />
+          </Form.Group>
+          <Form.Group controlId="formPromesaImage">
+            <Form.Label>¿Deseas añadir una imagen?</Form.Label>
+            <Form.Control
+              type="file"
+              accept="image/*"
+              name="file"
+              onChange={uploadImageToIpfs}
+            ></Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Temas que trata la promesa</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Escribe una palabra..."
+              onChange={(e) => setListaTemas(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Descripción de la promesa</Form.Label>
+            <>
+              <div data-color-mode="light">
+                <MDEditor
+                  height={200}
+                  value={descriptionPromesa}
+                  preview="edit"
+                  onChange={(e) => setDescriptionPromesa(e)}
+                />
+              </div>
+            </>
+          </Form.Group>
+          <div className="set-button-position">
+            <Button
+              onClick={verifiedElectoralPromise}
+              variant="primary"
+              size="lg"
+            >
+              Create
+            </Button>
+          </div>
+        </div>
+        <div className="form2">
+          <Form.Group controlId="formPromesaObligatoria">
+            <Form.Label>Promesas Relacionadas:</Form.Label>
+            <TablePromises
+              electoralManager={electoralManager}
+              addRelationalPromises={setRelationalPromises}
+            />
+          </Form.Group>
         </div>
       </Form>
     </div>
