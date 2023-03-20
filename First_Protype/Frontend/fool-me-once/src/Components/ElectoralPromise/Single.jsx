@@ -1,11 +1,14 @@
 import React from "react";
 import Form from "react-bootstrap/Form";
 import Moment from "react-moment";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import QRCode from "react-qr-code";
+
+import down from "../../assets/down-outline.gif";
+
 import "./single-grid.css";
 
-function Single({ electoralpromise }) {
+function Single({ electoralpromise, url }) {
   const navigate = useNavigate();
 
   return (
@@ -36,26 +39,67 @@ function Single({ electoralpromise }) {
           />
         </div>
         <>
-          {" "}
+          <div>
+            {electoralpromise.listaTemas.toString().length > 1 ? (
+              <>
+                Temas: <b>{electoralpromise.listaTemas.toString()}</b>
+              </>
+            ) : (
+              <></>
+            )}
+          </div>
           <div>
             Creado a fecha:
-            <Moment unix format="DD-MM-YYYY HH:MM">
-              {electoralpromise.created}
-            </Moment>
+            <b>
+              <Moment unix format="DD-MM-YYYY HH:MM">
+                {electoralpromise.created}
+              </Moment>
+            </b>
           </div>
         </>
         <div>
           {electoralpromise.relationalPromises.length > 0 ? (
             <>
-              {electoralpromise.relationalPromises.map((elem) => (
+              Promesas relacionadas:
+              {electoralpromise.relationalPromises.map((elem, i) => (
                 <Link to={`/listado/${elem}`} className="idpromise">
-                  #{elem}
+                  {i !== 0 ? <>, id:{elem}</> : <> id:{elem}</>}
                 </Link>
               ))}
             </>
           ) : (
             <></>
           )}
+        </div>
+        <div>
+          {electoralpromise.dateApproved === 0 ? (
+            <>
+              <img src={down} alt="down finger" style={{ height: "40px" }} />
+              No Aprobado
+            </>
+          ) : (
+            <>
+              Aprobado a fecha:
+              <Moment unix format="DD-MM-YYYY HH:MM">
+                {electoralpromise.dateApproved}
+              </Moment>
+              <img
+                src={down}
+                alt="down finger"
+                style={{ height: "40px" }}
+                className="rotate-180"
+              />
+            </>
+          )}
+        </div>
+        <div className="container-qr">
+          <QRCode
+            size={128}
+            style={{ height: "auto" }}
+            value={url}
+            viewBox={`0 0 256 256`}
+            className="qrstyle"
+          />
         </div>
       </div>
     </div>

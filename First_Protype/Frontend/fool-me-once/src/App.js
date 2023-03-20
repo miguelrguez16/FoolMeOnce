@@ -67,9 +67,9 @@ function App() {
   }
 
   const getUserId = async (electoralManager) => {
-    let userIdentifier = await electoralManager.checkMyIdentifier();
-    console.log(`User identifier: ${userIdentifier.toNumber()}`);
-    setIdUser(userIdentifier.toNumber());
+    let userIdentifier = (await electoralManager.checkMyIdentifier()).toNumber();
+    console.log(`User identifier: ${userIdentifier}`);
+    setIdUser(userIdentifier);
     setLoading(false);
   }
 

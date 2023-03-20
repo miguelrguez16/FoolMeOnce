@@ -33,14 +33,17 @@ function Create({ electoralManager }) {
   // upload the image to
   const uploadImageToIpfs = async (event) => {
     event.preventDefault();
+    debugger;
     const currentFile = event.target.files[0];
-    if (typeof currentFile !== "undefined") {
+    if (typeof currentFile !== "undefined" && currentFile.size > 1048576) {
       try {
         const cid = await clientIpfs.add(currentFile);
         setImageElectoralPromise(`http://127.0.0.1:8080/ipfs/${cid.path}`);
       } catch (error) {
         console.log("ipfs image uploadToIpfs error: ", error);
       }
+    } else {
+      alert("Archivo demasiado grande, debe ser menor de 1MB");
     }
   };
 
@@ -117,6 +120,7 @@ function Create({ electoralManager }) {
           <Form.Label>¿Deseas añadir una imagen?</Form.Label>
           <Form.Control
             type="file"
+            accept="image/*"
             name="file"
             onChange={uploadImageToIpfs}
           ></Form.Control>

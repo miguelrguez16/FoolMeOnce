@@ -40,3 +40,7 @@ ul {
 .not-found img {
   width: 40%;
 }
+
+.rotate-180 {
+  rotate: 180deg;
+}

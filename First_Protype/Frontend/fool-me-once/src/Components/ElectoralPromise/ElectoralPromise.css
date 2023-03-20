@@ -18,7 +18,8 @@
 
 
 .idpromise {
-    color: black
+    color: black;
+    font-weight: bold;
 }
 
 .idpromise:hover {

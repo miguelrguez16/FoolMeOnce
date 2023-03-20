@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import QRCode from "react-qr-code";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Single from "../Components/ElectoralPromise/Single";
 
 import SpinnerCustom from "../Components/SpinnerCustom/SpinnerCustom";
@@ -48,13 +47,7 @@ function SingleElectoralPromise({ electoralManager, userAccount }) {
 
   return (
     <div className="padding-basic">
-      <Single electoralpromise={promise} />
-      <QRCode
-        size={128}
-        style={{ height: "auto" }}
-        value={value}
-        viewBox={`0 0 256 256`}
-      />
+      <Single electoralpromise={promise} url={value} />
     </div>
   );
 }
