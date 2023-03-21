@@ -1,39 +1,85 @@
 import React from "react";
 import Moment from "react-moment";
+import { Link } from "react-router-dom";
 
 import "./ElectoralPromise.css";
-function ElectoralPromise({
-  id,
-  tituloPromesa,
-  fecha,
-  isApproved,
-  descriptionPromesa,
-  relationalPromises,
-  imagen,
-  autor,
-  isObligatory,
-}) {
-  const maxSize = 300;
-  if (descriptionPromesa.length > maxSize) {
-    descriptionPromesa = descriptionPromesa.slice(0, maxSize);
-    descriptionPromesa = descriptionPromesa.concat("...");
-  }
+function ElectoralPromise({ electoralpromise, className, key }) {
   return (
-    <div className="container-tarjeta">
+    <div key={key} className={className}>
       <div className="tarjeta-representacion">
-        <div>#{id}</div>
+        <>
+          <Link to={`/listado/${electoralpromise.id}`} className="idpromise">
+            #{electoralpromise.id}
+          </Link>
+        </>
+        <>
+          {electoralpromise.nameAuthor} {electoralpromise.namePoliticalParty}
+        </>
       </div>
-      <div className="tarjeta-imagen">
-        <img src={imagen} alt="" />
+      <>
+        <b>{electoralpromise.tituloPromesa}</b>
+      </>
+      {electoralpromise.imageElectoralPromise.length > 1 ? (
+        <div className="tarjeta-imagen">
+          <img
+            loading="lazy"
+            src={electoralpromise.imageElectoralPromise}
+            alt=""
+          />
+        </div>
+      ) : (
+        <></>
+      )}
+      <div>
+        <>
+          {electoralpromise.relationalPromises.toString().length > 1 ? (
+            <b>
+              Promesas Relacionadas:
+              {electoralpromise.relationalPromises.toString()}
+            </b>
+          ) : (
+            <></>
+          )}
+        </>
       </div>
-      <div className="tarjeta-descripcion">{descriptionPromesa}</div>
-      <div className="tarjeta-autor">
-        <span>
-          Por <i>{autor}</i>
-        </span>
-        <Moment unix format="DD-MM-YYYY">
-          {fecha}
+      <div>
+        <>
+          {electoralpromise.listaTemas.toString().length > 1 ? (
+            <>
+              {electoralpromise.listaTemas.split(" ").map((element) => (
+                <> #{element.toLocaleLowerCase()}</>
+              ))}
+            </>
+          ) : (
+            <></>
+          )}
+        </>
+      </div>
+
+      <div className="tarjeta-descripcion">
+        {electoralpromise.descriptionPromesa.length > 1 ? (
+          <>{electoralpromise.descriptionPromesa.toString()}</>
+        ) : (
+          <></>
+        )}
+      </div>
+      <div>
+        {electoralpromise.isObligatory === true ? <>Es Mandatorio</> : <></>}
+        <Moment unix format="DD-MM-YYYY HH:MM">
+          {electoralpromise.created}
         </Moment>
+      </div>
+      <div>
+        {electoralpromise.dateApproved === 0 ? (
+          <>No aprobado</>
+        ) : (
+          <>
+            Aprobado a fecha:
+            <Moment unix format="DD-MM-YYYY HH:MM">
+              {electoralpromise.dateApproved}
+            </Moment>
+          </>
+        )}
       </div>
     </div>
   );

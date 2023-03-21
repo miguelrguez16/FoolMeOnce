@@ -14,3 +14,5 @@ artifacts
 /Backend/contracts/Lock.sol
 /assets/epi-foolmeonce.code-workspace
 /assets/old/Lock.js
+
+/cache

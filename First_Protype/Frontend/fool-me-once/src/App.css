@@ -1,9 +1,28 @@
-.main-home {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+@media (min-width: 851px) {
+    main {
+        padding: 20px;
+        gap: 80px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        transition: ease all 1s;
+    }
+}
+
+@media (max-width: 850px) {
+    main {
+        display: flex;
+        flex-direction: column;
+        transition: ease all 1s;
+        gap: 10px;
+        flex-wrap: nowrap;
+        align-items: center;
+    }
+
+    footer {
+        margin-top: 60px;
+    }
 }
 
 .logo-tarjeta-top {
@@ -12,10 +31,21 @@
     align-items: center;
     align-content: center;
     justify-content: center;
+    filter: drop-shadow(3px 4px 3px #babab7)
 }
 
-.logo-tarjeta-top img {
-    width: 70%;
+.cards-presentation {
+    width: 20em;
+    height: 28em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cards-presentation img {
+    width: 300px;
+    height: 300px;
+
 }
 
 .brand {
@@ -24,18 +54,12 @@
     font-weight: bold;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    filter: drop-shadow(4px 2px 2px #babab7);
+    text-transform: uppercase;
 }
 
 
 .register {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-
-.create-promise {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -58,4 +82,29 @@
     gap: 28px;
     flex-wrap: wrap;
     align-content: center;
+    margin-bottom: 50px;
+}
+
+
+.empty-listed {
+    display: grid;
+    align-items: center;
+}
+
+
+.padding-basic {
+    padding: 20px;
+}
+
+.container-create {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 60px;
+}
+
+
+.create-promise {
+    min-width: 678px;
 }

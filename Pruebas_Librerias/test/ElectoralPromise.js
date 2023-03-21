@@ -131,12 +131,12 @@ describe("TestElectoralManager", function () {
 
       expect(electoralPromise.id).to.equal(_tokenId);
       expect(electoralPromise.nameAuthor).to.equal(_completeName);
-      expect(electoralPromise.namePoliticalParty).to.equal(_namePoliticalParty);
       expect(electoralPromise.idAuthor).to.equal(_idAuthor);
       expect(electoralPromise.created).to.lt(Date.now()); // Timestamp
       expect(electoralPromise.dateApproved).to.equal(0);
       expect(electoralPromise.tokenUri).to.equal(_tokenURI);
       expect(electoralPromise.isObligatory).to.equal(false);
+      expect(electoralPromise.isApproved).to.equal(false);
 
       // expect basic information to be okey
       expect(await electoralManager.tokenURI(_tokenId)).to.equal('ipfs://' + _tokenURI);

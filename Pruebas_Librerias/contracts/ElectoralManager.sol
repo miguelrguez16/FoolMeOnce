@@ -92,9 +92,9 @@ contract ElectoralManager is ElectoralPromise {
             0,
             listPromisers[msg.sender].idAuthor,
             _isObligatory,
+            false,
             _tokenURI,
-            listPromisers[msg.sender].completeName,
-            listPromisers[msg.sender].namePoliticalParty
+            listPromisers[msg.sender].completeName
         );
 
         /// save into the list
@@ -107,7 +107,7 @@ contract ElectoralManager is ElectoralPromise {
         counterElectoralPromises++;
         emit CreatedPromise(msg.sender, idtoken);
         // return the total electoral Promises
-        return idtoken;
+        return counterElectoralPromises;
     }
 
     /**

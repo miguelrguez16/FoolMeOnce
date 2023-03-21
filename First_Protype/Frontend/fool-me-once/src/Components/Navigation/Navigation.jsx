@@ -5,22 +5,21 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
-
 import "./Navigation.css";
 
-function Navigation({ web3Handler, userAccount, idUser }) {
+function Navigation({ web3Handler, userAccount, idUser, connected }) {
   return (
     <Navbar expand="lg" variant="beige">
-      <Container fluid>
+      <Container>
         <Navbar.Brand as={Link} to="/">
           <img src={logo} width="50" height="50" className="" alt="" />
-          &nbsp;&nbsp;&nbsp; <span className="brand">VOTUM3.0</span>
+          &nbsp;&nbsp;&nbsp; <span className="brand">VOTUM</span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar navbar-white bg-primary" />
         <Navbar.Collapse id="navbar navbar-white bg-primary">
           <Nav className="me-auto">
             <Nav className="me-auto">
-              {userAccount ? (
+              {userAccount && connected ? (
                 <Nav.Link className="connected">Connected</Nav.Link>
               ) : (
                 <Button onClick={web3Handler} variant="outline-danger">
@@ -31,22 +30,36 @@ function Navigation({ web3Handler, userAccount, idUser }) {
             <Nav.Link as={Link} to="/">
               Home
             </Nav.Link>
-            <Nav.Link as={Link} to="/create">
-              Nueva Promesa
-            </Nav.Link>
-            <Nav.Link as={Link} to="/listado">
-              Listado Promesas
-            </Nav.Link>
+            {userAccount ? (
+              <Nav.Link as={Link} to="/listado">
+                Listado Promesas
+              </Nav.Link>
+            ) : (
+              <></>
+            )}
+            {idUser ? (
+              <Nav.Link as={Link} to="/create">
+                Nueva Promesa
+              </Nav.Link>
+            ) : (
+              <></>
+            )}
           </Nav>
           <Nav>
-            {idUser !== 0 ? (
+            {idUser !== 0 && userAccount ? (
               <Nav.Link as={Link} to="/myPromises">
                 Perfil
               </Nav.Link>
             ) : (
-              <Nav.Link as={Link} to="/register">
-                Sign Up
-              </Nav.Link>
+              <>
+                {!userAccount ? (
+                  <></>
+                ) : (
+                  <Nav.Link as={Link} to="/register">
+                    Registrarse
+                  </Nav.Link>
+                )}
+              </>
             )}
           </Nav>
         </Navbar.Collapse>

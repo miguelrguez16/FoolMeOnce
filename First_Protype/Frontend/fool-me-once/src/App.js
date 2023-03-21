@@ -8,10 +8,11 @@ import Footer from './Components/Footer/Footer';
 
 // Pages
 import Home from './Pages/Home';
-import ListElectoralPromise from './Pages/ListElectoralPromise';
-import CreateElectoralPromise from './Pages/CreateElectoralPromise';
+import Listado from './Pages/Listado';
+import Create from './Pages/Create';
 import Register from './Pages/Register';
 import NoPage from './Pages/NoPage';
+import SingleElectoralPromise from './Pages/SingleElectoralPromise';
 
 import {
   BrowserRouter,
@@ -24,7 +25,9 @@ import ElectoralManagerAbi from '../src/contractsData/ElectoralManager.json'
 import ElectoralManagerAddress from '../src/contractsData/ElectoralManager-address.json'
 
 function App() {
+
   const [loading, setLoading] = useState(true);
+  const [connected, setConnected] = useState(false);
   const [userAccount, setUserAccount] = useState(null);
   const [electoralManager, setElectoralManager] = useState({});
   const [isWallet, setWallet] = useState(false); // para controlar si se conecta una wallet
@@ -58,37 +61,35 @@ function App() {
     const electoralManager = new ethers.Contract(ElectoralManagerAddress.address, ElectoralManagerAbi.abi, signer);
     setElectoralManager(electoralManager);
     console.log(electoralManager)
-    const nombre = await electoralManager.name();
-    console.log(nombre);
+    const isConnected = await electoralManager.name() === "FoolMeOnce" ? true : false;
+    setConnected(isConnected);
     getUserId(electoralManager);
   }
 
   const getUserId = async (electoralManager) => {
-    let userIdentifier = await electoralManager.checkMyIdentifier();
-    userIdentifier = parseInt(userIdentifier, 16)
+    let userIdentifier = (await electoralManager.checkMyIdentifier()).toNumber();
     console.log(`User identifier: ${userIdentifier}`);
     setIdUser(userIdentifier);
     setLoading(false);
-
-  }
-
-  const setUserIdentifier = (newIdentifier) => {
-    setIdUser(newIdentifier);
   }
 
   useEffect(() => {
 
-  }, [isWallet, idUser]);
+
+  }, [isWallet, idUser, setIdUser]);
 
   return (
     <BrowserRouter>
       <div className='App'>
-        <Navigation web3Handler={web3Handler} userAccount={userAccount} idUser={idUser} />
+        <Navigation web3Handler={web3Handler} userAccount={userAccount} idUser={idUser} connected={connected} />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/listado" element={<ListElectoralPromise electoralManager={electoralManager} />} />
-          <Route path="/create" element={<CreateElectoralPromise electoralManager={electoralManager} />} />
-          <Route path="/register" element={<Register electoralManager={electoralManager} setUserIdentifier={setUserIdentifier} />} />
+          <Route path="/listado" element={<Listado electoralManager={electoralManager} userAccount={userAccount} />} />
+          <Route path="/listado/:tokenId" element={<SingleElectoralPromise electoralManager={electoralManager} userAccount={userAccount} />} />
+          <Route path="/create" element={
+            <Create electoralManager={electoralManager} userAccount={userAccount} />} />
+          <Route path="/register" element={
+            <Register electoralManager={electoralManager} setIdUser={setIdUser} userAccount={userAccount} />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
         <Footer />
