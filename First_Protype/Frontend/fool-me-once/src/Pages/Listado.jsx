@@ -14,6 +14,7 @@ function Listado({ electoralManager, userAccount }) {
 
   const loadListedItems = async () => {
     const all = await electoralManager.getAllPromises();
+
     let listedElectoralPromise = [];
     for (let i = 0; i < all.length; i++) {
       let element = all[i];
@@ -22,6 +23,12 @@ function Listado({ electoralManager, userAccount }) {
       let descriptionPromesa = metadata.descriptionPromesa;
       if (descriptionPromesa.length > 50) {
         descriptionPromesa = descriptionPromesa.slice(0, 50).concat("...");
+      }
+      if (descriptionPromesa.startsWith("#")) {
+        descriptionPromesa = descriptionPromesa.slice(
+          1,
+          descriptionPromesa.length
+        );
       }
       let item = {
         id: element.id.toNumber(),

@@ -29,7 +29,7 @@ function SingleElectoralPromise({ electoralManager, userAccount }) {
       imageElectoralPromise: metadata.imageElectoralPromise,
       listaTemas: metadata.listaTemas,
     };
-    setValue(`http://localhost:3000/listado/{item.id}`);
+    setValue(`http://localhost:3000/listado/${item.id}`);
     setPromise(item);
     setLoading(false);
   };

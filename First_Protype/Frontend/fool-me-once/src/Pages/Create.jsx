@@ -23,7 +23,6 @@ const clientIpfs = create({
 
 function Create({ electoralManager }) {
   const navigate = useNavigate();
-
   const [tituloPromesa, setTituloPromesa] = useState("");
   const [descriptionPromesa, setDescriptionPromesa] = useState("");
   const [isObligatory, setIsObligatory] = useState(true);
@@ -84,6 +83,8 @@ function Create({ electoralManager }) {
       isObligatory
     );
     let total = await electoralManager.counterElectoralPromises();
+    console.log("total: ", total.toNumber());
+
     navigate(`/listado/${total.toNumber()}`);
   };
 

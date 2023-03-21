@@ -65,7 +65,6 @@ function Register({ electoralManager, setIdUser }) {
 
   return (
     <div className="register">
-      <button onClick={() => navigate("/listado")}></button>
       <h3>Registra tu nombre o Partido Político</h3>
       <Form>
         {/* Nombre Completo */}
