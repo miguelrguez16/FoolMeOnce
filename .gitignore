@@ -3,6 +3,9 @@
 /.idea/
 /.deps/
 /.vscode/
+# node
+**/node_modules/**
+package-lock.json
 # workspace
 /First_Protype/assets/epi-foolmeonce.code-workspace
 # basic staff from hardhat

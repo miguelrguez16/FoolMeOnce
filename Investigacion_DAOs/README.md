@@ -8,6 +8,8 @@
       - [Contrato 2. voto](#contrato-2-voto)
       - [Contrato 3. Control de tiempo (TimeLockController)](#contrato-3-control-de-tiempo-timelockcontroller)
       - [Contrato 4. Sobre el que se ejecutara la DAO](#contrato-4-sobre-el-que-se-ejecutara-la-dao)
+    - [Entrando en materia](#entrando-en-materia)
+      - [Proyecto DAO Full On-Chain](#proyecto-dao-full-on-chain)
   - [Referencias](#referencias)
 
 ## Introducción
@@ -16,7 +18,7 @@ En este apartado se realizarán varias investigaciones y una implementación fun
 
 ## Parte 1: Gobernanza con OpenZeppelin
 
-OpenZeppelin ofrece un servicio de librería de contratos, implementaciones de los EIPs y un mantenimiento de estos. Además ofrecen una herramienta con la que crear una DAO, [openzeppelin wizzard](https://docs.openzeppelin.com/contracts/4.x/wizard).
+OpenZeppelin ofrece un servicio de librería de contratos, implementaciones de los EIPs y un mantenimiento de estos. Además ofrecen una herramienta con la que crear una DAO, [openzeppelin Wizzard](https://docs.openzeppelin.com/contracts/4.x/wizard).
 
 En esencia una DAO como es [COMPOUND](https://compound.finance/) necesita cuatro contratos principales:
 
@@ -48,6 +50,20 @@ Además comprende una segunda tarea, en su inicio se encarga de indicar el conju
 
 Se necesita el contrato sobre el que la gobernanza tendrá su peso en este caso ElectoralManager, este contrato una vez desplegado tendrá como owner y administrador el contrato TimeLocker.
 
-El traspaso de "poder" sobre el contrato a gobernar servirá para el proceso de verificación de las promesas, esta función sobre la que se ejecutará la verificación se marcará con el modificador onlyOwner, de esta manera, se permite la gobernanza sobre la verficacion de las promesas. El resto de funciones seguirán siendo igual de accesibles.
+El traspaso de "poder" sobre el contrato a gobernar servirá para el proceso de verificación de las promesas, esta función sobre la que se ejecutará la verificación se marcará con el modificador onlyOwner, de esta manera, se permite la gobernanza sobre la verificación de las promesas. El resto de funciones seguirán siendo igual de accesibles.
+
+### Entrando en materia
+
+Este primer prototipo a desarrollar afrontará varios problemas ya conocidos y mencionados:
+
+1. Alto coste en gas para cada transacción
+2. Desconocimiento de una cuenta una persona una dirección de Ethereum
+
+#### Proyecto DAO Full On-Chain
+
+Al igual que en anteriores apartados se utilizará hardhat y ethers.js para el desarrollo del proyecto, esta vez se utilizará la propia red blockchain de hardhat ya que se necesitará hacer llamadas a la blockchain para generar bloques, esto permitirá adelantar el tiempo generando bloques. El número de bloques es una variable utilizada para medir tiempos, en ethereum se conoce cada cuanto tiempo se genera un nuevo bloques estableciendo de esta manera un periodo, para la prueba que se realizará
 
 ## Referencias
+
+- [Governance compound](https://compound.finance/)
+- [openzeppelin wizzard](https://docs.openzeppelin.com/contracts/4.x/wizard)
