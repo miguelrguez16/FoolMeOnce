@@ -10,7 +10,11 @@ contract ElectoralManager is ElectoralPromise {
      *      CONSTRUCTOR
      ****************************/
 
-    constructor() ElectoralPromise("FoolMeOnce", "FMO", "ipfs://") {
+    constructor(
+        string memory name_,
+        string memory symbol_,
+        string memory baseUri_
+    ) ElectoralPromise(name_, symbol_, baseUri_) {
         counterElectoralPromises = 0;
         counterPromisers = 1;
     }
@@ -50,7 +54,7 @@ contract ElectoralManager is ElectoralPromise {
         /// check if msg.sender is not registerd
         require(
             _checkPromiser(msg.sender) == 0,
-            "ElectoralManager author already exists"
+            "Error: ElectoralManager author already exists"
         );
 
         /// register a new user
@@ -84,7 +88,7 @@ contract ElectoralManager is ElectoralPromise {
     ) external returns (uint256) {
         require(
             _checkPromiser(msg.sender) != 0,
-            "ElectoralManager author not exists"
+            "Error: ElectoralManager author not exists"
         );
 
         /// new ElectoralPromise
@@ -118,24 +122,20 @@ contract ElectoralManager is ElectoralPromise {
     function approvePromise(uint256 promiseId) external {
         require(
             promiseId < counterElectoralPromises,
-            "Error: promise do not exists"
+            "Error: electoral promise do not exists"
         );
         DataInfo.DataPromise storage promiseToApprove = listElectoralPromises[
             promiseId
         ];
-        require(
-            promiseToApprove.id == promiseId,
-            "Error, promise do not exists"
-        );
-        // check if 4 years of legisltature have passed
+        //check if 4 years of legislature have passed
         uint256 currentSeconds = block.timestamp;
         uint256 difference = currentSeconds - promiseToApprove.created;
         require(
             difference < secondsLegislature,
-            "Error, a legislature already gone"
+            "Error: a legislature already gone"
         );
 
-        promiseToApprove.dateApproved = currentSeconds;
+        promiseToApprove.dateApproved = block.timestamp;
         emit ApprovedPromise(promiseId);
     }
 

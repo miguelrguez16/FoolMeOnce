@@ -17,3 +17,4 @@ First_Protype/README.md
 **/contractsData/**
 Investigacion_DAOs/DAO_On_Chain/scripts/deploy.ts
 Investigacion_DAOs/DAO_On_Chain/test/Lock.ts
+Investigacion_DAOs/DAO_On_Chain/contracts/Lock.sol

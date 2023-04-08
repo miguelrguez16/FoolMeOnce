@@ -10,7 +10,7 @@ library DataInfo {
     struct DataPromise {
         uint256 id;
         uint256 created; // timestamp
-        uint256 dateApproved;
+        uint256 dateApproved; // timestamp date approved
         uint256 idAuthor;
         bool isObligatory;
         string tokenUri;
