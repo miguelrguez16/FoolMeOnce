@@ -23,8 +23,7 @@
 
 ### Cobertura 08/04/2023
 
-lanzado los test y con la función de registrar una promesa como aprobada sin una DAO
-
+Test correctos para proceder con el lanzamiento de la DAO
 File                    |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
 ------------------------|----------|----------|----------|----------|----------------|
  ElectoralManager\      |    97.62 |    70.83 |      100 |    98.15 |                |

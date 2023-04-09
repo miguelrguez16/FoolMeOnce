@@ -3,9 +3,11 @@ pragma solidity 0.8.17;
 
 import "./ElectoralPromise.sol";
 import "./DataInfo.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
+///@title manage all data for electoralPromise
 ///@author Miguel Rodriguez Gonzalez
-contract ElectoralManager is ElectoralPromise {
+contract ElectoralManager is ElectoralPromise, Ownable {
     /****************************
      *      CONSTRUCTOR
      ****************************/
@@ -119,7 +121,7 @@ contract ElectoralManager is ElectoralPromise {
     /**
      *
      */
-    function approvePromise(uint256 promiseId) external {
+    function approvePromise(uint256 promiseId) external onlyOwner {
         require(
             promiseId < counterElectoralPromises,
             "Error: electoral promise do not exists"

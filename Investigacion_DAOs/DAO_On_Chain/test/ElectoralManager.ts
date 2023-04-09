@@ -30,6 +30,8 @@ describe("ElectoralManager", function () {
   const _errorApprovePromiseLegislatureGone =
     "Error: a legislature already gone";
 
+  const _errorNotTheOwner = "Ownable: caller is not the owner";
+
   // BASIC INFO FOR REGISTER
   const _completeName1 = "Juan Alberto Rodriguez";
   const _namePoliticalParty1 = "Partido Por La BlockChain";
@@ -211,8 +213,8 @@ describe("ElectoralManager", function () {
   //@ts-ignore
   describe("Register new promise and verified it", function () {
     //@ts-ignore
-    it("should track the correct approve of an electoral promise", async function () {
-      // basic information for an electoral promise
+    beforeEach(async () => {
+      // BASIC PROCEDURE TO CREATE A PROMISE
       const _tokenId = 0;
 
       // register a promiser on success
@@ -238,6 +240,10 @@ describe("ElectoralManager", function () {
       )
         .to.emit(electoralManager, "CreatedPromise")
         .withArgs(addr1.address, _tokenId);
+    });
+    //@ts-ignore
+    it("should track the correct approve of an electoral promise", async function () {
+      // basic information for an electoral promise
 
       const allEP = await electoralManager.getAllPromises();
       expect(allEP.length).to.equal(1);
@@ -249,7 +255,7 @@ describe("ElectoralManager", function () {
       // First attempt expect to return error promise do not exists
       const _idTokenExists = 0;
       await expect(
-        await electoralManager.connect(addr1).approvePromise(_idTokenExists)
+        await electoralManager.connect(deployer).approvePromise(_idTokenExists)
       )
         .to.emit(electoralManager, "ApprovedPromise")
         .withArgs(_idTokenExists);
@@ -267,37 +273,14 @@ describe("ElectoralManager", function () {
       // console.log(`Approve not existing token [${_idTokenNotExists}]`);
       // send tx
       await expect(
-        electoralManager.connect(addr1).approvePromise(_idTokenNotExists)
+        electoralManager.connect(deployer).approvePromise(_idTokenNotExists)
       ).to.be.revertedWith(_errorApprovePromiseNotExists);
     });
 
     //@ts-ignore
-    it("should track the incorrect attempt to approve an electoral promise before legislature", async function () {
-      // Second attempt, promise do not exist
+    it("should track the incorrect attempt to approve an electoral promise before legislature ends", async function () {
+      // Second attempt, promise exist
       const _idTokenExists = 0;
-      // register a promiser on success
-      await expect(
-        electoralManager
-          .connect(addr1)
-          .registerUser(
-            _completeName1,
-            _namePoliticalParty1,
-            _isNotPoliticalParty
-          )
-      ).to.emit(electoralManager, "NewPromiser");
-
-      // generate a new electoral promise
-      await expect(
-        electoralManager
-          .connect(addr1)
-          .createElectoralPromise(
-            _baseUri,
-            _isNotObligatory,
-            _relationalPromisesEmpty
-          )
-      )
-        .to.emit(electoralManager, "CreatedPromise")
-        .withArgs(addr1.address, _idTokenExists);
       // move time 4 years
       const nowInFourYears: number = Date.now() + _secondsLegislature;
       await network.provider.send("evm_setNextBlockTimestamp", [
@@ -305,8 +288,17 @@ describe("ElectoralManager", function () {
       ]);
 
       await expect(
-        electoralManager.connect(addr1).approvePromise(_idTokenExists)
+        electoralManager.connect(deployer).approvePromise(_idTokenExists)
       ).to.be.revertedWith(_errorApprovePromiseLegislatureGone);
+    });
+
+    //@ts-ignore
+    it("Should emit an error when the caller is not the owner for function approve", async function () {
+      const _idTokenExists = 0;
+      expect(await electoralManager.counterElectoralPromises()).to.equal(1);
+      await expect(
+        electoralManager.connect(addr2).approvePromise(_idTokenExists)
+      ).to.be.revertedWith(_errorNotTheOwner);
     });
   });
 });
