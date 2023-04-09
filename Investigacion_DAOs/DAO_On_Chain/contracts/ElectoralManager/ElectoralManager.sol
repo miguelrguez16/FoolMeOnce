@@ -119,7 +119,8 @@ contract ElectoralManager is ElectoralPromise, Ownable {
     }
 
     /**
-     *
+     * @dev approve an electoral promise updating the parameter dateApproved
+     * @param promiseId uint that identifies the electoral promise
      */
     function approvePromise(uint256 promiseId) external onlyOwner {
         require(
@@ -137,7 +138,7 @@ contract ElectoralManager is ElectoralPromise, Ownable {
             "Error: a legislature already gone"
         );
 
-        promiseToApprove.dateApproved = block.timestamp;
+        promiseToApprove.dateApproved = currentSeconds;
         emit ApprovedPromise(promiseId);
     }
 
