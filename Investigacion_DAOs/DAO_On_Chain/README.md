@@ -8,7 +8,7 @@
   - [Cobertura](#cobertura)
     - [Cobertura 08/04/2023](#cobertura-08042023)
   - [Deploy DAO](#deploy-dao)
-    - [Realizar el deploy](#realizar-el-deploy)
+    - [Resumen despliegue](#resumen-despliegue)
 
 ## Procedimientos
 
@@ -50,6 +50,26 @@ All files               |    97.62 |    70.83 |      100 |    98.15 |           
 
 Para esta parte de verificación en la que perfectamente podría entrar también la parte de tiempo de legislatura, solo se implementará para la verificación. Quedaría como una mejora a futuro.
 
-### Realizar el deploy
+### Resumen despliegue
 
-Primero: se despliega el contrato que funciona como voto, es decir, nuestro ElectoralToken.
+Se desarrollan varios scripts con el fin de realizar un despliegue y configuración determinados para cada contrato.
+
+- Primero: se despliega el contrato que funciona como voto, es decir, nuestro **ElectoralToken** que extiende de ERC20.
+- Segundo: se lanzará el contrato encargado de manejar las funciones que se ejecutaran mediante la DAO, también se encargará de manejar el conjunto de direcciones que tienen permitido proponer y votar en la DAO -> **TimeLock**
+- Tercero: Contrato de gobernanza (**GovernorContract**) este realizará el proceso de:
+
+    ```mermaid
+    graph LR
+    Propuesta --> Votación
+    Votación --> Rechazada
+    Votación --> Cola-Ejecución
+    ```
+
+- Cuarto (Configuración): En este apartado se establecerán que dirección tendrá permisos de ejecución, propuesta y administración sobre el contrato TimeLock.
+  - En cuanto a permisos de ejecución de una propuesta, ya votada y aprobada, permitiremos que cualquier dirección se le permita mandar la transacción que ejecute la propuesta.
+  - Se da acceso al contrato de gobierno para la acción de propuesta
+  - Y por último se revoca el permiso de administrador de la cuenta de despliegue.
+    - Si se mantiene este permiso se tendrían una dirección central y ya no se podría afirmar que se trata de una Organización Autónoma **Descentralizada**
+- Quinto: despliegue de electorManager y trasferencia del administrador a TimeLock, de esta manera la DAO gobernara sobre las funciones que tengan el modificador OnlyOwner.
+
+Un miembro de la comunidad DAO realizará la operación de propuesta, voto y propuesta mediante el contrato de gobierno -> GovernorContract

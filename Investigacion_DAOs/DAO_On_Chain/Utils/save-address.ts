@@ -1,7 +1,7 @@
 //@ts-ignore
 import * as fs from "fs";
 
-import { JSON_DEPLOYMENT_ADDRESS } from "./helper-hardhat";
+import { JSON_FILE_DEPLOYMENT_ADDRESS } from "./helper-hardhat";
 
 export async function storeAddressContract(
   contractName: string,
@@ -9,8 +9,10 @@ export async function storeAddressContract(
 ) {
   let listAddress: any;
 
-  if (fs.existsSync(JSON_DEPLOYMENT_ADDRESS)) {
-    listAddress = JSON.parse(fs.readFileSync(JSON_DEPLOYMENT_ADDRESS, "utf8"));
+  if (fs.existsSync(JSON_FILE_DEPLOYMENT_ADDRESS)) {
+    listAddress = JSON.parse(
+      fs.readFileSync(JSON_FILE_DEPLOYMENT_ADDRESS, "utf8")
+    );
   } else {
     listAddress = {};
     listAddress[contractName] = [];
@@ -18,7 +20,7 @@ export async function storeAddressContract(
   // machacamos el valor por si ha cambiado con respecto al anterior
   listAddress[contractName][0] = address;
   fs.writeFileSync(
-    JSON_DEPLOYMENT_ADDRESS,
+    JSON_FILE_DEPLOYMENT_ADDRESS,
     JSON.stringify(listAddress),
     "utf8"
   );

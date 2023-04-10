@@ -2,14 +2,12 @@
 import { ethers } from "hardhat"; //@ts-ignore
 import { ELECTORAL_TOKEN } from "../Utils/helper-hardhat";
 import { storeAddressContract } from "../Utils/save-address";
-import { readAddressForDeployedContract } from "../Utils/read-address";
 
 async function deployElectoralToken() {
   const ElectoralToken = await ethers.getContractFactory(ELECTORAL_TOKEN);
   const electoralToken = await ElectoralToken.deploy();
 
-  let deployer;
-  let addrs;
+  let deployer, addrs;
   [deployer, ...addrs] = await ethers.getSigners();
   await electoralToken.deployed();
 

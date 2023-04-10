@@ -11,9 +11,10 @@ import {
 } from "../Utils/helper-hardhat";
 import { readAddressForDeployedContract } from "../Utils/read-address";
 import { storeAddressContract } from "../Utils/save-address";
+
+// main function
 async function deployGovernorContract() {
-  let deployer;
-  let addrs;
+  let deployer, addrs;
   [deployer, ...addrs] = await ethers.getSigners();
 
   // Governor Contract necesita:
