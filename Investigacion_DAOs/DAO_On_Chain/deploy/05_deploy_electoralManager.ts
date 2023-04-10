@@ -4,7 +4,7 @@ import { ELECTORAL_MANAGER, TIME_LOCK } from "../Utils/helper-hardhat";
 import { storeAddressContract } from "../Utils/save-address";
 import { readAddressForDeployedContract } from "../Utils/read-address";
 
-const deployElectoralManagerAccount = async () => {
+export const deployElectoralManagerAccount = async () => {
   let deployer, addrs;
   [deployer, ...addrs] = await ethers.getSigners();
 

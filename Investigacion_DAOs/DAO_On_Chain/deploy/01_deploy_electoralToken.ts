@@ -3,7 +3,7 @@ import { ethers } from "hardhat"; //@ts-ignore
 import { ELECTORAL_TOKEN } from "../Utils/helper-hardhat";
 import { storeAddressContract } from "../Utils/save-address";
 
-async function deployElectoralToken() {
+export async function deployElectoralToken() {
   const ElectoralToken = await ethers.getContractFactory(ELECTORAL_TOKEN);
   const electoralToken = await ElectoralToken.deploy();
 

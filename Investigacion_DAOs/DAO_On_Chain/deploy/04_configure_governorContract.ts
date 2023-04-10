@@ -8,7 +8,7 @@ import {
   TIME_LOCK,
 } from "../Utils/helper-hardhat";
 
-async function configureGovernorContract() {
+export async function configureGovernorContract() {
   let deployer;
   let addrs;
   [deployer, ...addrs] = await ethers.getSigners();

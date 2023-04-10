@@ -3,7 +3,7 @@ import { ethers } from "hardhat"; //@ts-ignore
 import { MIN_DELAY, TIME_LOCK } from "../Utils/helper-hardhat";
 import { storeAddressContract } from "../Utils/save-address";
 
-async function deployTimeLock() {
+export async function deployTimeLock() {
   let deployer, addrs;
   [deployer, ...addrs] = await ethers.getSigners();
   const TimeLock = await ethers.getContractFactory(TIME_LOCK);

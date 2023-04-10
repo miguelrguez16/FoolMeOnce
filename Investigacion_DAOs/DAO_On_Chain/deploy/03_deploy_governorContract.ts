@@ -13,7 +13,7 @@ import { readAddressForDeployedContract } from "../Utils/read-address";
 import { storeAddressContract } from "../Utils/save-address";
 
 // main function
-async function deployGovernorContract() {
+export async function deployGovernorContract() {
   let deployer, addrs;
   [deployer, ...addrs] = await ethers.getSigners();
 
