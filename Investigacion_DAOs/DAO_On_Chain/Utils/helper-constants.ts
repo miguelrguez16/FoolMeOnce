@@ -22,3 +22,9 @@ export const PROPOSAL_THRESHOLD: number = 0;
 //      ZERO ADDRESS
 export const DEFAULT_ADDRESS: string =
   "0x0000000000000000000000000000000000000000";
+
+// EXECUTION
+
+export const FUNC_REGISTER_USER: string = "registerUser";
+export const FUNC_CREATE_NEW_PROMISE: string = "createElectoralPromise";
+export const FUNC_APPROVE_PROMISE: string = "approvePromise";

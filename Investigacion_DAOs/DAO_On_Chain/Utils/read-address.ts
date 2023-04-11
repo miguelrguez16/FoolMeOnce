@@ -1,7 +1,7 @@
 //@ts-ignore
 import * as fs from "fs";
 
-import { JSON_FILE_DEPLOYMENT_ADDRESS } from "./helper-hardhat";
+import { JSON_FILE_DEPLOYMENT_ADDRESS } from "./helper-constants";
 
 export async function readAddressForDeployedContract(
   contractName: string

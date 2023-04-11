@@ -1,12 +1,13 @@
 //@ts-ignore
 import * as fs from "fs";
 
-import { JSON_FILE_DEPLOYMENT_ADDRESS } from "./helper-hardhat";
+import { JSON_FILE_DEPLOYMENT_ADDRESS } from "./helper-constants";
 
 export async function storeAddressContract(
   contractName: string,
   address: string
 ) {
+  console.log(`Saving address -> ${contractName} ${address}`);
   let listAddress: any;
 
   if (fs.existsSync(JSON_FILE_DEPLOYMENT_ADDRESS)) {

@@ -9,6 +9,11 @@
     - [Cobertura 08/04/2023](#cobertura-08042023)
   - [Deploy DAO](#deploy-dao)
     - [Resumen despliegue](#resumen-despliegue)
+  - [Proceso Votación](#proceso-votación)
+    - [Preparación](#preparación)
+    - [Propuestas](#propuestas)
+    - [Votación](#votación)
+    - [Cola y Ejecución](#cola-y-ejecución)
 
 ## Procedimientos
 
@@ -73,3 +78,19 @@ Se desarrollan varios scripts con el fin de realizar un despliegue y configuraci
 - Quinto: despliegue de electorManager y trasferencia del administrador a TimeLock, de esta manera la DAO gobernara sobre las funciones que tengan el modificador OnlyOwner.
 
 Un miembro de la comunidad DAO realizará la operación de propuesta, voto y propuesta mediante el contrato de gobierno -> GovernorContract
+
+## Proceso Votación
+
+Una vez finalizado el despliegue se crearán un conjunto de scripts que permitirán ver el proceso con lo que cualquiera podría realizar.
+
+### Preparación
+
+Primero se deberá generar cuentas de usuario en el contrato de electoralManager y un conjunto de promesas electorales que den juego a generar propuestas.
+
+Se necesitará para esta parte la dirección del contrato de gobierno y de ElectoralManager. De esta manera se podrá hacer uso mediante la librería ethers de realizar llamadas. Este proceso perfectamente podría ser extrapolado a un entorno web.
+
+### Propuestas
+
+### Votación
+
+### Cola y Ejecución

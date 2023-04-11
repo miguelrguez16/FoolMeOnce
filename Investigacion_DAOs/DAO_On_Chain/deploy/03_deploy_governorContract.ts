@@ -8,12 +8,12 @@ import {
   QUORUM_PERCENTAGE,
   PROPOSAL_THRESHOLD,
   GOVERNOR_CONTRACT,
-} from "../Utils/helper-hardhat";
+} from "../Utils/helper-constants";
 import { readAddressForDeployedContract } from "../Utils/read-address";
 import { storeAddressContract } from "../Utils/save-address";
 
 // main function
-export async function deployGovernorContract() {
+export async function deployGovernorContract(debug: boolean) {
   let deployer, addrs;
   [deployer, ...addrs] = await ethers.getSigners();
 
@@ -22,8 +22,6 @@ export async function deployGovernorContract() {
   //2. Contrato TimeLock <-- direccion
   //3. Parametros de configuracion
   // --> _votingDelay, _votingPeriod, _quorumPercentage,_proposalThreshold
-
-  console.log("Reading deployment address");
 
   let electoralTokenAddress = await readAddressForDeployedContract(
     ELECTORAL_TOKEN
@@ -36,17 +34,16 @@ export async function deployGovernorContract() {
 
   let timeLockAddress = await readAddressForDeployedContract(TIME_LOCK);
 
-  const timeLock = await ethers.getContractAt(TIME_LOCK, timeLockAddress);
-
-  console.log(`
-    electoral Token address = [${electoralToken.address}]
-    timeLock contract address = [${timeLock.address}]
+  if (debug) {
+    console.log(`
+    electoral Token address = [${electoralTokenAddress}]
+    timeLock contract address = [${timeLockAddress}]
   `);
-
+  }
   const GovernorContract = await ethers.getContractFactory(GOVERNOR_CONTRACT);
   const governorContract = await GovernorContract.deploy(
-    electoralToken.address,
-    timeLock.address,
+    electoralTokenAddress,
+    timeLockAddress,
     VOTING_DELAY,
     VOTING_PERIOD,
     QUORUM_PERCENTAGE,
@@ -54,14 +51,14 @@ export async function deployGovernorContract() {
   );
 
   await governorContract.deployed();
-
-  console.log(`GovernorContract deployed at [${governorContract.address}]`);
-  console.log(`GovernorContract address deployer at [${deployer.address}]`);
-
-  storeAddressContract(GOVERNOR_CONTRACT, governorContract.address);
+  if (debug) {
+    console.log(`GovernorContract deployed at [${governorContract.address}]`);
+    console.log(`GovernorContract address deployer at [${deployer.address}]`);
+  }
+  await storeAddressContract(GOVERNOR_CONTRACT, governorContract.address);
 }
 
-deployGovernorContract().catch((error) => {
+deployGovernorContract(false).catch((error) => {
   console.error(error);
   //@ts-ignore
   process.exitCode = 1;

@@ -1,10 +1,10 @@
 //@ts-ignore
 import { ethers } from "hardhat"; //@ts-ignore
-import { ELECTORAL_MANAGER, TIME_LOCK } from "../Utils/helper-hardhat";
+import { ELECTORAL_MANAGER, TIME_LOCK } from "../Utils/helper-constants";
 import { storeAddressContract } from "../Utils/save-address";
 import { readAddressForDeployedContract } from "../Utils/read-address";
 
-export const deployElectoralManagerAccount = async () => {
+export const deployElectoralManagerAccount = async (debug: false) => {
   let deployer, addrs;
   [deployer, ...addrs] = await ethers.getSigners();
 
@@ -14,12 +14,16 @@ export const deployElectoralManagerAccount = async () => {
     "EM",
     "ipfs://"
   );
+  if (debug) {
+    console.log(
+      `ElectoralManager deployed at [${electoralManagerContract.address}]`
+    );
+  }
 
-  console.log(
-    `ElectoralManager deployed at [${electoralManagerContract.address}]`
+  await storeAddressContract(
+    ELECTORAL_MANAGER,
+    electoralManagerContract.address
   );
-
-  storeAddressContract(ELECTORAL_MANAGER, electoralManagerContract.address);
 
   // transfer admin to timeLock
   const timeLockAddress: string = await readAddressForDeployedContract(
@@ -32,7 +36,7 @@ export const deployElectoralManagerAccount = async () => {
   await transferAdmin.wait(1);
 };
 
-deployElectoralManagerAccount().catch((error) => {
+deployElectoralManagerAccount(false).catch((error) => {
   console.error(error);
   //@ts-ignore
   process.exitCode = 1;
