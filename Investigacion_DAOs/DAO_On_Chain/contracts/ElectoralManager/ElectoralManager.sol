@@ -58,10 +58,10 @@ contract ElectoralManager is ElectoralPromise, Ownable {
             _checkPromiser(msg.sender) == 0,
             "Error: ElectoralManager author already exists"
         );
-
+        uint256 idAssignedAuthor = counterPromisers;
         /// register a new user
         DataInfo.Promiser memory tmpPromiser = DataInfo.Promiser(
-            counterPromisers,
+            idAssignedAuthor,
             _isPoliticalParty,
             _completeName,
             _namePoliticalParty
@@ -75,7 +75,7 @@ contract ElectoralManager is ElectoralPromise, Ownable {
         emit NewPromiser(msg.sender);
 
         // return the identifier
-        return tmpPromiser.idAuthor;
+        return idAssignedAuthor;
     }
 
     /**
