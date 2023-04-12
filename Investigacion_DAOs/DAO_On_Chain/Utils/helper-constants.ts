@@ -3,6 +3,8 @@
  */
 // BACKUP ADDRESS
 export const JSON_FILE_DEPLOYMENT_ADDRESS: string = "DeploymentAddress.json";
+export const JSON_FILE_PROPOSALS_ID: string = "Proposals.json";
+
 export const ELECTORAL_TOKEN: string = "ElectoralToken";
 export const TIME_LOCK: string = "TimeLock";
 export const GOVERNOR_CONTRACT: string = "GovernorContract";
@@ -28,3 +30,9 @@ export const DEFAULT_ADDRESS: string =
 export const FUNC_REGISTER_USER: string = "registerUser";
 export const FUNC_CREATE_NEW_PROMISE: string = "createElectoralPromise";
 export const FUNC_APPROVE_PROMISE: string = "approvePromise";
+
+// VOTING
+
+export const AGAINST: number = 0;
+export const FOR: number = 1;
+export const ABSTAIN: number = 2;

@@ -9,6 +9,13 @@
       - [Inicio de un proyecto con Yarn](#inicio-de-un-proyecto-con-yarn)
       - [Instalacion y Arranque hardhat](#instalacion-y-arranque-hardhat)
     - [otras dependencias](#otras-dependencias)
+  - [Lanzar DAO](#lanzar-dao)
+    - [Primera ventana](#primera-ventana)
+    - [Segunda ventana](#segunda-ventana)
+  - [Proceso DAO](#proceso-dao)
+    - [Preparación](#preparación)
+    - [Propuesta](#propuesta)
+    - [Votación](#votación)
 
 ## Introducción
 
@@ -91,4 +98,38 @@ yarn add --dev "hardhat@^2.11.1" "@nomicfoundation/hardhat-toolbox@^2.0.0" "@nom
 ### otras dependencias
 
 Se incluirá también la dependencia de openzeppellin contracts
-`$>yarn add --dev @openzeppelin/contracts`
+`yarn add --dev @openzeppelin/contracts`
+
+## Lanzar DAO
+
+### Primera ventana
+
+`yarn hardhat node`
+
+### Segunda ventana
+
+`yarn hardhat run .\deploy\01_deploy_electoralToken.ts --network localhost`
+`yarn hardhat run .\deploy\02_deploy_timeLock.ts --network localhost`
+`yarn hardhat run .\deploy\03_deploy_governorContract.ts --network localhost`
+`yarn hardhat run .\deploy\04_configure_governorContract.ts --network localhost`
+`yarn hardhat run .\deploy\05_deploy_electoralManager.ts --network localhost`
+
+```
+yarn hardhat run .\deploy\01_deploy_electoralToken.ts --network localhost |
+yarn hardhat run .\deploy\02_deploy_timeLock.ts --network localhost |
+yarn hardhat run .\deploy\03_deploy_governorContract.ts --network localhost |
+yarn hardhat run .\deploy\04_configure_governorContract.ts --network localhost |
+yarn hardhat run .\deploy\05_deploy_electoralManager.ts --network localhost 
+```
+
+## Proceso DAO
+
+### Preparación
+
+`yarn hardhat run .\scripts\preparation_electoral_manager.ts --network localhost`
+
+### Propuesta
+
+`yarn hardhat run .\scripts\propose.ts --network localhost`
+
+### Votación

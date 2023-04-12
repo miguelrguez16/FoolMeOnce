@@ -85,12 +85,46 @@ Una vez finalizado el despliegue se crearán un conjunto de scripts que permitir
 
 ### Preparación
 
-Primero se deberá generar cuentas de usuario en el contrato de electoralManager y un conjunto de promesas electorales que den juego a generar propuestas.
+Primero se deberá generar cuentas de usuario en el contrato de electoralManager y una o más promesas electorales que den juego a generar propuestas.
 
-Se necesitará para esta parte la dirección del contrato de gobierno y de ElectoralManager. De esta manera se podrá hacer uso mediante la librería ethers de realizar llamadas. Este proceso perfectamente podría ser extrapolado a un entorno web.
+Se necesitará para esta parte la dirección del contrato de ElectoralManager. De esta manera se podrá hacer uso mediante la librería ethers de realizar llamadas. Este proceso será el mismo que en el apartado web.
+
+A continuación haciendo uso del contrato de gobernanza se realizarán las llamadas de propuesta, votación, poner en cola de ejecución y ejecución.
 
 ### Propuestas
 
+Para esta parte se utilizará el contrato de gobernanza,  este contrato hará como puente entre el usuario y el contrato electoralManager. Un primer usuario realizará una llamada de propuesta, más en detalle, le indicará al contrato de gobernanza lo siguiente:
+
+- Función que quiere ejecutar, es decir, sobre qué función se generará la propuesta
+- Datos necesarios para la ejecución si se aprobara en un futuro la promesa
+
+El usuario deberá conocer que función y que datos proponer, para este caso se querrá llamar a la función --> approvePromise y se le pasará el identificador numérico de la promesa.
+
 ### Votación
+
+Para realizar la votación se necesitará conocer el identificador de la propuesta y hacer la llamada al igual que pasaba en la propuesta pero en este caso para votar.
+
+Para indicar el tipo de votación: a favor , en contra o abstención se utilizan valores del cero al dos respectivamente.
+
+En conjunto al final se realizará una llamada a la función de votación con dos argumentos:
+
+- identificador de la propuesta
+- tipo de voto
+
+Opcionalmente, existen otro tipo de llamadas que permiten votar donde se puede incluir la razón de voto y/o la firma del votante.
+
+Una vez finalizada la votación y pasado el tiempo de este, se puede preguntar en que estado se encuentra la propuesta:
+
+´´´TypeScript
+ const stateProposal = await governorContract.state(proposalId);
+  console.log(`STATE proposal ${proposalId} is ${stateProposal}`);
+
+// LO QUE DEVUELVE
+STATE proposal 81599910900495007656454957995179928549475228392468876642720126284774266985485 is 4
+
+```
+
+
+Ese cuatro indica indica el estado de succeded, yendo al código del contrato de gobierno, a su interfaz [IGobernor.sol](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.8.2/contracts/governance/IGovernor.sol) se encuentra una estructura ENUM denominada ProposalState, el número cuatro corresponde al quinto valor de ese enum.
 
 ### Cola y Ejecución

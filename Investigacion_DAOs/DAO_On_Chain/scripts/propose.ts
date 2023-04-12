@@ -1,5 +1,5 @@
 //@ts-ignore
-import { ethers, network } from "hardhat";
+import { ethers } from "hardhat";
 import {
   ELECTORAL_MANAGER,
   FUNC_APPROVE_PROMISE,
@@ -8,6 +8,7 @@ import {
 } from "../Utils/helper-constants";
 import { readAddressForDeployedContract } from "../Utils/read-address";
 import { moveBlocks } from "../Utils/move-blocks-forward";
+import { storeProposalId } from "../Utils/controllerProposalsId";
 
 const propose = async () => {
   let deployer, addr1, addrs;
@@ -44,14 +45,14 @@ const propose = async () => {
   );
 
   // ENVIO DE UNA PROPUESTA:
-  const proposeTx = await governorContract.propose(
+  const proposeTxResponse = await governorContract.propose(
     [electoralManagerAddress],
     [0],
     [encode],
     _descripcionPropuesta
   );
 
-  const proposeReceipt = await proposeTx.wait(1);
+  const proposeReceipt = await proposeTxResponse.wait(1);
 
   await moveBlocks(VOTING_DELAY + 1);
 
@@ -61,6 +62,8 @@ const propose = async () => {
           proposeId:${proposalId}
     #################################
   `);
+
+  await storeProposalId(proposalId.toString());
 };
 
 propose().catch((error) => {
