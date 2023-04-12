@@ -115,15 +115,10 @@ Opcionalmente, existen otro tipo de llamadas que permiten votar donde se puede i
 
 Una vez finalizada la votación y pasado el tiempo de este, se puede preguntar en que estado se encuentra la propuesta:
 
-´´´TypeScript
+```JavaScript
  const stateProposal = await governorContract.state(proposalId);
-  console.log(`STATE proposal ${proposalId} is ${stateProposal}`);
-
-// LO QUE DEVUELVE
-STATE proposal 81599910900495007656454957995179928549475228392468876642720126284774266985485 is 4
-
+ // Lo que devuelve la sentencia es un 4
 ```
-
 
 Ese cuatro indica indica el estado de succeded, yendo al código del contrato de gobierno, a su interfaz [IGobernor.sol](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.8.2/contracts/governance/IGovernor.sol) se encuentra una estructura ENUM denominada ProposalState, el número cuatro corresponde al quinto valor de ese enum.
 
