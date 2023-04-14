@@ -1,12 +1,14 @@
 //@ts-ignore
 import { ethers } from "hardhat";
 import {
+  DESCRIPCION_PROPUESTA,
   ELECTORAL_MANAGER,
   FUNC_APPROVE_PROMISE,
   GOVERNOR_CONTRACT,
+  PROPOSAL_ID_FOR_APPROVE,
   VOTING_DELAY,
 } from "../Utils/helper-constants";
-import { readAddressForDeployedContract } from "../Utils/read-address";
+import { readAddressForDeployedContract } from "../Utils/manage-address-contracts";
 import { moveBlocks } from "../Utils/move-blocks-forward";
 import { storeProposalId } from "../Utils/controllerProposalsId";
 
@@ -34,22 +36,23 @@ const propose = async () => {
   );
 
   // DATOS PROPUESTA:
-  const _nombreFuncionLlamada = FUNC_APPROVE_PROMISE;
-  const _identificadorPromesaElectoral = 0;
-  const _descripcionPropuesta = "Quiero aprobar la propuesta";
+  // FUNC_APPROVE_PROMISE;
+  //PROPOSAL_ID_FOR_APPROVE
+  //DESCRIPCION_PROPUESTA
 
   // CODIFICACION DE FUNCION QUE GOBIERNA LA DAO
-  const encode = electoralManagerContract.interface.encodeFunctionData(
-    _nombreFuncionLlamada,
-    [_identificadorPromesaElectoral]
-  );
+  const encodeFunctionParameter =
+    electoralManagerContract.interface.encodeFunctionData(
+      FUNC_APPROVE_PROMISE,
+      [PROPOSAL_ID_FOR_APPROVE]
+    );
 
   // ENVIO DE UNA PROPUESTA:
   const proposeTxResponse = await governorContract.propose(
     [electoralManagerAddress],
     [0],
-    [encode],
-    _descripcionPropuesta
+    [encodeFunctionParameter],
+    DESCRIPCION_PROPUESTA
   );
 
   const proposeReceipt = await proposeTxResponse.wait(1);

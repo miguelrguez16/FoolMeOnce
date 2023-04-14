@@ -14,6 +14,8 @@
     - [Propuestas](#propuestas)
     - [Votación](#votación)
     - [Cola y Ejecución](#cola-y-ejecución)
+      - [Cola](#cola)
+      - [Verificacion](#verificacion)
 
 ## Procedimientos
 
@@ -67,7 +69,8 @@ Se desarrollan varios scripts con el fin de realizar un despliegue y configuraci
     graph LR
     Propuesta --> Votación
     Votación --> Rechazada
-    Votación --> Cola-Ejecución
+    Votación --> Cola
+    Cola --> Ejecución
     ```
 
 - Cuarto (Configuración): En este apartado se establecerán que dirección tendrá permisos de ejecución, propuesta y administración sobre el contrato TimeLock.
@@ -102,7 +105,7 @@ El usuario deberá conocer que función y que datos proponer, para este caso se 
 
 ### Votación
 
-Para realizar la votación se necesitará conocer el identificador de la propuesta y hacer la llamada al igual que pasaba en la propuesta pero en este caso para votar.
+Para realizar la votación se necesitará conocer el identificador de la propuesta y hacer la llamada al igual que pasaba en el estado de proposición pero en este caso para votar.
 
 Para indicar el tipo de votación: a favor , en contra o abstención se utilizan valores del cero al dos respectivamente.
 
@@ -111,15 +114,41 @@ En conjunto al final se realizará una llamada a la función de votación con do
 - identificador de la propuesta
 - tipo de voto
 
-Opcionalmente, existen otro tipo de llamadas que permiten votar donde se puede incluir la razón de voto y/o la firma del votante.
+Opcionalmente, existen otro tipo de llamadas que permiten votar donde se puede incluir la razón de voto (una pequeña explicación) y/o la firma del votante.
 
-Una vez finalizada la votación y pasado el tiempo de este, se puede preguntar en que estado se encuentra la propuesta:
+Una vez finalizada la votación y pasado el tiempo marcado, se puede preguntar en que estado se encuentra la propuesta mediante la siguiente llamada:
 
 ```JavaScript
  const stateProposal = await governorContract.state(proposalId);
- // Lo que devuelve la sentencia es un 4
+ // stateProposal = 4
 ```
 
-Ese cuatro indica indica el estado de succeded, yendo al código del contrato de gobierno, a su interfaz [IGobernor.sol](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.8.2/contracts/governance/IGovernor.sol) se encuentra una estructura ENUM denominada ProposalState, el número cuatro corresponde al quinto valor de ese enum.
+Ese cuatro indica el estado de succeded, yendo al código del contrato de gobierno, a su interfaz [IGobernor.sol](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.8.2/contracts/governance/IGovernor.sol) se encuentra una estructura ENUM denominada ProposalState, el número cuatro corresponde al quinto valor de ese enum.
+
+```Solidity
+enum ProposalState {
+        Pending,    //0
+        Active,     //1
+        Canceled,   //2
+        Defeated,   //3
+        Succeeded,  //4
+        Queued,     //5
+        Expired,    //6
+        Executed    //7
+    }
+```
 
 ### Cola y Ejecución
+
+En esta última parte se procede a realizar el cambio de estado para permitir finalmente ejecutarla, se realizan dos procesos:
+
+1. Se pone en cola de ejecución
+2. Se ejecuta
+
+#### Cola
+
+Para pasar a cola (cualquiera puede realizar esta acción) se necesita indicar al contrato de gobierno que función y que argumentos se van a verificar de nuevo. Esto permite pasar a ejecución la propuesta.
+
+#### Verificacion
+
+Exactamente igual que para la cola, pero esto finalmente ejecutará la función de verificación, una vez completado este proceso se podrá ver la fecha de verificación como parámetro de la promesa electoral, se encuentra marcado como dateApproved.

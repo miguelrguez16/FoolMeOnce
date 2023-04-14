@@ -16,6 +16,7 @@
     - [Preparación](#preparación)
     - [Propuesta](#propuesta)
     - [Votación](#votación)
+    - [Queuing and Executing](#queuing-and-executing)
 
 ## Introducción
 
@@ -126,10 +127,16 @@ yarn hardhat run .\deploy\05_deploy_electoralManager.ts --network localhost
 
 ### Preparación
 
-`yarn hardhat run .\scripts\preparation_electoral_manager.ts --network localhost`
+`yarn hardhat run .\scripts\01_preparation_electoral_manager.ts --network localhost`
 
 ### Propuesta
 
-`yarn hardhat run .\scripts\propose.ts --network localhost`
+`yarn hardhat run .\scripts\02_propose.ts --network localhost`
 
 ### Votación
+
+`yarn hardhat run .\scripts\03_voting.ts --network localhost`
+
+### Queuing and Executing
+
+`yarn hardhat run .\scripts\04_queuing_executing.ts --network localhost`

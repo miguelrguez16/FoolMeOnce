@@ -2,11 +2,10 @@
 import { ethers } from "hardhat";
 import {
   GOVERNOR_CONTRACT,
-  ELECTORAL_MANAGER,
   FOR,
   VOTING_PERIOD,
 } from "../Utils/helper-constants";
-import { readAddressForDeployedContract } from "../Utils/read-address";
+import { readAddressForDeployedContract } from "../Utils/manage-address-contracts";
 import { readLastProposalId } from "../Utils/controllerProposalsId";
 import { moveBlocks } from "../Utils/move-blocks-forward";
 
@@ -21,7 +20,6 @@ const voting = async () => {
   );
 
   const proposalId: string = await readLastProposalId();
-  let proposeToVote: number = parseInt(proposalId);
 
   const voteTxResponse = await governorContract.castVoteWithReason(
     proposalId,

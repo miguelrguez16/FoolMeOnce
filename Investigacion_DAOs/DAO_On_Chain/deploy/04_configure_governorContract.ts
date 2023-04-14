@@ -1,6 +1,6 @@
 //@ts-ignore
 import { ethers } from "hardhat"; //@ts-ignore
-import { readAllAddress } from "../Utils/read-address";
+import { readAllAddress } from "../Utils/manage-address-contracts";
 import {
   DEFAULT_ADDRESS,
   ELECTORAL_TOKEN,

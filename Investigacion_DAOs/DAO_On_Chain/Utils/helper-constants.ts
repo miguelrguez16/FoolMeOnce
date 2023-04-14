@@ -30,9 +30,23 @@ export const DEFAULT_ADDRESS: string =
 export const FUNC_REGISTER_USER: string = "registerUser";
 export const FUNC_CREATE_NEW_PROMISE: string = "createElectoralPromise";
 export const FUNC_APPROVE_PROMISE: string = "approvePromise";
+export const PROPOSAL_ID_FOR_APPROVE: number = 0;
+export const DESCRIPCION_PROPUESTA: string = "Quiero aprobar la propuesta";
 
 // VOTING
 
 export const AGAINST: number = 0;
 export const FOR: number = 1;
 export const ABSTAIN: number = 2;
+
+// PROPOSALS STATE
+export const PROPOSALSTATE: Array<string> = [
+  "Pending",
+  "Active",
+  "Canceled",
+  "Defeated",
+  "Succeeded",
+  "Queued",
+  "Expired",
+  "Executed",
+];

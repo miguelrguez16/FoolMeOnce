@@ -9,8 +9,8 @@ import {
   PROPOSAL_THRESHOLD,
   GOVERNOR_CONTRACT,
 } from "../Utils/helper-constants";
-import { readAddressForDeployedContract } from "../Utils/read-address";
-import { storeAddressContract } from "../Utils/save-address";
+import { readAddressForDeployedContract } from "../Utils/manage-address-contracts";
+import { storeAddressContract } from "../Utils/manage-address-contracts";
 
 // main function
 export async function deployGovernorContract(debug: boolean) {

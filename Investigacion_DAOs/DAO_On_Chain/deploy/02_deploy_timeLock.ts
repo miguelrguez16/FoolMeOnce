@@ -1,8 +1,7 @@
 //@ts-ignore
 import { ethers } from "hardhat"; //@ts-ignore
 import { MIN_DELAY, TIME_LOCK } from "../Utils/helper-constants";
-import { storeAddressContract } from "../Utils/save-address";
-
+import { storeAddressContract } from "../Utils/manage-address-contracts";
 export async function deployTimeLock(debug: boolean) {
   let deployer, addrs;
   [deployer, ...addrs] = await ethers.getSigners();

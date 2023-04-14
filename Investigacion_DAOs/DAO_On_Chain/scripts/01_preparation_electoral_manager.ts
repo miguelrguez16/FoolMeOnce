@@ -1,7 +1,7 @@
 //@ts-ignore
 import { ethers } from "hardhat";
 import { ELECTORAL_MANAGER } from "../Utils/helper-constants";
-import { readAddressForDeployedContract } from "../Utils/read-address";
+import { readAddressForDeployedContract } from "../Utils/manage-address-contracts";
 
 const prepare = async () => {
   let deployer, addr1, addrs;

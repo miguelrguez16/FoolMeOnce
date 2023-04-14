@@ -1,8 +1,8 @@
 //@ts-ignore
 import { ethers } from "hardhat"; //@ts-ignore
 import { ELECTORAL_MANAGER, TIME_LOCK } from "../Utils/helper-constants";
-import { storeAddressContract } from "../Utils/save-address";
-import { readAddressForDeployedContract } from "../Utils/read-address";
+import { storeAddressContract } from "../Utils/manage-address-contracts";
+import { readAddressForDeployedContract } from "../Utils/manage-address-contracts";
 
 export const deployElectoralManagerAccount = async (debug: false) => {
   let deployer, addrs;
