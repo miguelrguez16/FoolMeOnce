@@ -15,7 +15,7 @@
     - [Votación](#votación)
     - [Cola y Ejecución](#cola-y-ejecución)
       - [Cola](#cola)
-      - [Verificacion](#verificacion)
+      - [Ejecución](#ejecución)
 
 ## Procedimientos
 
@@ -149,6 +149,6 @@ En esta última parte se procede a realizar el cambio de estado para permitir fi
 
 Para pasar a cola (cualquiera puede realizar esta acción) se necesita indicar al contrato de gobierno que función y que argumentos se van a verificar de nuevo. Esto permite pasar a ejecución la propuesta.
 
-#### Verificacion
+#### Ejecución
 
 Exactamente igual que para la cola, pero esto finalmente ejecutará la función de verificación, una vez completado este proceso se podrá ver la fecha de verificación como parámetro de la promesa electoral, se encuentra marcado como dateApproved.
