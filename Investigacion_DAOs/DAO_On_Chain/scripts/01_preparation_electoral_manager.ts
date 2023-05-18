@@ -23,6 +23,12 @@ const prepare = async () => {
   const _namePoliticalParty = "Partido por la Web3.0";
   const _isPoliticalParty = false;
 
+  console.log(`Registrando usuario :
+      create: ${_completeName}  
+      _namePoliticalParty: ${_namePoliticalParty}  
+      _isPoliticalParty: ${_isPoliticalParty}  
+  `);
+
   const registerIdTx = await electoralManagerContract
     .connect(addr1)
     .registerUser(_completeName, _namePoliticalParty, _isPoliticalParty);
@@ -43,8 +49,8 @@ const prepare = async () => {
     .getAllPromises();
 
   console.log(`Promise created:
-  
-      IdAuthor: ${allElectoralPromise[0].IdAuthor}  
+      create: ${allElectoralPromise[0].created}  
+      dateApproved: ${allElectoralPromise[0].dateApproved}  
       tokenUri: ${allElectoralPromise[0].tokenUri}  
       nameAuthor: ${allElectoralPromise[0].nameAuthor}  
       namePoliticalParty: ${allElectoralPromise[0].namePoliticalParty}  

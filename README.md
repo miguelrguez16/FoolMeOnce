@@ -1,6 +1,6 @@
 # EPI-FoolMeOnce
 
-![FOOLMEONCE](https://ipfs.io/ipfs/QmY2FeQ7SwVdfaEHcRvJ1GA2g55q3T5ZbvNHjsbd8UaTDo?filename=FoolMeOnce360.png)
+![FOOLMEONCE](First_Protype/Frontend/fool-me-once/src/assets/FoolMeOnce360.png)
 Plataforma para la creación y verificación de promesas electorales por parte de políticos y sus partidos.
 
 ![Solidity](https://img.shields.io/badge/Solidity-%23363636.svg?style=for-the-badge&logo=solidity&logoColor=white) ![TypeScript](https://img.shields.io/badge/typescript-%23323330.svg?style=for-the-badge&logo=typescript&logoColor=%035aa5) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) !["//"](https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=Ethereum&logoColor=White)

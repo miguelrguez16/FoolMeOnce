@@ -33,7 +33,7 @@ function Home() {
               ¿Nuevo Político?
             </Card.Title>
             <Card.Body style={{ textAlign: "justify" }}>
-              Conecta to Wallet, regístrate y comienza a grabar en la blockchain
+              Conecta tu Wallet, regístrate y comienza a grabar en la blockchain
               tus promesas electorales.
             </Card.Body>
           </Card>

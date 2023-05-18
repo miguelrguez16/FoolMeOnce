@@ -82,10 +82,13 @@ function Create({ electoralManager }) {
       uri,
       isObligatory
     );
-    let total = await electoralManager.counterElectoralPromises();
-    console.log("total: ", total.toNumber());
 
-    navigate(`/listado/${total.toNumber()}`);
+    let receipt = await newEPid.wait();
+    let total =
+      (await electoralManager.counterElectoralPromises()).toNumber() - 1;
+    console.log("total: ", total);
+
+    navigate(`/listado/${total}`);
   };
 
   return (
