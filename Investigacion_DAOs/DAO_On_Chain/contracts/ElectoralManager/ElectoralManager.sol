@@ -21,7 +21,8 @@ contract ElectoralManager is ElectoralPromise, Ownable {
         counterPromisers = 1;
     }
 
-    uint256 public secondsLegislature = 126_144_000;
+    ///@dev number of seconds on four years
+    uint256 public constant SECONDS_LEGISLATURE = 126_144_000;
 
     ///@dev number of promise, it is use for id
     uint256 public counterElectoralPromises;
@@ -35,6 +36,7 @@ contract ElectoralManager is ElectoralPromise, Ownable {
     ///@dev list promisers
     mapping(address => DataInfo.Promiser) public listPromisers;
 
+    ///@dev event create user
     event NewPromiser(address indexed owner);
 
     /****************************
@@ -82,7 +84,7 @@ contract ElectoralManager is ElectoralPromise, Ownable {
      * @notice register a new Electoral promise
      * @param _tokenURI string with all data
      * @param _isObligatory boolean representing the mandatory of the electoral promise
-     * @return the id of the new user
+     * @return the id of the new promise
      */
     function createElectoralPromise(
         string memory _tokenURI,
@@ -130,11 +132,15 @@ contract ElectoralManager is ElectoralPromise, Ownable {
         DataInfo.DataPromise storage promiseToApprove = listElectoralPromises[
             promiseId
         ];
+        require(
+            promiseToApprove.dateApproved == 0,
+            "Error: electoral promise already approved"
+        );
         //check if 4 years of legislature have passed
         uint256 currentSeconds = block.timestamp;
         uint256 difference = currentSeconds - promiseToApprove.created;
         require(
-            difference < secondsLegislature,
+            difference < SECONDS_LEGISLATURE,
             "Error: a legislature already gone"
         );
 

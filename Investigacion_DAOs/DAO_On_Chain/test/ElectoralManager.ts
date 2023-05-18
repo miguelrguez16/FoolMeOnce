@@ -39,7 +39,6 @@ describe("ElectoralManager", function () {
   const _newIdentifierOne = 1;
   const _isNotObligatory = false;
   const _isNotPoliticalParty = false;
-  const _relationalPromisesEmpty: any = [];
 
   /** #######################################################################
    *          DEPLOY SMART CONTRACT ELECTORAL MANAGER
@@ -65,7 +64,7 @@ describe("ElectoralManager", function () {
       expect(await electoralManager.name()).to.equal(_name);
       expect(await electoralManager.symbol()).to.equal(_symbol);
       expect(await electoralManager.baseURI()).to.equal(_baseUri);
-      expect(await electoralManager.secondsLegislature()).to.equal(
+      expect(await electoralManager.SECONDS_LEGISLATURE()).to.equal(
         _secondsLegislature
       );
       // check state values
@@ -124,17 +123,12 @@ describe("ElectoralManager", function () {
     //@ts-ignore
     it("should track the register of a new electoral promise without a login", async function () {
       const _isObligatory = false;
-      const _relationalPromises: any = [];
       const _tokenUriPromise: Promise<string> = Promise.resolve(_baseUri);
       // first attempt -> expect a user not exists
       await expect(
         electoralManager
           .connect(addr1)
-          .createElectoralPromise(
-            _tokenUriPromise,
-            _isObligatory,
-            _relationalPromises
-          )
+          .createElectoralPromise(_tokenUriPromise, _isObligatory)
       ).to.be.revertedWith(_errorAuthorNotExists);
 
       expect(await electoralManager.balanceOf(addr1.address)).to.equal(0);
@@ -167,11 +161,7 @@ describe("ElectoralManager", function () {
       await expect(
         electoralManager
           .connect(addr1)
-          .createElectoralPromise(
-            _baseUri,
-            _isNotObligatory,
-            _relationalPromisesEmpty
-          )
+          .createElectoralPromise(_baseUri, _isNotObligatory)
       )
         .to.emit(electoralManager, "CreatedPromise")
         .withArgs(addr1.address, _tokenId);
@@ -232,11 +222,7 @@ describe("ElectoralManager", function () {
       await expect(
         electoralManager
           .connect(addr1)
-          .createElectoralPromise(
-            _baseUri,
-            _isNotObligatory,
-            _relationalPromisesEmpty
-          )
+          .createElectoralPromise(_baseUri, _isNotObligatory)
       )
         .to.emit(electoralManager, "CreatedPromise")
         .withArgs(addr1.address, _tokenId);
@@ -249,7 +235,6 @@ describe("ElectoralManager", function () {
       expect(allEP.length).to.equal(1);
 
       expect(await electoralManager.counterElectoralPromises()).to.equal(1);
-      // console.log("const: ", await electoralManager.counterElectoralPromises());
       // APPROVE ELECTORAL PROMISE
 
       // First attempt expect to return error promise do not exists
@@ -270,7 +255,6 @@ describe("ElectoralManager", function () {
     it("should track the incorrect attempt to approve an electoral promise", async function () {
       // Second attempt, promise do not exist
       const _idTokenNotExists = 1;
-      // console.log(`Approve not existing token [${_idTokenNotExists}]`);
       // send tx
       await expect(
         electoralManager.connect(deployer).approvePromise(_idTokenNotExists)
@@ -313,7 +297,7 @@ describe("ElectoralManager error deploy", function () {
   const _name: string = "FoolMeOnce";
   const _symbol: string = "FMO";
   const _baseUri: string = "";
-  const _secondsLegislature: number = 126144000;
+  const _SECONDS_LEGISLATURE: number = 126144000;
   // address manage
   let deployer: SignerWithAddress;
   let addr1: SignerWithAddress;
@@ -324,7 +308,6 @@ describe("ElectoralManager error deploy", function () {
   const _namePoliticalParty1 = "Partido Por La BlockChain";
   const _isNotObligatory = false;
   const _isNotPoliticalParty = false;
-  const _relationalPromisesEmpty: any = [];
 
   //@ts-ignore
   it("should track the incorrect attempt on create the smart contract", async function () {
@@ -347,11 +330,7 @@ describe("ElectoralManager error deploy", function () {
     await expect(
       electoralManager
         .connect(addr1)
-        .createElectoralPromise(
-          _baseUri,
-          _isNotObligatory,
-          _relationalPromisesEmpty
-        )
+        .createElectoralPromise(_baseUri, _isNotObligatory)
     )
       .to.emit(electoralManager, "CreatedPromise")
       .withArgs(addr1.address, _idTokenExists);
