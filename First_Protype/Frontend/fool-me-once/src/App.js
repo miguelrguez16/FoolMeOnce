@@ -11,7 +11,6 @@ import Home from './Pages/Home';
 import Listado from './Pages/Listado';
 import Create from './Pages/Create';
 import Register from './Pages/Register';
-import NoPage from './Pages/NoPage';
 import SingleElectoralPromise from './Pages/SingleElectoralPromise';
 
 import {
@@ -44,7 +43,7 @@ function App() {
     setUserAccount(accounts[0]);
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
-
+    setWallet(true);
     window.ethereum.on('chainChanged', (chainId) => {
       window.location.reload();
     })
@@ -74,8 +73,6 @@ function App() {
   }
 
   useEffect(() => {
-
-
   }, [isWallet, idUser, setIdUser]);
 
   return (
@@ -84,13 +81,13 @@ function App() {
         <Navigation web3Handler={web3Handler} userAccount={userAccount} idUser={idUser} connected={connected} />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/listado" element={<Listado electoralManager={electoralManager} userAccount={userAccount} />} />
-          <Route path="/listado/:tokenId" element={<SingleElectoralPromise electoralManager={electoralManager} userAccount={userAccount} />} />
+          <Route path="/promise" element={<Listado electoralManager={electoralManager} userAccount={userAccount} />} />
+          <Route path="/promise/:tokenId" element={<SingleElectoralPromise electoralManager={electoralManager} userAccount={userAccount} />} />
           <Route path="/create" element={
             <Create electoralManager={electoralManager} userAccount={userAccount} />} />
           <Route path="/register" element={
             <Register electoralManager={electoralManager} setIdUser={setIdUser} userAccount={userAccount} />} />
-          <Route path="*" element={<NoPage />} />
+          <Route path="*" element={<Home />} />
         </Routes>
         <Footer />
       </div>

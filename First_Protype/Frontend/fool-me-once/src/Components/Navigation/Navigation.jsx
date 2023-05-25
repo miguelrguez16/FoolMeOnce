@@ -31,7 +31,7 @@ function Navigation({ web3Handler, userAccount, idUser, connected }) {
               Home
             </Nav.Link>
             {userAccount ? (
-              <Nav.Link as={Link} to="/listado">
+              <Nav.Link as={Link} to="/promise">
                 Listado Promesas
               </Nav.Link>
             ) : (
