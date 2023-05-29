@@ -8,7 +8,7 @@ function ElectoralPromise({ electoralpromise, className, key }) {
     <div key={key} className={className}>
       <div className="tarjeta-representacion">
         <>
-          <Link to={`/listado/${electoralpromise.id}`} className="idpromise">
+          <Link to={`/promise/${electoralpromise.id}`} className="idpromise">
             #{electoralpromise.id}
           </Link>
         </>

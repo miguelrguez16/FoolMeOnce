@@ -33,7 +33,6 @@ function Create({ electoralManager }) {
   // upload the image to
   const uploadImageToIpfs = async (event) => {
     event.preventDefault();
-    debugger;
     const currentFile = event.target.files[0];
     if (typeof currentFile !== "undefined") {
       try {
