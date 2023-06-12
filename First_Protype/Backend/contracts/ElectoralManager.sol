@@ -3,17 +3,26 @@ pragma solidity 0.8.17;
 
 import "./ElectoralPromise.sol";
 import "./DataInfo.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
+///@title manage all data for electoralPromise
 ///@author Miguel Rodriguez Gonzalez
-contract ElectoralManager is ElectoralPromise {
+contract ElectoralManager is ElectoralPromise, Ownable {
     /****************************
      *      CONSTRUCTOR
      ****************************/
 
-    constructor() ElectoralPromise("FoolMeOnce", "FMO", "ipfs://") {
+    constructor(
+        string memory name_,
+        string memory symbol_,
+        string memory baseUri_
+    ) ElectoralPromise(name_, symbol_, baseUri_) {
         counterElectoralPromises = 0;
         counterPromisers = 1;
     }
+
+    ///@dev number of seconds on four years
+    uint256 public constant SECONDS_LEGISLATURE = 126_144_000;
 
     ///@dev number of promise, it is use for id
     uint256 public counterElectoralPromises;
@@ -22,11 +31,12 @@ contract ElectoralManager is ElectoralPromise {
     uint256 public counterPromisers;
 
     ///@dev list of all electoral promise
-    DataInfo.DataPromise[] public listElectoralPromises;
+    DataInfo.DataPromise[] public electoralPromises;
 
     ///@dev list promisers
-    mapping(address => DataInfo.Promiser) public listPromisers;
+    mapping(address => DataInfo.Promiser) public promisers;
 
+    ///@dev event create user
     event NewPromiser(address indexed owner);
 
     /****************************
@@ -48,18 +58,18 @@ contract ElectoralManager is ElectoralPromise {
         /// check if msg.sender is not registerd
         require(
             _checkPromiser(msg.sender) == 0,
-            "ElectoralManager author already exists"
+            "Error: ElectoralManager author already exists"
         );
-
+        uint256 idAssignedAuthor = counterPromisers;
         /// register a new user
-        DataInfo.Promiser memory tmpPromiser = DataInfo.Promiser(
-            counterPromisers,
+        DataInfo.Promiser memory promiserData = DataInfo.Promiser(
+            idAssignedAuthor,
             _isPoliticalParty,
             _completeName,
             _namePoliticalParty
         );
 
-        listPromisers[msg.sender] = tmpPromiser;
+        promisers[msg.sender] = promiserData;
 
         counterPromisers++; //increment
 
@@ -67,14 +77,14 @@ contract ElectoralManager is ElectoralPromise {
         emit NewPromiser(msg.sender);
 
         // return the identifier
-        return tmpPromiser.idAuthor;
+        return idAssignedAuthor;
     }
 
     /**
      * @notice register a new Electoral promise
      * @param _tokenURI string with all data
      * @param _isObligatory boolean representing the mandatory of the electoral promise
-     * @return the id of the new user
+     * @return the id of the new promise
      */
     function createElectoralPromise(
         string memory _tokenURI,
@@ -82,11 +92,11 @@ contract ElectoralManager is ElectoralPromise {
     ) external returns (uint256) {
         require(
             _checkPromiser(msg.sender) != 0,
-            "ElectoralManager author not exists"
+            "Error: ElectoralManager author not exists"
         );
 
         /// new ElectoralPromise
-        DataInfo.DataPromise memory tmpPromise = DataInfo.DataPromise(
+        DataInfo.DataPromise memory dataPromise = DataInfo.DataPromise(
             counterElectoralPromises,
             block.timestamp,
             0,
@@ -98,7 +108,7 @@ contract ElectoralManager is ElectoralPromise {
         );
 
         /// save into the list
-        listElectoralPromises.push(tmpPromise);
+        electoralPromises.push(dataPromise);
 
         /// mint the newPromise
         _mint(msg.sender, counterElectoralPromises);
@@ -111,10 +121,38 @@ contract ElectoralManager is ElectoralPromise {
     }
 
     /**
+     * @dev approve an electoral promise updating the parameter dateApproved
+     * @param promiseId uint that identifies the electoral promise
+     */
+    function approvePromise(uint256 promiseId) external onlyOwner {
+        require(
+            promiseId < counterElectoralPromises,
+            "Error: electoral promise do not exists"
+        );
+        DataInfo.DataPromise storage promiseToApprove = electoralPromises[
+            promiseId
+        ];
+        require(
+            promiseToApprove.dateApproved == 0,
+            "Error: electoral promise already approved"
+        );
+        //check if 4 years of legislature have passed
+        uint256 currentSeconds = block.timestamp;
+        uint256 difference = currentSeconds - promiseToApprove.created;
+        require(
+            difference < SECONDS_LEGISLATURE,
+            "Error: a legislature already gone"
+        );
+
+        promiseToApprove.dateApproved = currentSeconds;
+        emit ApprovedPromise(promiseId);
+    }
+
+    /**
      * @notice returns the associated identifier
      */
     function checkMyIdentifier() external view returns (uint256) {
-        return listPromisers[msg.sender].idAuthor;
+        return promisers[msg.sender].idAuthor;
     }
 
     /**
@@ -125,7 +163,7 @@ contract ElectoralManager is ElectoralPromise {
         view
         returns (DataInfo.DataPromise[] memory)
     {
-        return listElectoralPromises;
+        return electoralPromises;
     }
 
     /****************************

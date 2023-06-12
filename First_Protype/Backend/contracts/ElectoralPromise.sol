@@ -90,13 +90,9 @@ contract ElectoralPromise is IElectoralPromise {
         emit CreatedPromise(to, tokenId);
     }
 
-    function tokenURI(uint256 tokenId)
-        public
-        view
-        virtual
-        override
-        returns (string memory)
-    {
+    function tokenURI(
+        uint256 tokenId
+    ) public view virtual override returns (string memory) {
         require(
             _exists(tokenId),
             "ElectoralPromise: URI query for nonexistent token"
@@ -124,10 +120,10 @@ contract ElectoralPromise is IElectoralPromise {
      *
      * - `tokenId` must exist.
      */
-    function _setTokenURI(uint256 tokenId, string memory _tokenURI)
-        internal
-        virtual
-    {
+    function _setTokenURI(
+        uint256 tokenId,
+        string memory _tokenURI
+    ) internal virtual {
         require(
             _exists(tokenId),
             "ElectoralPromise: URI set of nonexistent token"

@@ -12,14 +12,14 @@ function Navigation({ web3Handler, userAccount, idUser, connected }) {
     <Navbar expand="lg" variant="beige">
       <Container>
         <Navbar.Brand as={Link} to="/">
-          <img src={logo} width="50" height="50" className="" alt="" />
+          <img src={logo} width="70" height="50" className="" alt="" />
           &nbsp;&nbsp;&nbsp; <span className="brand">VOTUM</span>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar navbar-white bg-primary" />
         <Navbar.Collapse id="navbar navbar-white bg-primary">
           <Nav className="me-auto">
             <Nav className="me-auto">
-              {userAccount && connected ? (
+              {userAccount !== "" && connected ? (
                 <Nav.Link className="connected">Connected</Nav.Link>
               ) : (
                 <Button onClick={web3Handler} variant="outline-danger">
@@ -30,36 +30,28 @@ function Navigation({ web3Handler, userAccount, idUser, connected }) {
             <Nav.Link as={Link} to="/">
               Home
             </Nav.Link>
-            {userAccount ? (
+            {userAccount !== "" ? (
               <Nav.Link as={Link} to="/promise">
-                Listado Promesas
+                Listar
               </Nav.Link>
             ) : (
               <></>
             )}
-            {idUser ? (
+            {idUser !== 0 ? (
               <Nav.Link as={Link} to="/create">
-                Nueva Promesa
+                Crear
               </Nav.Link>
             ) : (
               <></>
             )}
           </Nav>
           <Nav>
-            {idUser !== 0 && userAccount ? (
-              <Nav.Link as={Link} to="/myPromises">
-                Perfil
-              </Nav.Link>
+            {idUser !== 0 ? (
+              <></>
             ) : (
-              <>
-                {!userAccount ? (
-                  <></>
-                ) : (
-                  <Nav.Link as={Link} to="/register">
-                    Registrarse
-                  </Nav.Link>
-                )}
-              </>
+              <Nav.Link as={Link} to="/register">
+                Registrarse
+              </Nav.Link>
             )}
           </Nav>
         </Navbar.Collapse>

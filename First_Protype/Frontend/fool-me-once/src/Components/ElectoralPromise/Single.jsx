@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import MDEditor from "@uiw/react-md-editor";
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
