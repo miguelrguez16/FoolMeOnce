@@ -64,8 +64,8 @@ function ElectoralPromise({ electoralpromise, className, key }) {
         )}
       </div>
       <div>
-        {electoralpromise.isObligatory === true ? <>Es Mandatorio</> : <></>}
-        <Moment unix format="DD-MM-YYYY HH:MM">
+        {electoralpromise.isObligatory === true ? <>Es Mandatorio </> : <></>}
+        <Moment unix format="DD-MM-YYYY">
           {electoralpromise.created}
         </Moment>
       </div>
@@ -75,7 +75,7 @@ function ElectoralPromise({ electoralpromise, className, key }) {
         ) : (
           <>
             Aprobado a fecha:
-            <Moment unix format="DD-MM-YYYY HH:MM">
+            <Moment unix format="DD-MM-YYYY">
               {electoralpromise.dateApproved}
             </Moment>
           </>

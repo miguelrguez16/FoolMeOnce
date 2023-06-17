@@ -14,7 +14,7 @@ function Register({ electoralManager, setIdUser }) {
   const loadPoliticalpartiesNames = async () => {
     const bigData = await electoralManager.getAllPromises();
     const mySet1 = new Set();
-    debugger;
+
     bigData.forEach((element) => {
       mySet1.add(element["namePoliticalParty"]);
     });
@@ -24,12 +24,6 @@ function Register({ electoralManager, setIdUser }) {
 
   const registerNewUser = async (event) => {
     event.preventDefault();
-
-    console.log(`
-      -> Nombre: [${nameUser}]
-      -> namePoliticalParty: [${namePoliticalParty}]
-      -> IsPolitical: [${isPOliticalParty}]
-    `);
 
     if (
       nameUser.trim().length !== 0 &&

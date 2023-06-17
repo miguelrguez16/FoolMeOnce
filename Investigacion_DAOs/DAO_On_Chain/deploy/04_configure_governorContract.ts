@@ -1,12 +1,7 @@
 //@ts-ignore
 import { ethers } from "hardhat"; //@ts-ignore
 import { readAllAddress } from "../Utils/manage-address-contracts";
-import {
-  DEFAULT_ADDRESS,
-  ELECTORAL_TOKEN,
-  GOVERNOR_CONTRACT,
-  TIME_LOCK,
-} from "../Utils/helper-constants";
+import { TIME_LOCK, ZERO_ADDRESS } from "../Utils/helper-constants";
 
 export async function configureGovernorContract(debug: boolean) {
   let deployer;
@@ -62,7 +57,7 @@ export async function configureGovernorContract(debug: boolean) {
   //2. set all address can execute proposals
   const canExecuteAll = await timeLockContract.grantRole(
     executorRole,
-    "0x0000000000000000000000000000000000000000"
+    ZERO_ADDRESS
   );
   await canExecuteAll.wait(1);
 

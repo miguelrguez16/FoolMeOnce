@@ -82,12 +82,12 @@ function Create({ electoralManager }) {
       isObligatory
     );
 
-    let receipt = await newEPid.wait();
+    console.log(await newEPid.wait());
     let total =
       (await electoralManager.counterElectoralPromises()).toNumber() - 1;
     console.log("total: ", total);
 
-    navigate(`/listado/${total}`);
+    navigate(`/promise/${total}`);
   };
 
   return (

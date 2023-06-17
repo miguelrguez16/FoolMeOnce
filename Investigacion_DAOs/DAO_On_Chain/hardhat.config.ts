@@ -22,6 +22,10 @@ const config: HardhatUserConfig = {
       chainId: 31337,
       allowUnlimitedContractSize: true,
     },
+    ganacheCli: {
+      url: "http://127.0.0.1:8545",
+      allowUnlimitedContractSize: true,
+    },
   },
 };
 

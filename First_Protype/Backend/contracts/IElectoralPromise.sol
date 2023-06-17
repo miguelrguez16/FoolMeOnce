@@ -5,7 +5,6 @@ pragma solidity 0.8.17;
 ///@title Interface for Electoral Promise
 ///@dev Interface similar to IERC721
 interface IElectoralPromise {
-
     /**
      * @dev Emitted when `tokenId` token is created from `from`.
      */
@@ -14,7 +13,7 @@ interface IElectoralPromise {
     /**
      * @dev Approved when `tokenId` token is approved.
      */
-    event ApprovedPromise(address indexed from, uint256 indexed tokenId);
+    event ApprovedPromise(uint256 indexed tokenId);
 
     /**
      * @dev Returns the number of tokens in ``owner``'s account.
@@ -43,5 +42,4 @@ interface IElectoralPromise {
      * @dev Returns the Uniform Resource Identifier (URI) for `tokenId` token.
      */
     function tokenURI(uint256 tokenId) external view returns (string memory);
-
 }

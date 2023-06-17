@@ -14,6 +14,8 @@ export const deployElectoralManagerAccount = async (debug: false) => {
     "EM",
     "ipfs://"
   );
+  await electoralManagerContract.deployed();
+
   if (debug) {
     console.log(
       `ElectoralManager deployed at [${electoralManagerContract.address}]`

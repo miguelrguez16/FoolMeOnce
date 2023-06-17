@@ -48,8 +48,6 @@ function Listado({ electoralManager, userAccount }) {
       listedElectoralPromise.push(item);
     }
 
-    // console.log(`Items to list: [${listedElectoralPromise.length}]`);
-    // console.table(listedElectoralPromise);
     setListedElectoralPromise(listedElectoralPromise);
     setLoading(false);
   };
