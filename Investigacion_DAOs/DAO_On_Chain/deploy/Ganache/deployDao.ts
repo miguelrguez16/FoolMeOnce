@@ -10,7 +10,6 @@ import {
   ELECTORAL_MANAGER,
 } from "../../Utils/helper-constants";
 
-import { Contract, ContractFactory } from "ethers";
 import { JsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers";
 import {
   checkBalance,
@@ -19,10 +18,8 @@ import {
   deployElectoralToken,
   deployTimeLock,
   printAddress,
-  registerUser,
   saveMap,
 } from "../../Utils/ganache-functions";
-import { User } from "../../Utils/model/user-model";
 
 const deployDaoGanache = async (debug: boolean) => {
   const contractsDeployed: Map<string, string> = new Map<string, string>();
@@ -35,10 +32,9 @@ const deployDaoGanache = async (debug: boolean) => {
     console.log(`Cuenta -> ${accounts[0]}`);
     const account: string = accounts[0];
 
-    const signer: JsonRpcSigner = await provider.getSigner(account);
+    const signer: JsonRpcSigner = provider.getSigner(account);
     await signer.unlock("");
-    //console.log("Cuenta desbloqueada correctamente");
-    const balance = await provider.getBalance(account);
+
     await checkBalance(account, provider);
 
     const electoralTokenAddress: string = await Promise.resolve(

@@ -4,8 +4,6 @@ pragma solidity 0.8.17;
 import "./IElectoralPromise.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 
-//import "../../.deps/npm/@openzeppelin/contracts/utils/Strings.sol";
-
 contract ElectoralPromise is IElectoralPromise {
     using Strings for uint256;
 

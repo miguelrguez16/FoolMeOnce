@@ -14,20 +14,16 @@ describe("TestElectoralManager", function () {
   let _tokenURI = 'sample uri for new electoral promise';
 
   // ERRORS MESSAGE
-  const errorNewRegister = 'ElectoralManager author already exists';
-  const errorAuthorNotExists = 'ElectoralManager author not exists';
+  const errorNewRegister = 'Error: ElectoralManager author already exists';
+  const errorAuthorNotExists = 'Error: ElectoralManager author does not exist';
 
 
   // Deploy contract
   beforeEach(async function () {
     ElectoralManager = await ethers.getContractFactory('ElectoralManager');
     [deployer, addr1, addr2, ...addrs] = await ethers.getSigners();
-    electoralManager = await ElectoralManager.deploy();
-    // console.log(`
-    //      Deployer: [${deployer.address}]
-    //      addr1: [${addr1.address}]
-    //      addr2: [${addr2.address}]
-    //  `);
+    electoralManager = await ElectoralManager.deploy("FoolMeOnce", "FMO", "ipfs://");
+
   })
 
   describe("Deployment", function () {
@@ -69,7 +65,7 @@ describe("TestElectoralManager", function () {
       // on previous success check all data is registered in the correct position
       await expect(await electoralManager.connect(addr1).checkMyIdentifier()).to.equal(newIdentifier);
 
-      const promiser = await electoralManager.listPromisers(addr1.address);
+      const promiser = await electoralManager.promisers(addr1.address);
 
       expect(promiser.idAuthor).to.equal(newIdentifier);
       expect(promiser.completeName).to.equal(_completeName);
@@ -138,7 +134,7 @@ describe("TestElectoralManager", function () {
       expect(electoralPromise.tokenUri).to.equal(_tokenURI);
       expect(electoralPromise.isObligatory).to.equal(false);
 
-      // expect basic information to be okey
+      // expect basic information to be ok
       expect(await electoralManager.tokenURI(_tokenId)).to.equal('ipfs://' + _tokenURI);
       expect(await electoralManager.ownerOf(_tokenId)).to.equal(addr1.address);
       expect(await electoralManager.balanceOf(addr1.address)).to.equal(1);

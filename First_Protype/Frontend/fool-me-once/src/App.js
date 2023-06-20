@@ -57,8 +57,7 @@ function App() {
       signer
     );
     setElectoralManager(electoralManager);
-    console.log(electoralManager);
-    console.log(await electoralManager.name());
+
     const isConnected =
       (await electoralManager.name()) === "FoolMeOnce" ? true : false;
     setConnected(isConnected);
@@ -72,10 +71,6 @@ function App() {
     console.log(`User identifier: ${userIdentifier}`);
     setIdUser(userIdentifier);
     setLoading(false);
-
-    console.log(userAccount);
-    let register = await electoralManager.listPromisers(userAccount);
-    console.log("REGISTER2", register);
 
   };
 
