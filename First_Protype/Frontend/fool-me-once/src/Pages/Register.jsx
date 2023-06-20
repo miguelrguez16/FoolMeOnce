@@ -18,7 +18,6 @@ function Register({ electoralManager, setIdUser }) {
     bigData.forEach((element) => {
       mySet1.add(element["namePoliticalParty"]);
     });
-    console.log(mySet1);
     setdataToSelet(Array.from(mySet1));
   };
 

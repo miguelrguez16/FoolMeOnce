@@ -31,10 +31,10 @@ contract ElectoralManager is ElectoralPromise, Ownable {
     uint256 public counterPromisers;
 
     ///@dev list of all electoral promise
-    DataInfo.DataPromise[] public listElectoralPromises;
+    DataInfo.DataPromise[] public electoralPromises;
 
     ///@dev list promisers
-    mapping(address => DataInfo.Promiser) public listPromisers;
+    mapping(address => DataInfo.Promiser) public promisers;
 
     ///@dev event create user
     event NewPromiser(address indexed owner);
@@ -62,14 +62,14 @@ contract ElectoralManager is ElectoralPromise, Ownable {
         );
         uint256 idAssignedAuthor = counterPromisers;
         /// register a new user
-        DataInfo.Promiser memory tmpPromiser = DataInfo.Promiser(
+        DataInfo.Promiser memory promiserData = DataInfo.Promiser(
             idAssignedAuthor,
             _isPoliticalParty,
             _completeName,
             _namePoliticalParty
         );
 
-        listPromisers[msg.sender] = tmpPromiser;
+        promisers[msg.sender] = promiserData;
 
         counterPromisers++; //increment
 
@@ -92,23 +92,23 @@ contract ElectoralManager is ElectoralPromise, Ownable {
     ) external returns (uint256) {
         require(
             _checkPromiser(msg.sender) != 0,
-            "Error: ElectoralManager author not exists"
+            "Error: ElectoralManager author does not exist"
         );
 
         /// new ElectoralPromise
-        DataInfo.DataPromise memory tmpPromise = DataInfo.DataPromise(
+        DataInfo.DataPromise memory dataPromise = DataInfo.DataPromise(
             counterElectoralPromises,
             block.timestamp,
             0,
-            listPromisers[msg.sender].idAuthor,
+            promisers[msg.sender].idAuthor,
             _isObligatory,
             _tokenURI,
-            listPromisers[msg.sender].completeName,
-            listPromisers[msg.sender].namePoliticalParty
+            promisers[msg.sender].completeName,
+            promisers[msg.sender].namePoliticalParty
         );
 
         /// save into the list
-        listElectoralPromises.push(tmpPromise);
+        electoralPromises.push(dataPromise);
 
         /// mint the newPromise
         _mint(msg.sender, counterElectoralPromises);
@@ -127,9 +127,9 @@ contract ElectoralManager is ElectoralPromise, Ownable {
     function approvePromise(uint256 promiseId) external onlyOwner {
         require(
             promiseId < counterElectoralPromises,
-            "Error: electoral promise do not exists"
+            "Error: electoral promise does not exists"
         );
-        DataInfo.DataPromise storage promiseToApprove = listElectoralPromises[
+        DataInfo.DataPromise storage promiseToApprove = electoralPromises[
             promiseId
         ];
         require(
@@ -152,7 +152,7 @@ contract ElectoralManager is ElectoralPromise, Ownable {
      * @notice returns the associated identifier
      */
     function checkMyIdentifier() external view returns (uint256) {
-        return listPromisers[msg.sender].idAuthor;
+        return promisers[msg.sender].idAuthor;
     }
 
     /**
@@ -163,7 +163,7 @@ contract ElectoralManager is ElectoralPromise, Ownable {
         view
         returns (DataInfo.DataPromise[] memory)
     {
-        return listElectoralPromises;
+        return electoralPromises;
     }
 
     /****************************
@@ -176,6 +176,6 @@ contract ElectoralManager is ElectoralPromise, Ownable {
     function _checkPromiser(
         address _addressToCheck
     ) internal view returns (uint256) {
-        return listPromisers[_addressToCheck].idAuthor;
+        return promisers[_addressToCheck].idAuthor;
     }
 }

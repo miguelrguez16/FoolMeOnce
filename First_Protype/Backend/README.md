@@ -14,7 +14,7 @@ Para esta version comenzaremos a utilizar una de las famosos entornos de desarro
       - [Compilacion](#compilacion)
       - [Arranque de la Blockchain de desarrollo local](#arranque-de-la-blockchain-de-desarrollo-local)
       - [Conectar las cuentas del blockchain de desarrollo a Metamask](#conectar-las-cuentas-del-blockchain-de-desarrollo-a-metamask)
-      - [Migrar los Smart Contracts](#migrar-los-smart-contracts)
+      - [Migrar los Smart Contracts a GANACHE UI](#migrar-los-smart-contracts-a-ganache-ui)
       - [Ejecutar los Tests](#ejecutar-los-tests)
       - [Comprobar cobertura de los test](#comprobar-cobertura-de-los-test)
     - [Generar diagrama UML del código](#generar-diagrama-uml-del-código)
@@ -85,11 +85,11 @@ npx hardhat run scripts/deploy.js # Lanzar Deploy
 #### Conectar las cuentas del blockchain de desarrollo a Metamask
 
 - Copiar la clave privada de las direcciones e importarla a Metamask
-- Conecta tu metamask al hardhat blockchain, 127.0.0.1:8545.
+- Conecta tu metamask al hardhat blockchain, 127.0.0.1:7545.
 
-#### Migrar los Smart Contracts
+#### Migrar los Smart Contracts a GANACHE UI
 
-`npx hardhat run ./scripts/deploy.js --network ganache`
+`npx hardhat run ./scripts/deployFirstPrototype.js --network ganache`
 
 #### Ejecutar los Tests
 

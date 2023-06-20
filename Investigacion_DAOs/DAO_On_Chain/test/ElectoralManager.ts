@@ -24,9 +24,9 @@ describe("ElectoralManager", function () {
 
   // ERRORS MESSAGES
   const _errorNewRegister = "Error: ElectoralManager author already exists";
-  const _errorAuthorNotExists = "Error: ElectoralManager author not exists";
+  const _errorAuthorNotExists = "Error: ElectoralManager author does not exist";
   const _errorApprovePromiseNotExists: string =
-    "Error: electoral promise do not exists";
+    "Error: electoral promise does not exists";
   const _errorApprovePromiseLegislatureGone =
     "Error: a legislature already gone";
   const _errorApprovePromiseAlreadyApproved =
@@ -96,7 +96,7 @@ describe("ElectoralManager", function () {
         await electoralManager.connect(addr1).checkMyIdentifier()
       ).to.equal(_newIdentifierOne);
 
-      const promiser = await electoralManager.listPromisers(addr1.address);
+      const promiser = await electoralManager.promisers(addr1.address);
       expect(promiser.idAuthor).to.equal(_newIdentifierOne);
       expect(promiser.completeName).to.equal(_completeName1);
       expect(promiser.isPoliticalParty).to.equal(_isPoliticalParty);
@@ -105,7 +105,7 @@ describe("ElectoralManager", function () {
       );
 
       /**
-       * CRETA PROMISE
+       * CREATE PROMISE
        */
 
       await expect(
@@ -115,6 +115,12 @@ describe("ElectoralManager", function () {
       )
         .to.emit(electoralManager, "CreatedPromise")
         .withArgs(addr1.address, _tokenIdZero);
+
+      await expect(
+        electoralManager
+          .connect(addr2)
+          .createElectoralPromise(_baseUri, _isNotObligatory)
+      ).to.be.revertedWith(_errorAuthorNotExists);
 
       // expect to list increment
       expect(await electoralManager.counterElectoralPromises()).to.equal(1);
@@ -242,7 +248,7 @@ describe("ElectoralManager", function () {
         await electoralManager.connect(addr1).checkMyIdentifier()
       ).to.equal(_newIdentifierOne);
 
-      const promiser = await electoralManager.listPromisers(addr1.address);
+      const promiser = await electoralManager.promisers(addr1.address);
 
       expect(promiser.idAuthor).to.equal(_newIdentifierOne);
       expect(promiser.completeName).to.equal(_completeName1);

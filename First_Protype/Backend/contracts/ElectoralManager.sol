@@ -92,7 +92,7 @@ contract ElectoralManager is ElectoralPromise, Ownable {
     ) external returns (uint256) {
         require(
             _checkPromiser(msg.sender) != 0,
-            "Error: ElectoralManager author not exists"
+            "Error: ElectoralManager author does not exist"
         );
 
         /// new ElectoralPromise
@@ -100,11 +100,11 @@ contract ElectoralManager is ElectoralPromise, Ownable {
             counterElectoralPromises,
             block.timestamp,
             0,
-            listPromisers[msg.sender].idAuthor,
+            promisers[msg.sender].idAuthor,
             _isObligatory,
             _tokenURI,
-            listPromisers[msg.sender].completeName,
-            listPromisers[msg.sender].namePoliticalParty
+            promisers[msg.sender].completeName,
+            promisers[msg.sender].namePoliticalParty
         );
 
         /// save into the list
@@ -127,7 +127,7 @@ contract ElectoralManager is ElectoralPromise, Ownable {
     function approvePromise(uint256 promiseId) external onlyOwner {
         require(
             promiseId < counterElectoralPromises,
-            "Error: electoral promise do not exists"
+            "Error: electoral promise does not exists"
         );
         DataInfo.DataPromise storage promiseToApprove = electoralPromises[
             promiseId
@@ -176,6 +176,6 @@ contract ElectoralManager is ElectoralPromise, Ownable {
     function _checkPromiser(
         address _addressToCheck
     ) internal view returns (uint256) {
-        return listPromisers[_addressToCheck].idAuthor;
+        return promisers[_addressToCheck].idAuthor;
     }
 }

@@ -25,3 +25,4 @@ typechain-types
 **/electoralManagerData/**
 install-state.gz
 DeploymentAddress.json
+mapData.json

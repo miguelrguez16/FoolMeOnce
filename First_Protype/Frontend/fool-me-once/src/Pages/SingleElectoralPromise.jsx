@@ -10,7 +10,7 @@ function SingleElectoralPromise({ electoralManager, userAccount }) {
   const [promise, setPromise] = useState();
   const [value, setValue] = useState();
   const loadPromise = async () => {
-    const element = await electoralManager.listElectoralPromises(tokenId);
+    const element = await electoralManager.electoralPromises(tokenId);
     const response = await fetch(element.tokenUri);
     const metadata = await response.json();
     const relationalPromises = metadata.relationalPromises || "";

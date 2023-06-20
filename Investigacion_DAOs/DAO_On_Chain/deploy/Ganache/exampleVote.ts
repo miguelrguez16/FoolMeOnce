@@ -11,7 +11,6 @@ import { User } from "../../Utils/model/user-model";
 import {
   ELECTORAL_MANAGER,
   GOVERNOR_CONTRACT,
-  VOTING_DELAY,
 } from "../../Utils/helper-constants";
 import { Contract } from "ethers";
 import {
@@ -22,7 +21,6 @@ import {
   votePeriod,
   queryAndExecutePeriod,
 } from "../../Utils/ganache-functions";
-import { moveBlocks } from "../../Utils/move-blocks-forward";
 
 const exampleVote = async (debug: boolean) => {
   const myMap: Map<string, string> = new Map<string, string>(readAddress());
