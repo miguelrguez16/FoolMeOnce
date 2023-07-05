@@ -21,6 +21,7 @@ import {
   votePeriod,
   queryAndExecutePeriod,
 } from "../../Utils/ganache-functions";
+import { moveBlocks } from "../../Utils/move-blocks-forward";
 
 const exampleVote = async (debug: boolean) => {
   const myMap: Map<string, string> = new Map<string, string>(readAddress());
@@ -61,20 +62,6 @@ const exampleVote = async (debug: boolean) => {
       governorContractAddress
     );
 
-    //? Prepare Electoral Manager
-
-    const user: User = {
-      id: 1,
-      name: "Miguel Rodriguez",
-      politicalParty: "Partido por la BlockChain",
-      isPolitical: true,
-    };
-    // //? Register user
-    await registerUser(debug, signer, user, electoralManager);
-
-    await createPromise(debug, signer, electoralManager, URI_ONE);
-    await createPromise(debug, signer, electoralManager, URI_TWO);
-
     // //? Generate proposal
 
     const proposalId = await Promise.resolve(
@@ -97,6 +84,7 @@ const exampleVote = async (debug: boolean) => {
       signer,
       proposalId
     );
+    await moveBlocks(5);
 
     const listElectoralPromise = await electoralManager
       .connect(signer)
@@ -121,7 +109,7 @@ const readAddress = (): Map<string, string> => {
   return myMap;
 };
 
-exampleVote(false).catch((error) => {
+exampleVote(true).catch((error) => {
   console.error(error);
   //@ts-ignore
   process.exitCode = 1;

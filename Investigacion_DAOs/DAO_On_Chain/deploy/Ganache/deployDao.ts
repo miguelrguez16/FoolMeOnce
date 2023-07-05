@@ -1,7 +1,11 @@
 //@ts-ignore
 import { ethers } from "hardhat";
 
-import { ADDRESS_GANACHE } from "../../Utils/helper-ganache-constants";
+import {
+  ADDRESS_GANACHE,
+  URI_ONE,
+  URI_TWO,
+} from "../../Utils/helper-ganache-constants";
 
 import {
   ELECTORAL_TOKEN,
@@ -13,13 +17,17 @@ import {
 import { JsonRpcProvider, JsonRpcSigner } from "@ethersproject/providers";
 import {
   checkBalance,
+  createPromise,
   deployAndConfigGovernorContract,
   deployElectoralManager,
   deployElectoralToken,
   deployTimeLock,
   printAddress,
+  registerUser,
   saveMap,
 } from "../../Utils/ganache-functions";
+import { User } from "../../Utils/model/user-model";
+import { Contract } from "ethers";
 
 const deployDaoGanache = async (debug: boolean) => {
   const contractsDeployed: Map<string, string> = new Map<string, string>();
@@ -67,12 +75,29 @@ const deployDaoGanache = async (debug: boolean) => {
     contractsDeployed.set(ELECTORAL_MANAGER, electoralManagerAddress);
     printAddress(contractsDeployed);
     saveMap(contractsDeployed);
+
+    //? Prepare Electoral Manager
+    const electoralManager: Contract = await ethers.getContractAt(
+      ELECTORAL_MANAGER,
+      electoralManagerAddress
+    );
+    const user: User = {
+      id: 1,
+      name: "Miguel Rodriguez",
+      politicalParty: "Partido por la BlockChain",
+      isPolitical: true,
+    };
+    // //? Register user
+    await registerUser(debug, signer, user, electoralManager);
+
+    await createPromise(debug, signer, electoralManager, URI_ONE);
+    await createPromise(debug, signer, electoralManager, URI_TWO);
   } catch (error) {
     console.error("Error ", error);
   }
 };
 
-deployDaoGanache(false).catch((error) => {
+deployDaoGanache(true).catch((error) => {
   console.error(error);
   //@ts-ignore
   process.exitCode = 1;

@@ -61,7 +61,7 @@ function Single({ electoralpromise, url }) {
             <>
               Promesas relacionadas:
               {electoralpromise.relationalPromises.map((elem, i) => (
-                <Link to={`/listado/${elem}`} className="idpromise">
+                <Link to={`/promise/${elem}`} className="idpromise">
                   {i !== 0 ? <>, id:{elem}</> : <> id:{elem}</>}
                 </Link>
               ))}

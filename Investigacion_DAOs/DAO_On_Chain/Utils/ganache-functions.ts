@@ -21,7 +21,6 @@ import {
   PROPOSALSTATE,
 } from "./helper-constants";
 import { moveBlocks, moveTime } from "./move-blocks-forward";
-import { connect } from "http2";
 
 export const checkBalance = async (
   account: string,

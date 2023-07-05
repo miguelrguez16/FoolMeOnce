@@ -57,6 +57,13 @@ All files               |    97.62 |    70.83 |      100 |    98.15 |           
 
 Para esta parte de verificación en la que perfectamente podría entrar también la parte de tiempo de legislatura, solo se implementará para la verificación. Quedaría como una mejora a futuro.
 
+```mermaid
+graph LR
+GobernorContract --> ElectoralToken
+GobernorContract --> TimeLock
+TimeLock --> ElectoralManager
+```
+
 ### Resumen despliegue
 
 Se desarrollan varios scripts con el fin de realizar un despliegue y configuración determinados para cada contrato.
@@ -65,13 +72,13 @@ Se desarrollan varios scripts con el fin de realizar un despliegue y configuraci
 - Segundo: se lanzará el contrato encargado de manejar las funciones que se ejecutaran mediante la DAO, también se encargará de manejar el conjunto de direcciones que tienen permitido proponer y votar en la DAO -> **TimeLock**
 - Tercero: Contrato de gobernanza (**GovernorContract**) este realizará el proceso de:
 
-    ```mermaid
-    graph LR
-    Propuesta --> Votación
-    Votación --> Rechazada
-    Votación --> Cola
-    Cola --> Ejecución
-    ```
+  ```mermaid
+  graph LR
+  Propuesta --> Votación
+  Votación --> Rechazada
+  Votación --> Cola
+  Cola --> Ejecución
+  ```
 
 - Cuarto (Configuración): En este apartado se establecerán que dirección tendrá permisos de ejecución, propuesta y administración sobre el contrato TimeLock.
   - En cuanto a permisos de ejecución de una propuesta, ya votada y aprobada, permitiremos que cualquier dirección se le permita mandar la transacción que ejecute la propuesta.

@@ -47,7 +47,6 @@ function Register({ electoralManager, setIdUser }) {
   }, []);
 
   const setSelectedToInput = (event) => {
-    debugger;
     var input = document.getElementById("namePoliticalPartyInput");
     if (event.target.value !== "Selecciona uno existente:") {
       input.value = event.target.value;
