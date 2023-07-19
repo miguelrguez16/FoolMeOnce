@@ -4,7 +4,8 @@ coverage
 coverage.json
 typechain
 typechain-types
-
+.yarn
+install-state.gz
 # Hardhat files
 cache
 artifacts
