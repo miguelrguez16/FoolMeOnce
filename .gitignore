@@ -4,6 +4,7 @@
 /.deps/
 /.vscode/
 .yarn
+install-state.gz
 # node
 node_modules
 package-lock.json
