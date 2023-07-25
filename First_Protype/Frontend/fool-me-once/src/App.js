@@ -14,6 +14,17 @@ import Create from "./Pages/Create";
 import Register from "./Pages/Register";
 import SingleElectoralPromise from "./Pages/SingleElectoralPromise";
 
+// utils
+import {
+  FOOLMEONCE,
+  ROUTE_PROMISE,
+  ROUTE_PROMISE_TOKEN_ID,
+  ROUTE_CREATE,
+  ROUTE_REGISTER,
+  ROUTE_HOME,
+  ROUTE_ABSOLUTE
+} from "./utils";
+
 // Carga Smart Contracts
 import ElectoralManagerAbi from "../src/contractsData/ElectoralManager.json";
 import ElectoralManagerAddress from "../src/contractsData/ElectoralManager-address.json";
@@ -59,8 +70,9 @@ function App() {
     setElectoralManager(electoralManager);
 
     const isConnected =
-      (await electoralManager.name()) === "FoolMeOnce" ? true : false;
+      (await electoralManager.name()) === FOOLMEONCE ? true : false;
     setConnected(isConnected);
+    console.log(isConnected);
     getUserId(electoralManager);
   };
 
@@ -86,45 +98,49 @@ function App() {
           connected={connected}
         />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/promise"
-            element={
-              <Listado
-                electoralManager={electoralManager}
-                userAccount={userAccount}
-              />
-            }
-          />
-          <Route
-            path="/promise/:tokenId"
-            element={
-              <SingleElectoralPromise
-                electoralManager={electoralManager}
-                userAccount={userAccount}
-              />
-            }
-          />
-          <Route
-            path="/create"
-            element={
-              <Create
-                electoralManager={electoralManager}
-                userAccount={userAccount}
-              />
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              <Register
-                electoralManager={electoralManager}
-                setIdUser={setIdUser}
-                userAccount={userAccount}
-              />
-            }
-          />
-          <Route path="*" element={<Home />} />
+          <Route path={ROUTE_HOME} element={<Home />} />
+          {connected ? (<>
+            <Route
+              path={ROUTE_PROMISE}
+              element={
+                <Listado
+                  electoralManager={electoralManager}
+                  userAccount={userAccount}
+                />
+              }
+            />
+            <Route
+              path={ROUTE_PROMISE_TOKEN_ID}
+              element={
+                <SingleElectoralPromise
+                  electoralManager={electoralManager}
+                  userAccount={userAccount}
+                />
+              }
+            />
+            <Route
+              path={ROUTE_CREATE}
+              element={
+                <Create
+                  electoralManager={electoralManager}
+                  userAccount={userAccount}
+                />
+              }
+            />
+            <Route
+              path={ROUTE_REGISTER}
+              element={
+                <Register
+                  electoralManager={electoralManager}
+                  setIdUser={setIdUser}
+                  userAccount={userAccount}
+                />
+              }
+            />
+
+          </>) : (<></>)}
+
+          <Route path={ROUTE_ABSOLUTE} element={<Home />} />
         </Routes>
         <Footer />
       </div>

@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 
+// Components
 import SpinnerCustom from "../Components/SpinnerCustom/SpinnerCustom";
 import ElectoralPromise from "../Components/ElectoralPromise/ElectoralPromise";
 
+// utils
+import { EMPTY_ARRAY } from "../utils";
+
 function Listado({ electoralManager, userAccount }) {
-  const [listedElectoralPromise, setListedElectoralPromise] = useState([]);
+  const [promises, setPromises] = useState(EMPTY_ARRAY);
   const [loading, setLoading] = useState(true);
 
   const handleDataUri = async (tokenUri) => {
@@ -48,7 +52,7 @@ function Listado({ electoralManager, userAccount }) {
       listedElectoralPromise.push(item);
     }
 
-    setListedElectoralPromise(listedElectoralPromise);
+    setPromises(listedElectoralPromise);
     setLoading(false);
   };
 
@@ -68,13 +72,13 @@ function Listado({ electoralManager, userAccount }) {
     <div>
       <h3 style={{ textAlign: "center" }}>Listado de Promesas electorales</h3>
       <div className="simple-container">
-        {listedElectoralPromise.length > 0 ? (
+        {promises.length > 0 ? (
           <div className="visual-list">
-            {listedElectoralPromise.map((item, i) => (
+            {promises.map((item, i) => (
               <ElectoralPromise
-                key={i}
                 className="container-tarjeta"
                 electoralpromise={item}
+                key={i}
               />
             ))}
           </div>

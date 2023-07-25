@@ -1,24 +1,28 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+// Components Bootstrap
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
+// utils
+import { EMPTY, ROUTE_CREATE, EMPTY_ARRAY } from "../utils";
+
 function Register({ electoralManager, setIdUser }) {
   const navigate = useNavigate();
-  const [nameUser, setNameUser] = useState("");
-  const [namePoliticalParty, setNamePoliticalParty] = useState("");
-  const [isPOliticalParty, setIsPoliticalParty] = useState(false);
-  const [dataToSelect, setdataToSelet] = useState([]);
+  const [nameUser, setNameUser] = useState(EMPTY);
+  const [namePoliticalParty, setNamePoliticalParty] = useState(EMPTY);
+  const [isPoliticalParty, setIsPoliticalParty] = useState(false);
+  const [dataToSelect, setDataToSelect] = useState(EMPTY_ARRAY);
 
-  const loadPoliticalpartiesNames = async () => {
-    const bigData = await electoralManager.getAllPromises();
-    const mySet1 = new Set();
+  const loadPoliticalPartiesNames = async () => {
+    const promises = await electoralManager.getAllPromises();
+    const politicalParties = new Set();
 
-    bigData.forEach((element) => {
-      mySet1.add(element["namePoliticalParty"]);
+    promises.forEach((promise) => {
+      politicalParties.add(promise["namePoliticalParty"]);
     });
-    setdataToSelet(Array.from(mySet1));
+    setDataToSelect(Array.from(politicalParties));
   };
 
   const registerNewUser = async (event) => {
@@ -31,11 +35,11 @@ function Register({ electoralManager, setIdUser }) {
       const ide = await electoralManager.registerUser(
         nameUser,
         namePoliticalParty,
-        isPOliticalParty
+        isPoliticalParty
       );
       if (ide !== 0) {
         setIdUser(ide);
-        navigate("/create");
+        navigate(ROUTE_CREATE);
       } else {
         alert("Ups: algo fue mal");
       }
@@ -43,8 +47,8 @@ function Register({ electoralManager, setIdUser }) {
   };
 
   useEffect(() => {
-    loadPoliticalpartiesNames();
-  }, []);
+    loadPoliticalPartiesNames();
+  });
 
   const setSelectedToInput = (event) => {
     var input = document.getElementById("namePoliticalPartyInput");
@@ -77,8 +81,10 @@ function Register({ electoralManager, setIdUser }) {
           <Form.Label>Nombre del Partido Político</Form.Label>
           <Form.Select onChange={(e) => setSelectedToInput(e)}>
             <option>Selecciona uno existente:</option>
-            {dataToSelect.map((item) => (
-              <option value={item}>{item}</option>
+            {dataToSelect.map((item, i) => (
+              <option key={i} value={item}>
+                {item}
+              </option>
             ))}
           </Form.Select>
           <Form.Control

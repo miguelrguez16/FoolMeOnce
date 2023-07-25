@@ -1,33 +1,42 @@
 import React, { useState } from "react";
 import MDEditor from "@uiw/react-md-editor";
 
-// Componentes Bootstrap
+// Components Bootstrap
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 // Otros Componentes
 import TablePromises from "../Components/Tabla/TablaPromesas";
 import "../assets/create.css";
+
 // Router
 import { useNavigate } from "react-router-dom";
 
 // IPFS
 import { create } from "ipfs-http-client";
 
-// conect to localhost
+// utils
+import {
+  localClientIpfs,
+  URL_LOCAL_IPFS,
+  ROUTE_PROMISE_TOKEN,
+  EMPTY,
+} from "../utils";
+
+// connect to localhost
 const clientIpfs = create({
-  host: "localhost",
-  port: "5001",
-  protocol: "http",
+  host: localClientIpfs.host,
+  port: localClientIpfs.port,
+  protocol: localClientIpfs.protocol,
 });
 
 function Create({ electoralManager }) {
   const navigate = useNavigate();
-  const [tituloPromesa, setTituloPromesa] = useState("");
-  const [descriptionPromesa, setDescriptionPromesa] = useState("");
+  const [tituloPromesa, setTituloPromesa] = useState(EMPTY);
+  const [descriptionPromesa, setDescriptionPromesa] = useState(EMPTY);
   const [isObligatory, setIsObligatory] = useState(true);
   const [relationalPromises, setRelationalPromises] = useState([]);
-  const [imageElectoralPromise, setImageElectoralPromise] = useState("");
+  const [imageElectoralPromise, setImageElectoralPromise] = useState(EMPTY);
   const [listaTemas, setListaTemas] = useState([]);
 
   // upload the image to
@@ -37,7 +46,7 @@ function Create({ electoralManager }) {
     if (typeof currentFile !== "undefined") {
       try {
         const cid = await clientIpfs.add(currentFile);
-        setImageElectoralPromise(`http://127.0.0.1:8080/ipfs/${cid.path}`);
+        setImageElectoralPromise(URL_LOCAL_IPFS.concat(cid.path));
       } catch (error) {
         console.log("ipfs image uploadToIpfs error: ", error);
       }
@@ -46,12 +55,7 @@ function Create({ electoralManager }) {
 
   // Verificación datos
   const verifiedElectoralPromise = async () => {
-    if (
-      !tituloPromesa ||
-      !descriptionPromesa ||
-      !relationalPromises ||
-      !listaTemas
-    ) {
+    if (!tituloPromesa || !descriptionPromesa || !listaTemas) {
       return;
     } else {
       const resultCreate = await clientIpfs.add(
@@ -68,26 +72,19 @@ function Create({ electoralManager }) {
   };
 
   const createNewElectoralPromise = async (result) => {
-    console.log(`
-        URI: [${result}]
-        tituloPromesa: [${tituloPromesa}]
-        descriptionPromesa: [${descriptionPromesa}]
-        listElectoralPromise: [${relationalPromises}]
-        listaTemas: [${listaTemas}]
-      `);
-    const uri = `http://127.0.0.1:8080/ipfs/${result.path}`;
+    const uri = URL_LOCAL_IPFS.concat(result.path);
 
     const newEPid = await electoralManager.createElectoralPromise(
       uri,
       isObligatory
     );
 
-    console.log(await newEPid.wait());
+    console.log(await newEPid.wait(1));
     let total =
       (await electoralManager.counterElectoralPromises()).toNumber() - 1;
     console.log("total: ", total);
 
-    navigate(`/promise/${total}`);
+    navigate(ROUTE_PROMISE_TOKEN.concat(total));
   };
 
   return (
