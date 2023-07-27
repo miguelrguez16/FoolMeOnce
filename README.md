@@ -31,4 +31,5 @@ Plataforma para la creación y verificación de promesas electorales por parte d
 
 ## Project status
 
-Cerca de llegar a meta 🏁
+Ya en meta 🏁
+Y con una calificación de 🔟
