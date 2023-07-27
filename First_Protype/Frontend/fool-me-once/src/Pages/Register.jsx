@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Components Bootstrap
@@ -51,7 +51,7 @@ function Register({ electoralManager, setIdUser }) {
   });
 
   const setSelectedToInput = (event) => {
-    var input = document.getElementById("namePoliticalPartyInput");
+    let input = document.getElementById("namePoliticalPartyInput");
     if (event.target.value !== "Selecciona uno existente:") {
       input.value = event.target.value;
     } else {

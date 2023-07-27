@@ -22,7 +22,7 @@ import {
   ROUTE_CREATE,
   ROUTE_REGISTER,
   ROUTE_HOME,
-  ROUTE_ABSOLUTE
+  ROUTE_NOT_FOUND
 } from "./utils";
 
 // Carga Smart Contracts
@@ -140,7 +140,7 @@ function App() {
 
           </>) : (<></>)}
 
-          <Route path={ROUTE_ABSOLUTE} element={<Home />} />
+          <Route path={ROUTE_NOT_FOUND} element={<Home />} />
         </Routes>
         <Footer />
       </div>

@@ -1,6 +1,7 @@
-import React from "react";
+// Components Bootstrap
 import Card from "react-bootstrap/Card";
-import logo from "../assets/undraw_voting.svg";
+
+// assets
 import candidateLogo from "../assets/undraw_candidate.svg";
 import userLogo from "../assets/undraw_browsing.svg";
 
