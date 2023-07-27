@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+
 import Single from "../Components/ElectoralPromise/Single";
 
 import SpinnerCustom from "../Components/SpinnerCustom/SpinnerCustom";
+
+import { EMPTY, ROUTE_PROMISE_TOKEN, ROUTE_URI } from "../utils";
 
 function SingleElectoralPromise({ electoralManager, userAccount }) {
   const { tokenId } = useParams();
@@ -13,7 +16,7 @@ function SingleElectoralPromise({ electoralManager, userAccount }) {
     const element = await electoralManager.electoralPromises(tokenId);
     const response = await fetch(element.tokenUri);
     const metadata = await response.json();
-    const relationalPromises = metadata.relationalPromises || "";
+    const relationalPromises = metadata.relationalPromises || EMPTY;
     let item = {
       id: element.id.toNumber(),
       idAuthor: element.idAuthor.toNumber(),
@@ -29,7 +32,7 @@ function SingleElectoralPromise({ electoralManager, userAccount }) {
       imageElectoralPromise: metadata.imageElectoralPromise,
       listaTemas: metadata.listaTemas,
     };
-    setValue(`http://localhost:3000/promise/${item.id}`);
+    setValue(ROUTE_URI.concat(ROUTE_PROMISE_TOKEN).concat(item.id));
     setPromise(item);
     setLoading(false);
   };

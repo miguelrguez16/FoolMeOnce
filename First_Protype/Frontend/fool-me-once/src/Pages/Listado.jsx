@@ -5,7 +5,7 @@ import SpinnerCustom from "../Components/SpinnerCustom/SpinnerCustom";
 import ElectoralPromise from "../Components/ElectoralPromise/ElectoralPromise";
 
 // utils
-import { EMPTY_ARRAY } from "../utils";
+import { EMPTY, EMPTY_ARRAY, SUSPENSION_POINTS, STRING_PAD } from "../utils.js";
 
 function Listado({ electoralManager, userAccount }) {
   const [promises, setPromises] = useState(EMPTY_ARRAY);
@@ -17,22 +17,18 @@ function Listado({ electoralManager, userAccount }) {
   };
 
   const loadListedItems = async () => {
-    const all = await electoralManager.getAllPromises();
+    const electoralPromises = await electoralManager.getAllPromises();
 
     let listedElectoralPromise = [];
-    for (let i = 0; i < all.length; i++) {
-      let element = all[i];
+    for (const element of electoralPromises) {
       const metadata = await handleDataUri(element.tokenUri);
-      const relationalPromises = metadata.relationalPromises || "";
-      let descriptionPromesa = metadata.descriptionPromesa;
-      if (descriptionPromesa.length > 50) {
-        descriptionPromesa = descriptionPromesa.slice(0, 50).concat("...");
+      const relationalPromises = metadata.relationalPromises || EMPTY;
+      let description = metadata.descriptionPromesa;
+      if (description.length > 50) {
+        description = description.slice(0, 50).concat(SUSPENSION_POINTS);
       }
-      if (descriptionPromesa.startsWith("#")) {
-        descriptionPromesa = descriptionPromesa.slice(
-          1,
-          descriptionPromesa.length
-        );
+      if (description.startsWith(STRING_PAD)) {
+        description = description.slice(1, description.length);
       }
       let item = {
         id: element.id.toNumber(),
@@ -45,7 +41,7 @@ function Listado({ electoralManager, userAccount }) {
         created: element.created.toNumber(),
         dateApproved: element.dateApproved.toNumber(),
         tituloPromesa: metadata.tituloPromesa,
-        descriptionPromesa,
+        description,
         imageElectoralPromise: metadata.imageElectoralPromise,
         listaTemas: metadata.listaTemas,
       };

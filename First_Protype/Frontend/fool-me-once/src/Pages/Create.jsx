@@ -21,6 +21,7 @@ import {
   URL_LOCAL_IPFS,
   ROUTE_PROMISE_TOKEN,
   EMPTY,
+  EMPTY_ARRAY,
 } from "../utils";
 
 // connect to localhost
@@ -35,9 +36,9 @@ function Create({ electoralManager }) {
   const [tituloPromesa, setTituloPromesa] = useState(EMPTY);
   const [descriptionPromesa, setDescriptionPromesa] = useState(EMPTY);
   const [isObligatory, setIsObligatory] = useState(true);
-  const [relationalPromises, setRelationalPromises] = useState([]);
+  const [relationalPromises, setRelationalPromises] = useState(EMPTY_ARRAY);
   const [imageElectoralPromise, setImageElectoralPromise] = useState(EMPTY);
-  const [listaTemas, setListaTemas] = useState([]);
+  const [listaTemas, setListaTemas] = useState(EMPTY_ARRAY);
 
   // upload the image to
   const uploadImageToIpfs = async (event) => {

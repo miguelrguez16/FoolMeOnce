@@ -57,8 +57,8 @@ function ElectoralPromise({ electoralpromise, className, key }) {
       </div>
 
       <div className="tarjeta-descripcion">
-        {electoralpromise.descriptionPromesa.length > 1 ? (
-          <>{electoralpromise.descriptionPromesa.toString()}</>
+        {electoralpromise.description.length > 1 ? (
+          <>{electoralpromise.description.toString()}</>
         ) : (
           <></>
         )}

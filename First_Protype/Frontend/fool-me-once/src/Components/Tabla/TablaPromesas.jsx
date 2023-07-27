@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import "./TablaPromesas.css";
 
+import { EMPTY_ARRAY } from "../../utils.js";
+
 function TablePromises({ electoralManager, addRelationalPromises }) {
-  const [listaElementos, setListaElementos] = useState([]);
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [listaElementos, setListaElementos] = useState(EMPTY_ARRAY);
+  const [selectedItems, setSelectedItems] = useState(EMPTY_ARRAY);
 
   const loadListedItems = async () => {
-    const all = await electoralManager.getAllPromises();
+    const electoralPromises = await electoralManager.getAllPromises();
     let listaElementos = [];
     // need id, titulo, author, description
-    for (let i = 0; i < all.length; i++) {
-      const id = all[i].id.toNumber();
-      const nameAuthor = all[i].nameAuthor;
-      const response = await fetch(all[i].tokenUri);
+    for (const element of electoralPromises) {
+      const id = element.id.toNumber();
+      const nameAuthor = element.nameAuthor;
+      const response = await fetch(element.tokenUri);
       const metadata = await response.json();
       let item = {
         id,
